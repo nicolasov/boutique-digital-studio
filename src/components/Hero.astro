@@ -2,14 +2,14 @@
 import { translations } from '../i18n/translations';
 
 const metrics = ['heroMetricOne', 'heroMetricTwo', 'heroMetricThree'];
-const t = translations.es;
+const t = translations.en;
 ---
 
 <section id="top" class="relative overflow-hidden pb-20 pt-12 sm:pb-28 sm:pt-20">
   <div class="section-shell">
     <div class="grid gap-10 lg:grid-cols-[0.78fr_0.22fr] lg:items-end">
       <div>
-        <span class="eyebrow reveal w-fit" data-i18n="heroEyebrow">{t.heroEyebrow}</span>
+        <span class="eyebrow reveal w-fit" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
         <h1 class="section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(3.65rem,9.6vw,9.8rem)] text-ink">
           <span data-i18n="heroTitle">{t.heroTitle}</span>
         </h1>
@@ -22,7 +22,7 @@ const t = translations.es;
             href="https://cal.com/"
             target="_blank"
             rel="noreferrer"
-            class="inline-flex w-fit items-center justify-center rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2a2a]"
+            class="btn btn-primary"
             data-i18n="heroPrimary"
           >
             {t.heroPrimary}
@@ -31,7 +31,7 @@ const t = translations.es;
             href="https://wa.me/5490000000000"
             target="_blank"
             rel="noreferrer"
-            class="inline-flex w-fit items-center justify-center rounded-full border border-ink/14 bg-white/54 px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-white"
+            class="btn btn-secondary"
             data-i18n="heroSecondary"
           >
             {t.heroSecondary}

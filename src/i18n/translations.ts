@@ -1,4 +1,4 @@
-export const defaultLang = 'es';
+export const defaultLang = 'en';
 export const supportedLangs = ['es', 'en'] as const;
 
 export type Lang = (typeof supportedLangs)[number];
@@ -17,14 +17,14 @@ export const translations = {
     menuOpen: 'Menú',
     menuClose: 'Cerrar',
     menuLanguage: 'Idioma',
-    navCall: 'Agendar llamada',
+    navCall: 'Agendar reunión',
     contactLocation: 'Buenos Aires / remoto',
     contactWhatsApp: 'WhatsApp',
     heroEyebrow: 'Creative technology studio',
     heroTitle: 'Sistemas digitales con dirección creativa.',
     heroText:
       'Web, branding, IA y automatización para marcas que necesitan presencia, criterio y movimiento.',
-    heroPrimary: 'Agendar llamada',
+    heroPrimary: 'Agendar reunión',
     heroSecondary: 'WhatsApp',
     heroNote: 'Web. Branding. IA. Automatización. Experiencia.',
     heroMetricOne: 'Diseño editorial',
@@ -87,7 +87,7 @@ export const translations = {
     ctaTitle: 'Si tu marca necesita una experiencia digital con más presencia, empecemos.',
     ctaText:
       'Agenda una llamada breve. Revisamos visión, oportunidad y el sistema que tiene sentido construir.',
-    ctaPrimary: 'Agendar llamada',
+    ctaPrimary: 'Agendar reunión',
     ctaSecondary: 'Escribir por WhatsApp',
     footerText: 'Creative technology for premium digital experiences.',
   },

@@ -16,15 +16,12 @@ const overlayNav = [
   { key: 'navContact', href: '#contacto' },
 ];
 
-const t = translations.es;
+const t = translations.en;
 ---
 
-<header class="sticky top-0 z-50 border-b border-[rgba(17,17,17,0.08)] bg-[#fbfaf7]/76 backdrop-blur-xl">
+<header class="site-header fixed inset-x-0 top-0 z-[100]" data-site-header>
   <div class="section-shell flex h-[76px] items-center justify-between gap-6">
     <a href="#top" class="flex items-center gap-3" aria-label="Boutique Digital Studio">
-      <span class="display-font grid size-10 place-items-center border border-ink/12 bg-white text-sm font-bold text-ink shadow-sm">
-        B
-      </span>
       <span class="display-font text-sm font-bold tracking-[-0.03em] text-ink">Boutique Digital Studio</span>
     </a>
 
@@ -37,88 +34,95 @@ const t = translations.es;
     </nav>
 
     <div class="flex items-center gap-3">
-      <div class="lang-toggle hidden rounded-full border border-ink/10 bg-white/62 p-1 sm:flex" aria-label="Language selector">
-        <button class="rounded-full px-3 py-1.5 text-xs font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="es">
-          ES
-        </button>
-        <button class="rounded-full px-3 py-1.5 text-xs font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="en">
-          EN
-        </button>
+      <div class="language-mini hidden sm:inline-flex" aria-label="Language selector">
+        <button type="button" data-lang-option="en">EN</button>
+        <span>/</span>
+        <button type="button" data-lang-option="es">ES</button>
       </div>
       <a
         href="https://cal.com/"
         target="_blank"
         rel="noreferrer"
-        class="hidden rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2a2a] sm:inline-flex"
+        class="btn btn-primary header-action hidden sm:inline-flex"
         data-i18n="navCall"
       >
+        <span class="calendar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 3v4M17 3v4M4.5 9.5h15M6.5 5.5h11A2.5 2.5 0 0 1 20 8v10a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18V8a2.5 2.5 0 0 1 2.5-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </span>
         {t.navCall}
       </a>
       <button
-        class="menu-button rounded-full border border-ink/12 bg-white/70 px-4 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-white"
+        class="menu-button btn btn-secondary header-action"
         type="button"
         aria-expanded="false"
         aria-controls="site-menu"
         data-menu-toggle
       >
-        <span data-i18n="menuOpen">{t.menuOpen}</span>
-        <span aria-hidden="true" class="ml-2 inline-block translate-y-[-1px]">+</span>
+        <span class="sr-only" data-i18n="menuOpen">{t.menuOpen}</span>
+        <span class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
     </div>
   </div>
+</header>
 
-  <div id="site-menu" class="menu-overlay fixed inset-0 z-[80] overflow-y-auto bg-[#efe8dc] text-ink" aria-hidden="true" data-menu-overlay>
-    <div class="section-shell flex min-h-dvh flex-col py-6">
-      <div class="flex items-center justify-between gap-6">
-        <a href="#top" class="display-font text-sm font-bold tracking-[-0.03em]" data-menu-close>Boutique Digital Studio</a>
-        <button
-          class="rounded-full border border-ink/14 bg-white/50 px-4 py-3 text-sm font-semibold transition hover:bg-white"
-          type="button"
-          data-menu-close
-        >
-          <span data-i18n="menuClose">{t.menuClose}</span>
-        </button>
-      </div>
+<div id="site-menu" class="menu-overlay fixed inset-0 z-[999] overflow-y-auto bg-white text-ink" aria-hidden="true" data-menu-overlay>
+  <div class="section-shell flex min-h-dvh flex-col py-4">
+    <div class="flex items-center justify-end gap-6">
+      <button
+        class="menu-close-button btn btn-secondary"
+        type="button"
+        aria-label="Cerrar menú"
+        data-menu-close
+      >
+        <span class="hamburger is-x" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
 
-      <div class="grid flex-1 gap-10 py-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
-        <nav class="menu-links" aria-label="Menú principal">
-          {overlayNav.map((item, index) => (
-            <a
-              href={item.href}
-              class="menu-link display-font block border-t border-ink/14 py-3 text-[clamp(2.9rem,7.4vw,7.1rem)] font-bold leading-[0.88] tracking-[-0.07em] transition hover:translate-x-3 sm:py-4"
-              style={`--stagger: ${index * 70}ms`}
-              data-i18n={item.key}
-              data-menu-close
-            >
-              {t[item.key]}
-            </a>
-          ))}
-        </nav>
+    <div class="grid flex-1 gap-10 pb-8 pt-3 sm:pt-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+      <nav class="menu-links" aria-label="Menú principal">
+        {overlayNav.map((item, index) => (
+          <a
+            href={item.href}
+            class="menu-link display-font block border-t border-ink/14 py-3 text-[clamp(2.35rem,7.2vw,7.1rem)] font-bold leading-[0.9] tracking-[-0.064em] sm:py-4"
+            style={`--stagger: ${index * 70}ms`}
+            data-i18n={item.key}
+            data-menu-close
+          >
+            {t[item.key]}
+          </a>
+        ))}
+      </nav>
 
-        <div class="menu-meta grid gap-8 lg:pb-5">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="menuLanguage">{t.menuLanguage}</p>
-            <div class="lang-toggle mt-3 inline-flex rounded-full border border-ink/12 bg-white/40 p-1">
-              <button class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="es">
-                ES
-              </button>
-              <button class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="en">
-                EN
-              </button>
-            </div>
+      <div class="menu-meta grid gap-8 lg:pb-5">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="menuLanguage">{t.menuLanguage}</p>
+          <div class="language-mini mt-3 inline-flex" aria-label="Language selector">
+            <button type="button" data-lang-option="en">EN</button>
+            <span>/</span>
+            <button type="button" data-lang-option="es">ES</button>
           </div>
+        </div>
 
-          <div class="grid gap-4 border-t border-ink/14 pt-6">
-            <p class="text-sm font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="contactLocation">{t.contactLocation}</p>
-            <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
-              {t.navCall}
-            </a>
-            <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://wa.me/5490000000000" target="_blank" rel="noreferrer" data-i18n="contactWhatsApp">
-              {t.contactWhatsApp}
-            </a>
-          </div>
+        <div class="grid gap-4 border-t border-ink/14 pt-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="contactLocation">{t.contactLocation}</p>
+          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
+            {t.navCall}
+          </a>
+          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://wa.me/5490000000000" target="_blank" rel="noreferrer" data-i18n="contactWhatsApp">
+            {t.contactWhatsApp}
+          </a>
         </div>
       </div>
     </div>
   </div>
-</header>
+</div>

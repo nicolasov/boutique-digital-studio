@@ -9,8 +9,8 @@ const detectLang = (): Lang => {
   const stored = window.localStorage.getItem(storageKey);
   if (isLang(stored)) return stored;
 
-  const browserLang = window.navigator.language.toLowerCase();
-  return browserLang.startsWith('en') ? 'en' : defaultLang;
+  const locales = [window.navigator.language, ...window.navigator.languages].filter(Boolean);
+  return locales.some((locale) => locale.toLowerCase().startsWith('es')) ? 'es' : defaultLang;
 };
 
 const applyLang = (lang: Lang) => {
@@ -41,6 +41,30 @@ const initI18n = () => {
   const initialLang = detectLang();
   applyLang(initialLang);
 
+  const siteHeader = document.querySelector<HTMLElement>('[data-site-header]');
+  const headerTrigger = document.querySelector<HTMLElement>('[data-header-trigger]');
+  let headerRaf = 0;
+
+  const updateHeaderVisibility = () => {
+    if (!siteHeader) return;
+    const headerHeight = siteHeader.offsetHeight || 76;
+    const triggerTop = headerTrigger?.getBoundingClientRect().top ?? 0;
+    const shouldShow = window.scrollY > 8 && triggerTop <= headerHeight;
+    siteHeader.classList.toggle('is-visible', shouldShow);
+  };
+
+  const requestHeaderUpdate = () => {
+    if (headerRaf) return;
+    headerRaf = window.requestAnimationFrame(() => {
+      headerRaf = 0;
+      updateHeaderVisibility();
+    });
+  };
+
+  updateHeaderVisibility();
+  window.addEventListener('scroll', requestHeaderUpdate, { passive: true });
+  window.addEventListener('resize', requestHeaderUpdate);
+
   document.querySelectorAll<HTMLButtonElement>('[data-lang-option]').forEach((button) => {
     button.addEventListener('click', () => {
       const lang = button.dataset.langOption;
@@ -56,6 +80,7 @@ const initI18n = () => {
 
   const setMenuOpen = (isOpen: boolean) => {
     if (!menuToggle || !overlay) return;
+    document.documentElement.classList.toggle('menu-open', isOpen);
     document.body.classList.toggle('menu-open', isOpen);
     overlay.classList.toggle('is-open', isOpen);
     overlay.setAttribute('aria-hidden', String(!isOpen));
@@ -76,4 +101,8 @@ const initI18n = () => {
   });
 };
 
-initI18n();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initI18n, { once: true });
+} else {
+  initI18n();
+}
