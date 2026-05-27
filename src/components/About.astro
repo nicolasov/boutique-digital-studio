@@ -1,0 +1,37 @@
+---
+import { translations } from '../i18n/translations';
+
+const pillars = [
+  ['aboutOneTitle', 'aboutOneText'],
+  ['aboutTwoTitle', 'aboutTwoText'],
+  ['aboutThreeTitle', 'aboutThreeText'],
+];
+
+const t = translations.es;
+---
+
+<section id="about" class="section-pad">
+  <div class="section-shell">
+    <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+      <div>
+        <span class="eyebrow" data-i18n="aboutEyebrow">Enfoque</span>
+        <h2 class="section-heading mt-6 text-5xl sm:text-7xl" data-i18n="aboutTitle">
+          Dirección creativa con mentalidad de producto digital.
+        </h2>
+      </div>
+      <p class="max-w-2xl text-xl leading-8 text-muted lg:ml-auto" data-i18n="aboutText">
+        Trabajamos con marcas de hospitality, real estate, lifestyle y servicios modernos que necesitan una presencia digital más sofisticada, más útil y mejor conectada a su operación.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-5 md:grid-cols-3">
+      {pillars.map(([title, text]) => (
+        <article class="premium-card motion-card p-7">
+          <div class="mb-12 size-12 rounded-2xl border border-ink/10 bg-[#ece7df]"></div>
+          <h3 class="display-font text-2xl font-semibold tracking-[-0.04em] text-ink" data-i18n={title}>{t[title]}</h3>
+          <p class="mt-4 leading-7 text-muted" data-i18n={text}>{t[text]}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

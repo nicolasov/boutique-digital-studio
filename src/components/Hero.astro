@@ -1,75 +1,85 @@
 ---
-const metrics = [
-  'Estrategia digital',
-  'IA aplicada',
-  'Conversión medible',
-];
+import { translations } from '../i18n/translations';
+
+const metrics = ['heroMetricOne', 'heroMetricTwo', 'heroMetricThree'];
+const t = translations.es;
 ---
 
-<section class="relative overflow-hidden py-20 sm:py-24 lg:py-32">
-  <div class="section-shell grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
-    <div class="max-w-3xl">
-      <span class="eyebrow reveal">Boutique tech studio</span>
-      <h1 class="reveal reveal-delay-1 mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
-        Experiencias digitales modernas potenciadas con IA
-      </h1>
-      <p class="reveal reveal-delay-2 mt-7 max-w-2xl text-lg leading-8 text-white/68 sm:text-xl">
-        Diseñamos y desarrollamos webs estratégicas, automatizaciones y sistemas digitales orientados a conversión, crecimiento y experiencia de usuario.
-      </p>
-      <div class="reveal reveal-delay-3 mt-10 flex flex-col gap-3 sm:flex-row">
-        <a
-          href="#contacto"
-          class="inline-flex items-center justify-center rounded-full bg-[#f5f7fb] px-6 py-3 text-sm font-semibold text-[#07090d] transition hover:bg-[#80ffd0]"
-        >
-          Hablemos
-        </a>
-        <a
-          href="#soluciones"
-          class="inline-flex items-center justify-center rounded-full border border-white/14 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/8"
-        >
-          Ver soluciones
-        </a>
+<section class="relative overflow-hidden pb-20 pt-14 sm:pb-28 sm:pt-20">
+  <div class="absolute inset-x-0 top-0 -z-10 h-[68%] bg-[linear-gradient(180deg,#fbfaf7_0%,rgba(247,245,240,0)_100%)]"></div>
+  <div class="section-shell">
+    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+      <div class="max-w-4xl">
+        <span class="eyebrow reveal" data-i18n="heroEyebrow">Boutique Digital Studio</span>
+        <h1 class="section-heading reveal reveal-delay-1 mt-7 text-[clamp(3.4rem,8vw,7.8rem)] text-ink">
+          <span data-i18n="heroTitle">Experiencias digitales para marcas que piensan en futuro.</span>
+        </h1>
+      </div>
+      <div class="reveal reveal-delay-2 max-w-xl lg:pb-4">
+        <p class="text-xl leading-8 text-muted sm:text-2xl sm:leading-9" data-i18n="heroText">
+          Diseñamos webs estratégicas, sistemas de automatización e interfaces inteligentes para convertir presencia digital en crecimiento medible.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="https://cal.com/"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_48px_rgba(17,17,17,0.18)] transition hover:-translate-y-0.5 hover:bg-[#2a2a2a]"
+            data-i18n="heroPrimary"
+          >
+            Agendar llamada
+          </a>
+          <a
+            href="https://wa.me/5490000000000"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center justify-center rounded-full border border-ink/12 bg-white/70 px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-ink/24 hover:bg-white"
+            data-i18n="heroSecondary"
+          >
+            WhatsApp
+          </a>
+        </div>
       </div>
     </div>
 
-    <div class="premium-card reveal reveal-delay-2 relative min-h-[420px] overflow-hidden p-5">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(128,255,208,0.16),transparent_24rem)]"></div>
-      <div class="relative flex h-full flex-col justify-between">
-        <div class="grid grid-cols-2 gap-3">
-          {metrics.map((metric) => (
-            <div class="rounded-lg border border-white/10 bg-black/20 p-4">
-              <p class="text-xs uppercase tracking-[0.16em] text-white/38">Focus</p>
-              <p class="mt-6 text-lg font-medium text-white">{metric}</p>
-            </div>
-          ))}
-          <div class="rounded-lg border border-[#80ffd0]/25 bg-[#80ffd0]/10 p-4">
-            <p class="text-xs uppercase tracking-[0.16em] text-[#bfffe8]">Studio model</p>
-            <p class="mt-6 text-lg font-medium text-white">Ejecución boutique</p>
+    <div class="mt-14 grid gap-5 lg:grid-cols-[1.3fr_0.7fr]">
+      <figure class="visual-frame reveal reveal-delay-2 relative min-h-[420px] sm:min-h-[560px]">
+        <img class="image-cover" src="/assets/hero-editorial.png" alt="Premium editorial digital studio workspace" loading="eager" />
+        <div class="absolute inset-x-5 bottom-5 rounded-3xl border border-white/36 bg-white/72 p-5 shadow-[0_24px_70px_rgba(17,17,17,0.16)] backdrop-blur-xl sm:inset-x-8 sm:bottom-8">
+          <p class="text-sm font-semibold text-ink" data-i18n="heroNote">
+            Estrategia, diseño y tecnología en una experiencia clara.
+          </p>
+          <div class="mt-4 grid gap-2 sm:grid-cols-3">
+            {metrics.map((key) => (
+              <div class="rounded-2xl border border-ink/10 bg-white/68 p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.11em] text-muted" data-i18n={key}>{t[key]}</p>
+              </div>
+            ))}
           </div>
         </div>
+      </figure>
 
-        <div class="mt-12 rounded-lg border border-white/10 bg-[#0b0f16]/88 p-5">
-          <div class="mb-5 flex items-center justify-between gap-4">
-            <p class="text-sm font-medium text-white">Digital growth system</p>
-            <span class="rounded-full bg-[#80ffd0]/12 px-3 py-1 text-xs font-semibold text-[#bfffe8]">Live</span>
-          </div>
-          <div class="space-y-3">
-            <div class="h-2 rounded-full bg-white/8">
-              <div class="h-2 w-[86%] rounded-full bg-[#80ffd0]"></div>
+      <div class="grid gap-5">
+        <div class="premium-card motion-card p-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.12em] text-muted">01 / Intelligence</p>
+          <div class="mt-12 rounded-3xl bg-[#f0ece4] p-5">
+            <div class="h-3 rounded-full bg-white">
+              <div class="h-3 w-[74%] rounded-full bg-[#1f1f1f]"></div>
             </div>
-            <div class="grid grid-cols-3 gap-3 pt-3">
-              <div>
-                <p class="text-2xl font-semibold text-white">UX</p>
-                <p class="text-xs text-white/45">Clarity</p>
-              </div>
-              <div>
-                <p class="text-2xl font-semibold text-white">CRO</p>
-                <p class="text-xs text-white/45">Intent</p>
-              </div>
-              <div>
-                <p class="text-2xl font-semibold text-white">AI</p>
-                <p class="text-xs text-white/45">Scale</p>
-              </div>
+            <div class="mt-5 grid grid-cols-3 gap-2">
+              <span class="h-16 rounded-2xl bg-white"></span>
+              <span class="h-16 rounded-2xl bg-[#d7d2ca]"></span>
+              <span class="h-16 rounded-2xl bg-white"></span>
+            </div>
+          </div>
+        </div>
+        <div class="premium-card surface-grid motion-card min-h-64 p-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.12em] text-muted">02 / Experience</p>
+          <div class="float-slow mt-12 rounded-[2rem] border border-ink/10 bg-white p-5 shadow-[0_26px_60px_rgba(17,17,17,0.08)]">
+            <div class="h-2 w-24 rounded-full bg-ink/18"></div>
+            <div class="mt-5 space-y-3">
+              <div class="h-3 rounded-full bg-ink/10"></div>
+              <div class="h-3 w-2/3 rounded-full bg-ink/10"></div>
             </div>
           </div>
         </div>

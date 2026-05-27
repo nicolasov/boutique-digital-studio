@@ -1,49 +1,42 @@
 ---
+import { translations } from '../i18n/translations';
+
 const services = [
-  {
-    title: 'Desarrollo web estratégico',
-    text: 'Sitios rápidos, claros y orientados a objetivos comerciales reales.',
-  },
-  {
-    title: 'Branding & experiencia visual',
-    text: 'Sistemas visuales modernos para marcas que necesitan elevar percepción.',
-  },
-  {
-    title: 'Automatización & IA aplicada',
-    text: 'Flujos inteligentes para capturar, responder y activar oportunidades.',
-  },
-  {
-    title: 'CRO & optimización de conversión',
-    text: 'Mejoras medibles en contenido, journeys, formularios y llamadas a acción.',
-  },
-  {
-    title: 'GEO / AI Search Optimization',
-    text: 'Preparación de contenido para buscadores tradicionales y respuestas con IA.',
-  },
-  {
-    title: 'WhatsApp y formularios inteligentes',
-    text: 'Integraciones para convertir interés en conversaciones y leads accionables.',
-  },
+  ['serviceWebTitle', 'serviceWebText'],
+  ['serviceBrandTitle', 'serviceBrandText'],
+  ['serviceAiTitle', 'serviceAiText'],
+  ['serviceCroTitle', 'serviceCroText'],
+  ['serviceGeoTitle', 'serviceGeoText'],
+  ['serviceIntegrationsTitle', 'serviceIntegrationsText'],
 ];
+
+const t = translations.es;
 ---
 
-<section id="soluciones" class="py-20 sm:py-24">
+<section id="servicios" class="section-pad bg-paper">
   <div class="section-shell">
-    <div class="max-w-2xl">
-      <span class="eyebrow">Qué hacemos</span>
-      <h2 class="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
-        Soluciones digitales con criterio estratégico.
-      </h2>
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+      <div>
+        <span class="eyebrow" data-i18n="servicesEyebrow">Servicios</span>
+        <h2 class="section-heading mt-6 text-5xl sm:text-7xl" data-i18n="servicesTitle">
+          Lo esencial para crear una experiencia digital premium.
+        </h2>
+      </div>
+      <p class="max-w-2xl text-xl leading-8 text-muted lg:ml-auto" data-i18n="servicesIntro">
+        Cada servicio está pensado como parte de un sistema: atraer mejor, explicar mejor, convertir mejor y operar con menos fricción.
+      </p>
     </div>
 
-    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {services.map((service, index) => (
-        <article class="premium-card group p-6 transition duration-300 hover:-translate-y-1 hover:border-[#80ffd0]/30">
-          <div class="mb-8 flex size-10 items-center justify-center rounded-lg border border-white/10 bg-white/7 text-sm font-semibold text-[#80ffd0]">
+    <div class="mt-16 grid gap-4">
+      {services.map(([title, text], index) => (
+        <article class="motion-card grid gap-6 rounded-[28px] border border-ink/10 bg-[#f7f5f0] p-6 md:grid-cols-[0.18fr_0.42fr_0.4fr] md:items-center lg:p-8">
+          <span class="display-font text-4xl font-semibold tracking-[-0.06em] text-ink/26">
             {(index + 1).toString().padStart(2, '0')}
-          </div>
-          <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{service.title}</h3>
-          <p class="mt-4 leading-7 text-white/60">{service.text}</p>
+          </span>
+          <h3 class="display-font text-3xl font-semibold leading-none tracking-[-0.05em] text-ink sm:text-4xl" data-i18n={title}>
+            {t[title]}
+          </h3>
+          <p class="text-lg leading-8 text-muted" data-i18n={text}>{t[text]}</p>
         </article>
       ))}
     </div>

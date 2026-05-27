@@ -1,0 +1,51 @@
+---
+import { translations } from '../i18n/translations';
+
+const cases = [
+  ['workOneTitle', 'workOneText', 'bg-[#eee7dc]'],
+  ['workTwoTitle', 'workTwoText', 'bg-[#e7ebef]'],
+  ['workThreeTitle', 'workThreeText', 'bg-[#f1eee8]'],
+];
+
+const t = translations.es;
+---
+
+<section id="proyectos" class="section-pad">
+  <div class="section-shell">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl">
+        <span class="eyebrow" data-i18n="workEyebrow">Proyectos</span>
+        <h2 class="section-heading mt-6 text-5xl sm:text-7xl" data-i18n="workTitle">
+          Conceptos digitales con estética, claridad y performance.
+        </h2>
+      </div>
+      <p class="max-w-md text-lg leading-8 text-muted" data-i18n="workIntro">
+        Una muestra del tipo de sistemas que diseñamos: experiencias visuales con lógica comercial y operación conectada.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-5 lg:grid-cols-3">
+      {cases.map(([title, text, bg], index) => (
+        <article class="premium-card motion-card overflow-hidden">
+          <div class:list={['relative min-h-72 p-6 surface-grid', bg]}>
+            <div class="absolute left-6 top-6 rounded-full bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+              Case 0{index + 1}
+            </div>
+            <div class="absolute bottom-6 left-6 right-6 rounded-[2rem] border border-ink/10 bg-white/74 p-5 shadow-[0_24px_60px_rgba(17,17,17,0.08)] backdrop-blur">
+              <div class="h-3 w-28 rounded-full bg-ink/14"></div>
+              <div class="mt-5 grid grid-cols-3 gap-2">
+                <span class="h-20 rounded-2xl bg-[#f4f1ea]"></span>
+                <span class="h-20 rounded-2xl bg-[#d8d3ca]"></span>
+                <span class="h-20 rounded-2xl bg-[#f4f1ea]"></span>
+              </div>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="display-font text-3xl font-semibold leading-none tracking-[-0.05em]" data-i18n={title}>{t[title]}</h3>
+            <p class="mt-5 leading-7 text-muted" data-i18n={text}>{t[text]}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

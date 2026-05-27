@@ -7,30 +7,33 @@ const technologies = [
   'OpenAI API',
   'N8N',
   'Analytics',
-  'WhatsApp integrations',
+  'WhatsApp',
+  'Cal.com',
+  'CRM',
 ];
 ---
 
-<section id="tecnologias" class="py-20 sm:py-24">
+<section id="tecnologias" class="section-pad bg-paper">
   <div class="section-shell">
-    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-      <div class="max-w-xl">
-        <span class="eyebrow">Tecnologías</span>
-        <h2 class="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
-          Stack moderno para experiencias veloces e inteligentes.
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+      <div>
+        <span class="eyebrow" data-i18n="techEyebrow">Stack</span>
+        <h2 class="section-heading mt-6 text-5xl sm:text-7xl" data-i18n="techTitle">
+          Tecnología sobria, rápida y preparada para crecer.
         </h2>
       </div>
-      <p class="max-w-md leading-7 text-white/58">
-        Elegimos herramientas por performance, mantenibilidad e impacto en operación.
-      </p>
-    </div>
-
-    <div class="mt-12 flex flex-wrap gap-3">
-      {technologies.map((tech) => (
-        <span class="rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-sm font-medium text-white/78 transition hover:border-[#80ffd0]/30 hover:text-white">
-          {tech}
-        </span>
-      ))}
+      <div>
+        <p class="max-w-2xl text-xl leading-8 text-muted" data-i18n="techText">
+          Elegimos herramientas por performance, claridad operativa y capacidad de integrarse con el negocio.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          {technologies.map((tech) => (
+            <span class="rounded-full border border-ink/10 bg-[#f7f5f0] px-5 py-3 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </section>

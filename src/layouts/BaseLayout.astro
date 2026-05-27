@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { translations } from '../i18n/translations';
 
 interface Props {
   title?: string;
@@ -7,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Boutique Digital Studio',
-  description = 'Diseño y desarrollo de experiencias digitales modernas potenciadas con IA, automatización y estrategia de conversión.',
+  title = translations.es.metaTitle,
+  description = translations.es.metaDescription,
 } = Astro.props;
 ---
 
@@ -22,12 +23,15 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#07090d" />
+    <meta name="theme-color" content="#f7f5f0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
   </head>
   <body class="antialiased">
     <slot />
+    <script>
+      import '../i18n/client';
+    </script>
   </body>
 </html>

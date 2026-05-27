@@ -1,12 +1,17 @@
 ---
+import { translations } from '../i18n/translations';
+
 const year = new Date().getFullYear();
+const t = translations.es;
 ---
 
-<footer class="border-t border-white/10 py-8">
-  <div class="section-shell flex flex-col gap-4 text-sm text-white/48 sm:flex-row sm:items-center sm:justify-between">
-    <p>© {year} Boutique Digital Studio. Experiencias digitales inteligentes.</p>
-    <a class="transition hover:text-white" href="mailto:hola@boutiquedigitalstudio.com">
-      hola@boutiquedigitalstudio.com
-    </a>
+<footer class="py-10">
+  <div class="section-shell border-t border-ink/10 pt-8">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-muted">© {year} Boutique Digital Studio. <span data-i18n="footerText">{t.footerText}</span></p>
+      <a class="text-sm font-semibold text-muted transition hover:text-ink" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
+        {t.navCall}
+      </a>
+    </div>
   </div>
 </footer>
