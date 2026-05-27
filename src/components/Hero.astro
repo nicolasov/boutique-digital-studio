@@ -1,0 +1,79 @@
+---
+const metrics = [
+  'Estrategia digital',
+  'IA aplicada',
+  'Conversión medible',
+];
+---
+
+<section class="relative overflow-hidden py-20 sm:py-24 lg:py-32">
+  <div class="section-shell grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
+    <div class="max-w-3xl">
+      <span class="eyebrow reveal">Boutique tech studio</span>
+      <h1 class="reveal reveal-delay-1 mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
+        Experiencias digitales modernas potenciadas con IA
+      </h1>
+      <p class="reveal reveal-delay-2 mt-7 max-w-2xl text-lg leading-8 text-white/68 sm:text-xl">
+        Diseñamos y desarrollamos webs estratégicas, automatizaciones y sistemas digitales orientados a conversión, crecimiento y experiencia de usuario.
+      </p>
+      <div class="reveal reveal-delay-3 mt-10 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="#contacto"
+          class="inline-flex items-center justify-center rounded-full bg-[#f5f7fb] px-6 py-3 text-sm font-semibold text-[#07090d] transition hover:bg-[#80ffd0]"
+        >
+          Hablemos
+        </a>
+        <a
+          href="#soluciones"
+          class="inline-flex items-center justify-center rounded-full border border-white/14 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/8"
+        >
+          Ver soluciones
+        </a>
+      </div>
+    </div>
+
+    <div class="premium-card reveal reveal-delay-2 relative min-h-[420px] overflow-hidden p-5">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(128,255,208,0.16),transparent_24rem)]"></div>
+      <div class="relative flex h-full flex-col justify-between">
+        <div class="grid grid-cols-2 gap-3">
+          {metrics.map((metric) => (
+            <div class="rounded-lg border border-white/10 bg-black/20 p-4">
+              <p class="text-xs uppercase tracking-[0.16em] text-white/38">Focus</p>
+              <p class="mt-6 text-lg font-medium text-white">{metric}</p>
+            </div>
+          ))}
+          <div class="rounded-lg border border-[#80ffd0]/25 bg-[#80ffd0]/10 p-4">
+            <p class="text-xs uppercase tracking-[0.16em] text-[#bfffe8]">Studio model</p>
+            <p class="mt-6 text-lg font-medium text-white">Ejecución boutique</p>
+          </div>
+        </div>
+
+        <div class="mt-12 rounded-lg border border-white/10 bg-[#0b0f16]/88 p-5">
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <p class="text-sm font-medium text-white">Digital growth system</p>
+            <span class="rounded-full bg-[#80ffd0]/12 px-3 py-1 text-xs font-semibold text-[#bfffe8]">Live</span>
+          </div>
+          <div class="space-y-3">
+            <div class="h-2 rounded-full bg-white/8">
+              <div class="h-2 w-[86%] rounded-full bg-[#80ffd0]"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-3 pt-3">
+              <div>
+                <p class="text-2xl font-semibold text-white">UX</p>
+                <p class="text-xs text-white/45">Clarity</p>
+              </div>
+              <div>
+                <p class="text-2xl font-semibold text-white">CRO</p>
+                <p class="text-xs text-white/45">Intent</p>
+              </div>
+              <div>
+                <p class="text-2xl font-semibold text-white">AI</p>
+                <p class="text-xs text-white/45">Scale</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

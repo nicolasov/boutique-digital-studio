@@ -1,0 +1,51 @@
+---
+const services = [
+  {
+    title: 'Desarrollo web estratégico',
+    text: 'Sitios rápidos, claros y orientados a objetivos comerciales reales.',
+  },
+  {
+    title: 'Branding & experiencia visual',
+    text: 'Sistemas visuales modernos para marcas que necesitan elevar percepción.',
+  },
+  {
+    title: 'Automatización & IA aplicada',
+    text: 'Flujos inteligentes para capturar, responder y activar oportunidades.',
+  },
+  {
+    title: 'CRO & optimización de conversión',
+    text: 'Mejoras medibles en contenido, journeys, formularios y llamadas a acción.',
+  },
+  {
+    title: 'GEO / AI Search Optimization',
+    text: 'Preparación de contenido para buscadores tradicionales y respuestas con IA.',
+  },
+  {
+    title: 'WhatsApp y formularios inteligentes',
+    text: 'Integraciones para convertir interés en conversaciones y leads accionables.',
+  },
+];
+---
+
+<section id="soluciones" class="py-20 sm:py-24">
+  <div class="section-shell">
+    <div class="max-w-2xl">
+      <span class="eyebrow">Qué hacemos</span>
+      <h2 class="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+        Soluciones digitales con criterio estratégico.
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service, index) => (
+        <article class="premium-card group p-6 transition duration-300 hover:-translate-y-1 hover:border-[#80ffd0]/30">
+          <div class="mb-8 flex size-10 items-center justify-center rounded-lg border border-white/10 bg-white/7 text-sm font-semibold text-[#80ffd0]">
+            {(index + 1).toString().padStart(2, '0')}
+          </div>
+          <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{service.title}</h3>
+          <p class="mt-4 leading-7 text-white/60">{service.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
