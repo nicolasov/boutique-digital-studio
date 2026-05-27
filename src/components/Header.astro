@@ -1,11 +1,19 @@
 ---
 import { translations } from '../i18n/translations';
 
-const navItems = [
-  { key: 'navAbout', href: '#about' },
+const primaryNav = [
   { key: 'navServices', href: '#servicios' },
-  { key: 'navWork', href: '#proyectos' },
+  { key: 'navWork', href: '#work' },
+  { key: 'navAbout', href: '#about' },
+];
+
+const overlayNav = [
+  { key: 'navHome', href: '#top' },
+  { key: 'navServices', href: '#servicios' },
+  { key: 'navWork', href: '#work' },
+  { key: 'navAbout', href: '#about' },
   { key: 'navProcess', href: '#proceso' },
+  { key: 'navContact', href: '#contacto' },
 ];
 
 const t = translations.es;
@@ -13,15 +21,15 @@ const t = translations.es;
 
 <header class="sticky top-0 z-50 border-b border-[rgba(17,17,17,0.08)] bg-[#fbfaf7]/76 backdrop-blur-xl">
   <div class="section-shell flex h-[76px] items-center justify-between gap-6">
-    <a href="/" class="flex items-center gap-3" aria-label="Boutique Digital Studio">
+    <a href="#top" class="flex items-center gap-3" aria-label="Boutique Digital Studio">
       <span class="display-font grid size-10 place-items-center border border-ink/12 bg-white text-sm font-bold text-ink shadow-sm">
         B
       </span>
       <span class="display-font text-sm font-bold tracking-[-0.03em] text-ink">Boutique Digital Studio</span>
     </a>
 
-    <nav class="hidden items-center gap-8 md:flex" aria-label="Navegación principal">
-      {navItems.map((item) => (
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
+      {primaryNav.map((item) => (
         <a class="magnetic-link text-sm font-medium text-muted transition hover:text-ink" href={item.href} data-i18n={item.key}>
           {t[item.key]}
         </a>
@@ -41,11 +49,76 @@ const t = translations.es;
         href="https://cal.com/"
         target="_blank"
         rel="noreferrer"
-        class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2a2a]"
+        class="hidden rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2a2a] sm:inline-flex"
         data-i18n="navCall"
       >
         {t.navCall}
       </a>
+      <button
+        class="menu-button rounded-full border border-ink/12 bg-white/70 px-4 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-white"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-toggle
+      >
+        <span data-i18n="menuOpen">{t.menuOpen}</span>
+        <span aria-hidden="true" class="ml-2 inline-block translate-y-[-1px]">+</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="site-menu" class="menu-overlay fixed inset-0 z-[80] overflow-y-auto bg-[#efe8dc] text-ink" aria-hidden="true" data-menu-overlay>
+    <div class="section-shell flex min-h-dvh flex-col py-6">
+      <div class="flex items-center justify-between gap-6">
+        <a href="#top" class="display-font text-sm font-bold tracking-[-0.03em]" data-menu-close>Boutique Digital Studio</a>
+        <button
+          class="rounded-full border border-ink/14 bg-white/50 px-4 py-3 text-sm font-semibold transition hover:bg-white"
+          type="button"
+          data-menu-close
+        >
+          <span data-i18n="menuClose">{t.menuClose}</span>
+        </button>
+      </div>
+
+      <div class="grid flex-1 gap-10 py-10 sm:py-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+        <nav class="menu-links" aria-label="Menú principal">
+          {overlayNav.map((item, index) => (
+            <a
+              href={item.href}
+              class="menu-link display-font block border-t border-ink/14 py-3 text-[clamp(2.9rem,7.4vw,7.1rem)] font-bold leading-[0.88] tracking-[-0.07em] transition hover:translate-x-3 sm:py-4"
+              style={`--stagger: ${index * 70}ms`}
+              data-i18n={item.key}
+              data-menu-close
+            >
+              {t[item.key]}
+            </a>
+          ))}
+        </nav>
+
+        <div class="menu-meta grid gap-8 lg:pb-5">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="menuLanguage">{t.menuLanguage}</p>
+            <div class="lang-toggle mt-3 inline-flex rounded-full border border-ink/12 bg-white/40 p-1">
+              <button class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="es">
+                ES
+              </button>
+              <button class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:text-ink" type="button" data-lang-option="en">
+                EN
+              </button>
+            </div>
+          </div>
+
+          <div class="grid gap-4 border-t border-ink/14 pt-6">
+            <p class="text-sm font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="contactLocation">{t.contactLocation}</p>
+            <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
+              {t.navCall}
+            </a>
+            <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://wa.me/5490000000000" target="_blank" rel="noreferrer" data-i18n="contactWhatsApp">
+              {t.contactWhatsApp}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>

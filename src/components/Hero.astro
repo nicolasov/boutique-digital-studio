@@ -5,48 +5,69 @@ const metrics = ['heroMetricOne', 'heroMetricTwo', 'heroMetricThree'];
 const t = translations.es;
 ---
 
-<section class="relative overflow-hidden pb-16 pt-10 sm:pb-24 sm:pt-16">
+<section id="top" class="relative overflow-hidden pb-20 pt-12 sm:pb-28 sm:pt-20">
   <div class="section-shell">
-    <div class="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-      <div class="reveal flex min-h-48 flex-col justify-between border-t border-ink/14 pt-5 lg:min-h-[34rem]">
-        <span class="eyebrow w-fit" data-i18n="heroEyebrow">{t.heroEyebrow}</span>
-        <p class="max-w-sm text-lg leading-7 text-muted" data-i18n="heroText">{t.heroText}</p>
-      </div>
-
+    <div class="grid gap-10 lg:grid-cols-[0.78fr_0.22fr] lg:items-end">
       <div>
-        <h1 class="section-heading reveal reveal-delay-1 text-[clamp(4.1rem,12vw,11.5rem)] text-ink">
+        <span class="eyebrow reveal w-fit" data-i18n="heroEyebrow">{t.heroEyebrow}</span>
+        <h1 class="section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(3.65rem,9.6vw,9.8rem)] text-ink">
           <span data-i18n="heroTitle">{t.heroTitle}</span>
         </h1>
-        <div class="reveal reveal-delay-2 mt-8 grid gap-5 md:grid-cols-[1fr_0.56fr]">
-          <figure class="visual-frame relative h-[34rem] md:h-[42rem]">
-            <img class="image-cover" src="/assets/studio-cinematic.png" alt="Cinematic creative technology studio scene" loading="eager" />
-            <figcaption class="absolute bottom-5 left-5 right-5 border border-white/30 bg-white/64 p-5 text-sm font-medium text-ink shadow-[0_24px_70px_rgba(17,17,17,0.12)] backdrop-blur-xl" data-i18n="heroNote">
-              {t.heroNote}
-            </figcaption>
-          </figure>
+      </div>
 
-          <aside class="grid gap-5">
-            <div class="surface-grid min-h-72 border border-ink/12 bg-[#ebe6de] p-5">
-              <div class="display-font text-7xl font-bold tracking-[-0.08em] text-ink">BDS</div>
-              <div class="mt-16 space-y-3">
-                {metrics.map((key) => (
-                  <p class="border-t border-ink/14 pt-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted" data-i18n={key}>
-                    {t[key]}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <div class="relative min-h-64 overflow-hidden border border-ink/12 bg-ink p-5 text-white">
-              <div class="absolute -right-20 -top-20 size-52 rounded-full bg-white/10 blur-3xl"></div>
-              <p class="text-sm uppercase tracking-[0.16em] text-white/54">Motion / Systems</p>
-              <div class="float-slow mt-20 h-28 border border-white/18 bg-white/10 backdrop-blur"></div>
-            </div>
-          </aside>
+      <div class="reveal reveal-delay-2 border-t border-ink/14 pt-5 lg:mb-3">
+        <p class="text-base leading-7 text-muted sm:text-lg" data-i18n="heroText">{t.heroText}</p>
+        <div class="mt-7 flex flex-wrap gap-3 lg:flex-col">
+          <a
+            href="https://cal.com/"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex w-fit items-center justify-center rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2a2a]"
+            data-i18n="heroPrimary"
+          >
+            {t.heroPrimary}
+          </a>
+          <a
+            href="https://wa.me/5490000000000"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex w-fit items-center justify-center rounded-full border border-ink/14 bg-white/54 px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-white"
+            data-i18n="heroSecondary"
+          >
+            {t.heroSecondary}
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="mt-12 overflow-hidden border-y border-ink/12 py-5">
+    <div class="reveal reveal-delay-3 mt-12 grid gap-5 lg:grid-cols-[0.18fr_0.58fr_0.24fr] lg:items-stretch">
+      <aside class="hidden border-y border-ink/12 py-5 lg:flex lg:flex-col lg:justify-between">
+        <p class="display-font text-5xl font-semibold leading-none tracking-[-0.07em] text-ink/22">01</p>
+        <p class="max-w-40 text-sm font-semibold uppercase tracking-[0.14em] text-muted" data-i18n="heroNote">
+          {t.heroNote}
+        </p>
+      </aside>
+
+      <figure class="visual-frame relative h-[30rem] sm:h-[38rem] lg:h-[44rem]">
+        <img class="image-cover" src="/assets/studio-cinematic.png" alt="Cinematic creative technology studio scene" loading="eager" />
+        <figcaption class="absolute bottom-4 left-4 right-4 border border-white/34 bg-white/66 p-4 text-sm font-medium text-ink shadow-[0_24px_70px_rgba(17,17,17,0.12)] backdrop-blur-xl sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm">
+          <span data-i18n="heroNote">{t.heroNote}</span>
+        </figcaption>
+      </figure>
+
+      <aside class="grid gap-5 sm:grid-cols-3 lg:grid-cols-1">
+        {metrics.map((key, index) => (
+          <div class="surface-grid min-h-40 border border-ink/12 bg-[#ebe6de] p-5 lg:min-h-0">
+            <p class="display-font text-4xl font-semibold tracking-[-0.07em] text-ink/24">0{index + 2}</p>
+            <p class="mt-12 border-t border-ink/14 pt-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted" data-i18n={key}>
+              {t[key]}
+            </p>
+          </div>
+        ))}
+      </aside>
+    </div>
+
+    <div class="mt-14 overflow-hidden border-y border-ink/12 py-4">
       <div class="marquee">
         <span>Creative technology · Applied AI · Digital experiences · Editorial systems ·</span>
         <span>Creative technology · Applied AI · Digital experiences · Editorial systems ·</span>
