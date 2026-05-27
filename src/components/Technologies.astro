@@ -1,37 +1,33 @@
 ---
-const technologies = [
-  'Astro',
-  'Next.js',
-  'Vercel',
-  'Headless CMS',
-  'OpenAI API',
-  'N8N',
-  'Analytics',
-  'WhatsApp',
-  'Cal.com',
-  'CRM',
-];
+import { translations } from '../i18n/translations';
+
+const technologies = ['Astro', 'Next.js', 'Vercel', 'OpenAI', 'n8n', 'CMS', 'Analytics', 'WhatsApp', 'Cal.com', 'CRM'];
+const t = translations.es;
 ---
 
-<section id="tecnologias" class="section-pad bg-paper">
+<section id="tecnologias" class="section-pad">
   <div class="section-shell">
-    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-      <div>
-        <span class="eyebrow" data-i18n="techEyebrow">Stack</span>
-        <h2 class="section-heading mt-6 text-5xl sm:text-7xl" data-i18n="techTitle">
-          Tecnología sobria, rápida y preparada para crecer.
-        </h2>
+    <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
+      <div class="scroll-reveal flex flex-col justify-between border-t border-ink/14 pt-5">
+        <div>
+          <span class="eyebrow" data-i18n="techEyebrow">{t.techEyebrow}</span>
+          <h2 class="section-heading mt-7 text-5xl sm:text-7xl" data-i18n="techTitle">{t.techTitle}</h2>
+        </div>
+        <p class="mt-10 max-w-xl text-xl leading-8 text-muted" data-i18n="techText">{t.techText}</p>
       </div>
-      <div>
-        <p class="max-w-2xl text-xl leading-8 text-muted" data-i18n="techText">
-          Elegimos herramientas por performance, claridad operativa y capacidad de integrarse con el negocio.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-3">
-          {technologies.map((tech) => (
-            <span class="rounded-full border border-ink/10 bg-[#f7f5f0] px-5 py-3 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
-              {tech}
-            </span>
-          ))}
+
+      <div class="scroll-reveal grid gap-5 md:grid-cols-[0.55fr_0.45fr]">
+        <figure class="visual-frame min-h-[34rem]">
+          <img class="image-cover" src="/assets/system-abstract.png" alt="Abstract system visual for creative technology" loading="lazy" />
+        </figure>
+        <div class="surface-grid border border-ink/12 bg-[#eeeae1] p-5">
+          <div class="grid gap-3">
+            {technologies.map((tech) => (
+              <span class="border-b border-ink/12 pb-3 text-sm font-semibold uppercase tracking-[0.12em] text-ink">
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
