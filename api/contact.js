@@ -1,7 +1,7 @@
 const fallbackFormspreeEndpoint = 'https://formspree.io/f/mnjrwddb';
 
 const getFormspreeEndpoint = () => {
-  const endpoint = process.env.FORMSPREE_ENDPOINT || process.env.PUBLIC_FORMSPREE_ENDPOINT;
+  const endpoint = process.env.FORMSPREE_ENDPOINT;
   return endpoint?.trim() || fallbackFormspreeEndpoint;
 };
 
