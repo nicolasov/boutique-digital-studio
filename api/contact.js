@@ -38,6 +38,10 @@ export default async function handler(request, response) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Referer:
+          request.headers.referer ||
+          request.headers.origin ||
+          'https://boutique-digital-studio.vercel.app/',
       },
       body: JSON.stringify(payload),
     });
