@@ -5,13 +5,27 @@ const year = new Date().getFullYear();
 const t = translations.en;
 ---
 
-<footer class="py-10">
-  <div class="section-shell border-t border-ink/10 pt-8">
-    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-sm text-muted">© {year} Boutique Digital Studio. <span data-i18n="footerText">{t.footerText}</span></p>
-      <a class="text-sm font-semibold text-muted transition hover:text-ink" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
-        {t.navCall}
-      </a>
+<footer class="site-footer">
+  <div class="section-shell flex h-full flex-col justify-between gap-8 py-10 sm:py-14">
+    <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <div>
+        <p class="display-font text-[clamp(3rem,8vw,8rem)] font-bold leading-[0.9] tracking-[-0.065em] text-white">
+          Boutique Digital Studio
+        </p>
+        <p class="mt-6 max-w-xl text-xl leading-8 text-white/68" data-i18n="footerText">{t.footerText}</p>
+      </div>
+      <nav class="grid gap-3 text-lg font-semibold text-white/78 sm:grid-cols-2 lg:justify-self-end" aria-label="Footer navigation">
+        <a class="footer-link" href="#soluciones-digitales" data-i18n="navServices">{t.navServices}</a>
+        <a class="footer-link" href="#beneficios" data-i18n="navBenefits">{t.navBenefits}</a>
+        <a class="footer-link" href="#work" data-i18n="navWork">{t.navWork}</a>
+        <a class="footer-link" href="#contacto" data-i18n="navContact">{t.navContact}</a>
+        <a class="footer-link" href="https://wa.me/5491132102111" target="_blank" rel="noreferrer" data-i18n="contactWhatsApp" data-whatsapp-link>{t.contactWhatsApp}</a>
+        <a class="footer-link" href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto" data-i18n="navCall" data-cal-open>{t.navCall}</a>
+      </nav>
+    </div>
+    <div class="flex flex-col gap-3 border-t border-white/14 pt-5 text-sm text-white/54 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} Boutique Digital Studio. <span data-i18n="footerRights">{t.footerRights}</span></p>
+      <p data-i18n="contactLocation">{t.contactLocation}</p>
     </div>
   </div>
 </footer>

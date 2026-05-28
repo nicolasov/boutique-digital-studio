@@ -2,18 +2,19 @@
 import { translations } from '../i18n/translations';
 
 const services = [
-  ['serviceWebTitle', 'serviceWebText'],
-  ['serviceBrandTitle', 'serviceBrandText'],
-  ['serviceAiTitle', 'serviceAiText'],
-  ['serviceCroTitle', 'serviceCroText'],
-  ['serviceGeoTitle', 'serviceGeoText'],
-  ['serviceIntegrationsTitle', 'serviceIntegrationsText'],
-];
+  ['serviceWebTitle', 'serviceWebWhat', 'serviceWebUse', 'serviceWebBenefit'],
+  ['serviceBrandTitle', 'serviceBrandWhat', 'serviceBrandUse', 'serviceBrandBenefit'],
+  ['serviceUxTitle', 'serviceUxWhat', 'serviceUxUse', 'serviceUxBenefit'],
+  ['serviceAiTitle', 'serviceAiWhat', 'serviceAiUse', 'serviceAiBenefit'],
+  ['serviceIntegrationsTitle', 'serviceIntegrationsWhat', 'serviceIntegrationsUse', 'serviceIntegrationsBenefit'],
+  ['serviceGeoTitle', 'serviceGeoWhat', 'serviceGeoUse', 'serviceGeoBenefit'],
+  ['serviceCroTitle', 'serviceCroWhat', 'serviceCroUse', 'serviceCroBenefit'],
+] as const;
 
 const t = translations.en;
 ---
 
-<section id="servicios" class="section-pad bg-paper">
+<section id="soluciones-digitales" class="section-pad bg-paper">
   <div class="section-shell">
     <div class="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div class="scroll-reveal">
@@ -27,17 +28,30 @@ const t = translations.en;
       </p>
     </div>
 
-    <div class="mt-16 divide-y divide-ink/12 border-y border-ink/12">
-      {services.map(([title, text], index) => (
-        <article class="group grid gap-5 py-8 transition md:grid-cols-[0.2fr_0.46fr_0.34fr] md:items-center">
-          <span class="display-font text-5xl font-semibold tracking-[-0.08em] text-ink/22 transition group-hover:text-ink">
-            {(index + 1).toString().padStart(2, '0')}
-          </span>
-          <h3 class="display-font text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-ink sm:text-6xl" data-i18n={title}>
-            {t[title]}
-          </h3>
-          <p class="text-lg leading-8 text-muted" data-i18n={text}>{t[text]}</p>
-        </article>
+    <div class="mt-14 divide-y divide-ink/12 border-y border-ink/12">
+      {services.map(([title, what, use, benefit]) => (
+        <details class="solution-item group">
+          <summary class="grid cursor-pointer list-none gap-5 py-6 md:grid-cols-[1fr_auto] md:items-center">
+            <h3 class="solution-title display-font text-3xl font-semibold leading-[0.98] tracking-[-0.055em] text-ink sm:text-5xl" data-i18n={title}>
+              {t[title]}
+            </h3>
+            <span class="solution-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="solution-body" data-solution-body>
+            <p>
+              <strong data-i18n="solutionWhat">{t.solutionWhat}</strong>
+              <span data-i18n={what}>{t[what]}</span>
+            </p>
+            <p>
+              <strong data-i18n="solutionUse">{t.solutionUse}</strong>
+              <span data-i18n={use}>{t[use]}</span>
+            </p>
+            <p>
+              <strong data-i18n="solutionBenefit">{t.solutionBenefit}</strong>
+              <span data-i18n={benefit}>{t[benefit]}</span>
+            </p>
+          </div>
+        </details>
       ))}
     </div>
   </div>

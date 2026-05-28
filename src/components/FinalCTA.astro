@@ -6,38 +6,54 @@ const t = translations.en;
 
 <section id="contacto" class="section-pad">
   <div class="section-shell">
-    <div class="relative overflow-hidden bg-ink px-5 py-10 text-white sm:px-8 sm:py-14 lg:px-12">
-      <div class="absolute inset-0 opacity-20 surface-grid"></div>
-      <div class="relative grid gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+    <div class="relative overflow-hidden border border-ink/12 bg-paper px-5 py-10 text-ink sm:px-8 sm:py-14 lg:px-12">
+      <div class="absolute inset-0 opacity-45 surface-grid"></div>
+      <div class="relative grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
         <div>
-          <span class="eyebrow border-white/14 bg-white/10 text-white" data-i18n="ctaEyebrow">{t.ctaEyebrow}</span>
-          <h2 class="section-heading mt-7 text-[clamp(3.8rem,9vw,9rem)] text-white" data-i18n="ctaTitle">
+          <span class="eyebrow" data-i18n="ctaEyebrow">{t.ctaEyebrow}</span>
+          <h2 class="section-heading mt-7 text-[clamp(3.8rem,9vw,9rem)] text-ink" data-i18n="ctaTitle">
             {t.ctaTitle}
           </h2>
-        </div>
-        <div>
-          <p class="text-xl leading-8 text-white/72" data-i18n="ctaText">{t.ctaText}</p>
+          <p class="text-xl leading-8 text-muted" data-i18n="ctaText">{t.ctaText}</p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
-              href="https://cal.com/"
-              target="_blank"
-              rel="noreferrer"
-              class="btn btn-on-dark"
+              href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
+              class="btn btn-primary"
               data-i18n="ctaPrimary"
+              data-cal-open
             >
               {t.ctaPrimary}
             </a>
-            <a
-              href="https://wa.me/5490000000000"
-              target="_blank"
-              rel="noreferrer"
-              class="btn btn-secondary-on-dark"
-              data-i18n="ctaSecondary"
-            >
-              {t.ctaSecondary}
-            </a>
           </div>
         </div>
+        <form class="contact-form" data-contact-form>
+          <div class="contact-form-fields" data-contact-fields>
+            <label class="contact-honeypot" aria-hidden="true">
+              <span>Website</span>
+              <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </label>
+            <label>
+              <span data-i18n="formName">{t.formName}</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              <span data-i18n="formEmail">{t.formEmail}</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label class="contact-form-message">
+              <span data-i18n="formMessage">{t.formMessage}</span>
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <p class="contact-form-error" hidden data-contact-error data-i18n="formError">{t.formError}</p>
+            <button class="btn btn-primary" type="submit" data-contact-submit data-i18n="formSubmit">{t.formSubmit}</button>
+          </div>
+          <div class="contact-success" hidden data-contact-success>
+            <p class="display-font text-4xl font-semibold leading-[0.95] tracking-[-0.06em]" data-i18n="formSuccessTitle">
+              {t.formSuccessTitle}
+            </p>
+            <p class="mt-5 text-lg leading-8 text-muted" data-i18n="formSuccessText">{t.formSuccessText}</p>
+          </div>
+        </form>
       </div>
     </div>
   </div>

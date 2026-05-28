@@ -2,17 +2,16 @@
 import { translations } from '../i18n/translations';
 
 const primaryNav = [
-  { key: 'navServices', href: '#servicios' },
+  { key: 'navServices', href: '#soluciones-digitales' },
+  { key: 'navBenefits', href: '#beneficios' },
   { key: 'navWork', href: '#work' },
-  { key: 'navAbout', href: '#about' },
 ];
 
 const overlayNav = [
   { key: 'navHome', href: '#top' },
-  { key: 'navServices', href: '#servicios' },
+  { key: 'navServices', href: '#soluciones-digitales' },
+  { key: 'navBenefits', href: '#beneficios' },
   { key: 'navWork', href: '#work' },
-  { key: 'navAbout', href: '#about' },
-  { key: 'navProcess', href: '#proceso' },
   { key: 'navContact', href: '#contacto' },
 ];
 
@@ -25,7 +24,7 @@ const t = translations.en;
       <span class="display-font text-sm font-bold tracking-[-0.03em] text-ink">Boutique Digital Studio</span>
     </a>
 
-    <nav class="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
       {primaryNav.map((item) => (
         <a class="magnetic-link text-sm font-medium text-muted transition hover:text-ink" href={item.href} data-i18n={item.key}>
           {t[item.key]}
@@ -40,18 +39,16 @@ const t = translations.en;
         <button type="button" data-lang-option="es">ES</button>
       </div>
       <a
-        href="https://cal.com/"
-        target="_blank"
-        rel="noreferrer"
-        class="btn btn-primary header-action hidden sm:inline-flex"
-        data-i18n="navCall"
+        href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
+        class="btn btn-primary header-action header-call-button hidden sm:inline-flex"
+        data-cal-open
       >
         <span class="calendar-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M7 3v4M17 3v4M4.5 9.5h15M6.5 5.5h11A2.5 2.5 0 0 1 20 8v10a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18V8a2.5 2.5 0 0 1 2.5-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
           </svg>
         </span>
-        {t.navCall}
+        <span data-i18n="navCall">{t.navCall}</span>
       </a>
       <button
         class="menu-button btn btn-secondary header-action"
@@ -115,11 +112,8 @@ const t = translations.en;
 
         <div class="grid gap-4 border-t border-ink/14 pt-6">
           <p class="text-sm font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="contactLocation">{t.contactLocation}</p>
-          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/" target="_blank" rel="noreferrer" data-i18n="navCall">
+          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto" data-i18n="navCall" data-cal-open>
             {t.navCall}
-          </a>
-          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://wa.me/5490000000000" target="_blank" rel="noreferrer" data-i18n="contactWhatsApp">
-            {t.contactWhatsApp}
           </a>
         </div>
       </div>

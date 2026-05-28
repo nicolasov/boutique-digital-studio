@@ -24,6 +24,21 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#f7f5f0" />
+    <script is:inline>
+      (() => {
+        try {
+          const stored = window.localStorage.getItem('bds-lang');
+          const langs = [window.navigator.language, ...(window.navigator.languages || [])].filter(Boolean);
+          const lang = stored === 'es' || stored === 'en'
+            ? stored
+            : langs.some((locale) => locale.toLowerCase().startsWith('es')) ? 'es' : 'en';
+          document.documentElement.lang = lang;
+          document.documentElement.dataset.activeLang = lang;
+        } catch {
+          document.documentElement.lang = 'en';
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>

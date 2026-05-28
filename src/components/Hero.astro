@@ -1,7 +1,7 @@
 ---
 import { translations } from '../i18n/translations';
 
-const metrics = ['heroMetricOne', 'heroMetricTwo', 'heroMetricThree'];
+const loopItems = ['heroLoopTwo', 'heroLoopOne', 'heroLoopThree', 'heroLoopFour', 'heroLoopFive'] as const;
 const t = translations.en;
 ---
 
@@ -10,61 +10,40 @@ const t = translations.en;
     <div class="grid gap-10 lg:grid-cols-[0.78fr_0.22fr] lg:items-end">
       <div>
         <span class="eyebrow reveal w-fit" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
-        <h1 class="section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(3.65rem,9.6vw,9.8rem)] text-ink">
-          <span data-i18n="heroTitle">{t.heroTitle}</span>
+        <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(3.65rem,9.2vw,9.4rem)] text-ink">
+          <span data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
+          <a href="#soluciones-digitales" class="hero-highlight">
+            <span class="hero-highlight-part" data-i18n="heroTitleHighlightA">{t.heroTitleHighlightA}</span>
+            <span class="hero-highlight-part" data-i18n="heroTitleHighlightB">{t.heroTitleHighlightB}</span>
+          </a>
         </h1>
       </div>
 
       <div class="reveal reveal-delay-2 border-t border-ink/14 pt-5 lg:mb-3">
-        <p class="text-base leading-7 text-muted sm:text-lg" data-i18n="heroText">{t.heroText}</p>
+        <p class="hero-loop-line text-base leading-7 sm:text-lg" aria-live="polite">
+          <span data-i18n="heroTextPrefix">{t.heroTextPrefix}</span>
+          <span class="loop-word" data-hero-loop data-loop-keys={loopItems.join(',')}>{t.heroLoopTwo}</span>
+        </p>
         <div class="mt-7 flex flex-wrap gap-3 lg:flex-col">
           <a
-            href="https://cal.com/"
-            target="_blank"
-            rel="noreferrer"
+            href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
             class="btn btn-primary"
             data-i18n="heroPrimary"
+            data-cal-open
           >
             {t.heroPrimary}
-          </a>
-          <a
-            href="https://wa.me/5490000000000"
-            target="_blank"
-            rel="noreferrer"
-            class="btn btn-secondary"
-            data-i18n="heroSecondary"
-          >
-            {t.heroSecondary}
           </a>
         </div>
       </div>
     </div>
 
-    <div class="reveal reveal-delay-3 mt-12 grid gap-5 lg:grid-cols-[0.18fr_0.58fr_0.24fr] lg:items-stretch">
-      <aside class="hidden border-y border-ink/12 py-5 lg:flex lg:flex-col lg:justify-between">
-        <p class="display-font text-5xl font-semibold leading-none tracking-[-0.07em] text-ink/22">01</p>
-        <p class="max-w-40 text-sm font-semibold uppercase tracking-[0.14em] text-muted" data-i18n="heroNote">
-          {t.heroNote}
-        </p>
-      </aside>
-
+    <div class="reveal reveal-delay-3 mt-12">
       <figure class="visual-frame relative h-[30rem] sm:h-[38rem] lg:h-[44rem]">
         <img class="image-cover" src="/assets/studio-cinematic.png" alt="Cinematic creative technology studio scene" loading="eager" />
-        <figcaption class="absolute bottom-4 left-4 right-4 border border-white/34 bg-white/66 p-4 text-sm font-medium text-ink shadow-[0_24px_70px_rgba(17,17,17,0.12)] backdrop-blur-xl sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm">
+        <figcaption class="hero-caption absolute bottom-4 left-4 right-4 p-0 text-2xl font-semibold leading-9 text-white sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-2xl sm:text-3xl sm:leading-10">
           <span data-i18n="heroNote">{t.heroNote}</span>
         </figcaption>
       </figure>
-
-      <aside class="grid gap-5 sm:grid-cols-3 lg:grid-cols-1">
-        {metrics.map((key, index) => (
-          <div class="surface-grid min-h-40 border border-ink/12 bg-[#ebe6de] p-5 lg:min-h-0">
-            <p class="display-font text-4xl font-semibold tracking-[-0.07em] text-ink/24">0{index + 2}</p>
-            <p class="mt-12 border-t border-ink/14 pt-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted" data-i18n={key}>
-              {t[key]}
-            </p>
-          </div>
-        ))}
-      </aside>
     </div>
 
     <div class="mt-14 overflow-hidden border-y border-ink/12 py-4">
