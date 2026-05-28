@@ -1,9 +1,8 @@
 import { defaultLang, supportedLangs, translations, type Lang } from './translations';
 
 const storageKey = 'bds-lang';
-const formspreeEndpoint =
-  (import.meta.env.PUBLIC_FORMSPREE_ENDPOINT as string | undefined) ??
-  'https://formspree.io/f/mnjrwddb';
+const contactEndpoint =
+  ((import.meta.env.PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim() || '/api/contact');
 const calLink = 'nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto';
 const calOrigin = 'https://cal.com';
 const calNamespace = 'boutiqueDigitalStudio';
@@ -357,7 +356,7 @@ const initI18n = () => {
 
     errorNode?.setAttribute('hidden', '');
 
-    if (!formspreeEndpoint) {
+    if (!contactEndpoint) {
       if (errorNode) {
         errorNode.textContent = dictionary.formConfigError;
         errorNode.removeAttribute('hidden');
@@ -373,20 +372,30 @@ const initI18n = () => {
     }
 
     try {
-      const response = await window.fetch(formspreeEndpoint, {
+      const payload = Object.fromEntries(formData.entries());
+      const response = await window.fetch(contactEndpoint, {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify(payload),
         headers: {
           Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       });
 
-      if (!response.ok) throw new Error('Formspree request failed');
+      if (!response.ok) {
+        const detail = await response.text().catch(() => '');
+        console.error('Contact form request failed', {
+          status: response.status,
+          detail: detail.slice(0, 240),
+        });
+        throw new Error('Contact form request failed');
+      }
 
       contactForm.classList.add('is-sent');
       contactForm.querySelector<HTMLElement>('[data-contact-success]')?.removeAttribute('hidden');
       contactForm.reset();
-    } catch {
+    } catch (error) {
+      console.error('Contact form request failed', error);
       if (errorNode) {
         errorNode.textContent = dictionary.formError;
         errorNode.removeAttribute('hidden');
