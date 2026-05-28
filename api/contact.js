@@ -15,6 +15,20 @@ const readJsonBody = async (request) => {
   return rawBody ? JSON.parse(rawBody) : {};
 };
 
+const cleanText = (value) => (typeof value === 'string' ? value.trim() : '');
+
+const buildFormspreePayload = (payload) => ({
+  _subject: 'Nueva consulta desde la web Boutique Digital Studio',
+  _replyto: cleanText(payload.email),
+  nombre: cleanText(payload.name),
+  email: cleanText(payload.email),
+  whatsapp: cleanText(payload.whatsapp) || 'No informado',
+  mensaje: cleanText(payload.message),
+  pagina_actual: cleanText(payload.current_page),
+  fecha_hora: cleanText(payload.timestamp),
+  dispositivo_user_agent: cleanText(payload.user_agent),
+});
+
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
@@ -33,6 +47,8 @@ export default async function handler(request, response) {
       return response.status(200).json({ ok: true });
     }
 
+    const formspreePayload = buildFormspreePayload(payload);
+
     const formspreeResponse = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -43,7 +59,7 @@ export default async function handler(request, response) {
           request.headers.origin ||
           'https://boutique-digital-studio.vercel.app/',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(formspreePayload),
     });
 
     const body = await formspreeResponse.text();

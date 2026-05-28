@@ -347,14 +347,44 @@ const initI18n = () => {
   });
 
   const contactForm = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  contactForm
+    ?.querySelector<HTMLInputElement>('[data-contact-phone]')
+    ?.addEventListener('input', (event) => {
+      (event.currentTarget as HTMLInputElement).setCustomValidity('');
+    });
+
   contactForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const dictionary = translations[(document.documentElement.dataset.activeLang ?? initialLang) as Lang];
     const submitButton = contactForm.querySelector<HTMLButtonElement>('[data-contact-submit]');
+    const submitLabel = contactForm.querySelector<HTMLElement>('.contact-submit-label');
     const errorNode = contactForm.querySelector<HTMLElement>('[data-contact-error]');
-    const formData = new FormData(contactForm);
+    const phoneInput = contactForm.querySelector<HTMLInputElement>('[data-contact-phone]');
+    const currentPageInput = contactForm.querySelector<HTMLInputElement>('[data-current-page]');
+    const timestampInput = contactForm.querySelector<HTMLInputElement>('[data-timestamp]');
+    const userAgentInput = contactForm.querySelector<HTMLInputElement>('[data-user-agent]');
 
     errorNode?.setAttribute('hidden', '');
+    contactForm.classList.remove('is-error');
+
+    if (phoneInput) {
+      const phoneValue = phoneInput.value.trim();
+      const relaxedPhonePattern = /^\+?[0-9\s().-]{6,24}$/;
+      const digitCount = phoneValue.replace(/\D/g, '').length;
+      const isValidPhone =
+        !phoneValue || (relaxedPhonePattern.test(phoneValue) && digitCount >= 6 && digitCount <= 18);
+      phoneInput.setCustomValidity(isValidPhone ? '' : dictionary.formPhoneError);
+      if (!isValidPhone) {
+        phoneInput.reportValidity();
+        return;
+      }
+    }
+
+    if (currentPageInput) currentPageInput.value = window.location.href;
+    if (timestampInput) timestampInput.value = new Date().toISOString();
+    if (userAgentInput) userAgentInput.value = window.navigator.userAgent;
+
+    const formData = new FormData(contactForm);
 
     if (!contactEndpoint) {
       if (errorNode) {
@@ -368,8 +398,10 @@ const initI18n = () => {
 
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.textContent = dictionary.formSending;
+      submitButton.setAttribute('aria-busy', 'true');
+      if (submitLabel) submitLabel.textContent = dictionary.formSending;
     }
+    contactForm.classList.add('is-sending');
 
     try {
       const payload = Object.fromEntries(formData.entries());
@@ -400,10 +432,13 @@ const initI18n = () => {
         errorNode.textContent = dictionary.formError;
         errorNode.removeAttribute('hidden');
       }
+      contactForm.classList.add('is-error');
     } finally {
+      contactForm.classList.remove('is-sending');
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = dictionary.formSubmit;
+        submitButton.removeAttribute('aria-busy');
+        if (submitLabel) submitLabel.textContent = dictionary.formSubmit;
       }
     }
   });

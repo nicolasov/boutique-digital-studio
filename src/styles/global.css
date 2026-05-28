@@ -543,6 +543,10 @@ a {
   padding: clamp(1rem, 2.6vw, 1.5rem);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  transition:
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background-color 260ms ease;
 }
 
 .contact-form-fields {
@@ -585,6 +589,11 @@ a {
     box-shadow 220ms ease;
 }
 
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(17, 17, 17, 0.34);
+}
+
 .contact-form input {
   min-height: 3.15rem;
   padding: 0 0.95rem;
@@ -609,6 +618,60 @@ a {
   font-size: 0.95rem;
   font-weight: 650;
   line-height: 1.5;
+  animation: form-feedback 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.contact-form.is-sending {
+  border-color: rgba(17, 17, 17, 0.2);
+  background: rgba(255, 254, 250, 0.82);
+  box-shadow: 0 18px 58px rgba(17, 17, 17, 0.06);
+}
+
+.contact-form.is-error {
+  border-color: rgba(139, 31, 31, 0.26);
+}
+
+.contact-submit {
+  position: relative;
+  width: fit-content;
+  min-width: 12.5rem;
+  overflow: hidden;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    background-color 220ms ease;
+}
+
+.contact-submit:disabled {
+  cursor: wait;
+  opacity: 0.88;
+}
+
+.contact-submit-label {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.contact-submit-loader {
+  position: absolute;
+  right: 1.25rem;
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.34);
+  border-top-color: #ffffff;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateX(0.35rem) scale(0.82);
+}
+
+.contact-form.is-sending .contact-submit-label {
+  transform: translateX(-0.45rem);
+}
+
+.contact-form.is-sending .contact-submit-loader {
+  opacity: 1;
+  animation: spin 760ms linear infinite;
 }
 
 .contact-form.is-sent .contact-form-fields {
@@ -1138,12 +1201,18 @@ a {
   .benefit-item,
   .contact-form input,
   .contact-form textarea,
+  .contact-submit,
+  .contact-submit-label,
   .footer-link,
   .cal-modal-backdrop,
   .cal-modal-panel,
   .cal-modal-close,
   .back-to-top {
     transition: none;
+  }
+
+  .contact-form.is-sending .contact-submit-loader {
+    animation: none;
   }
 }
 
@@ -1155,6 +1224,23 @@ a {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes form-feedback {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: translateX(0.35rem) scale(0.82) rotate(360deg);
   }
 }
 

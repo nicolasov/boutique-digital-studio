@@ -28,6 +28,10 @@ const t = translations.en;
         </div>
         <form class="contact-form" data-contact-form>
           <div class="contact-form-fields" data-contact-fields>
+            <input type="hidden" name="_subject" value="Nueva consulta desde la web Boutique Digital Studio" />
+            <input type="hidden" name="current_page" data-current-page />
+            <input type="hidden" name="timestamp" data-timestamp />
+            <input type="hidden" name="user_agent" data-user-agent />
             <label class="contact-honeypot" aria-hidden="true">
               <span>Website</span>
               <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
@@ -40,12 +44,26 @@ const t = translations.en;
               <span data-i18n="formEmail">{t.formEmail}</span>
               <input name="email" type="email" autocomplete="email" required />
             </label>
+            <label>
+              <span data-i18n="formWhatsapp">{t.formWhatsapp}</span>
+              <input
+                name="whatsapp"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                placeholder="+54 9 11 1234 5678"
+                data-contact-phone
+              />
+            </label>
             <label class="contact-form-message">
               <span data-i18n="formMessage">{t.formMessage}</span>
               <textarea name="message" rows="5" required></textarea>
             </label>
-            <p class="contact-form-error" hidden data-contact-error data-i18n="formError">{t.formError}</p>
-            <button class="btn btn-primary" type="submit" data-contact-submit data-i18n="formSubmit">{t.formSubmit}</button>
+            <p class="contact-form-error" hidden data-contact-error data-i18n="formError" aria-live="polite">{t.formError}</p>
+            <button class="btn btn-primary contact-submit" type="submit" data-contact-submit>
+              <span class="contact-submit-label" data-i18n="formSubmit">{t.formSubmit}</span>
+              <span class="contact-submit-loader" aria-hidden="true"></span>
+            </button>
           </div>
           <div class="contact-success" hidden data-contact-success>
             <p class="display-font text-4xl font-semibold leading-[0.95] tracking-[-0.06em]" data-i18n="formSuccessTitle">
