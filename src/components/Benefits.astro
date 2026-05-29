@@ -2,39 +2,59 @@
 import { translations } from '../i18n/translations';
 
 const benefits = [
-  'benefitClarity',
-  'benefitLeads',
-  'benefitBrand',
-  'benefitContact',
-  'benefitAutomation',
-  'benefitPresence',
-  'benefitExperience',
+  ['benefitOneTitle', 'benefitClarity'],
+  ['benefitTwoTitle', 'benefitLeads'],
+  ['benefitThreeTitle', 'benefitBrand'],
+  ['benefitFourTitle', 'benefitContact'],
 ] as const;
 
-const t = translations.en;
+const t = translations.es;
 ---
 
 <section id="beneficios" class="section-pad">
   <div class="section-shell">
-    <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-      <div class="scroll-reveal">
-        <span class="eyebrow" data-i18n="benefitsEyebrow">{t.benefitsEyebrow}</span>
-        <h2 class="section-heading mt-7 text-[clamp(3.4rem,8vw,8rem)]" data-i18n="benefitsTitle">
-          {t.benefitsTitle}
-        </h2>
-      </div>
-      <p class="scroll-reveal max-w-2xl text-xl leading-8 text-muted lg:ml-auto" data-i18n="benefitsIntro">
-        {t.benefitsIntro}
-      </p>
+    <div class="scroll-reveal max-w-5xl text-2xl leading-9 text-ink/86">
+        {
+          /* Render intro with bolded phrase */
+        }
+        {
+          (() => {
+            const intro = t.benefitsIntro as string;
+            const bold = 'detectar oportunidades';
+            const [pre, post] = intro.split(bold);
+            return (
+              <p class="benefits-intro" data-i18n="benefitsIntro">
+                {pre}
+                <strong>{bold}</strong>
+                {post}
+              </p>
+            );
+          })()
+        }
+        {
+          (() => {
+            const intro2 = t.benefitsIntroSecondary as string;
+            const bold2 = 'mejorar tu negocio';
+            const [pre2, post2] = intro2.split(bold2);
+            return (
+              <p class="mt-5 benefits-intro-secondary" data-i18n="benefitsIntroSecondary">
+                {pre2}
+                <strong>{bold2}</strong>
+                {post2}
+              </p>
+            );
+          })()
+        }
     </div>
 
-    <div class="mt-14 grid gap-3 md:grid-cols-2">
-      {benefits.map((key, index) => (
-        <article class="benefit-item scroll-reveal">
-          <span class="display-font text-3xl font-semibold tracking-[-0.07em] text-ink/28">
+    <div class="mt-14 grid gap-6 md:grid-cols-4">
+      {benefits.map(([title, text], index) => (
+        <article class="benefit-item scroll-reveal text-center">
+          <span class="display-font text-4xl font-semibold tracking-[-0.07em] text-ink/28 mb-3 block">
             {(index + 1).toString().padStart(2, '0')}
           </span>
-          <p class="text-lg font-semibold leading-7 text-ink" data-i18n={key}>{t[key]}</p>
+          <h3 class="display-font text-sm uppercase font-semibold tracking-[-0.05em] text-ink mb-2" data-i18n={title}>{t[title]}</h3>
+          <p class="mt-1 text-sm leading-6 text-ink" data-i18n={text}>{t[text]}</p>
         </article>
       ))}
     </div>

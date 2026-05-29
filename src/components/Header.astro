@@ -5,6 +5,7 @@ const primaryNav = [
   { key: 'navServices', href: '#soluciones-digitales' },
   { key: 'navBenefits', href: '#beneficios' },
   { key: 'navWork', href: '#work' },
+  { key: 'navProcess', href: '#proceso' },
 ];
 
 const overlayNav = [
@@ -12,22 +13,23 @@ const overlayNav = [
   { key: 'navServices', href: '#soluciones-digitales' },
   { key: 'navBenefits', href: '#beneficios' },
   { key: 'navWork', href: '#work' },
+  { key: 'navProcess', href: '#proceso' },
   { key: 'navContact', href: '#contacto' },
 ];
 
-const t = translations.en;
+const t = translations.es;
 ---
 
 <header class="site-header fixed inset-x-0 top-0 z-[100]" data-site-header>
   <div class="section-shell flex h-[76px] items-center justify-between gap-6">
-    <a href="#top" class="flex items-center gap-3" aria-label="Boutique Digital Studio">
-      <span class="display-font text-sm font-bold tracking-[-0.03em] text-ink">Boutique Digital Studio</span>
+    <a href="#top" class="flex items-center gap-3" aria-label="SOK">
+      <span class="display-font text-2xl font-bold tracking-[-0.03em] text-ink">SOK</span>
     </a>
 
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
       {primaryNav.map((item) => (
-        <a class="magnetic-link text-sm font-medium text-muted transition hover:text-ink" href={item.href} data-i18n={item.key}>
-          {t[item.key]}
+        <a class="magnetic-link text-sm font-medium text-ink transition hover:text-ink/90" href={item.href} data-i18n={item.key}>
+          {t[item.key as keyof typeof t]}
         </a>
       ))}
     </nav>
@@ -43,12 +45,15 @@ const t = translations.en;
         class="btn btn-primary header-action header-call-button hidden sm:inline-flex"
         data-cal-open
       >
+        <svg class="header-call-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <rect fill="none" width="100%" height="100%" pathLength="100"></rect>
+        </svg>
         <span class="calendar-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M7 3v4M17 3v4M4.5 9.5h15M6.5 5.5h11A2.5 2.5 0 0 1 20 8v10a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18V8a2.5 2.5 0 0 1 2.5-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
           </svg>
         </span>
-        <span data-i18n="navCall">{t.navCall}</span>
+        <span class="header-call-label" data-i18n="navCall">{t.navCall}</span>
       </a>
       <button
         class="menu-button btn btn-secondary header-action"
@@ -85,8 +90,8 @@ const t = translations.en;
       </button>
     </div>
 
-    <div class="grid flex-1 gap-10 pb-8 pt-3 sm:pt-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-      <nav class="menu-links" aria-label="Menú principal">
+    <div class="flex-1 pb-8 pt-3 sm:pt-4">
+      <nav class="menu-links grid gap-0" aria-label="Menú principal">
         {overlayNav.map((item, index) => (
           <a
             href={item.href}
@@ -95,14 +100,14 @@ const t = translations.en;
             data-i18n={item.key}
             data-menu-close
           >
-            {t[item.key]}
+            {t[item.key as keyof typeof t]}
           </a>
         ))}
       </nav>
 
       <div class="menu-meta grid gap-8 lg:pb-5">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="menuLanguage">{t.menuLanguage}</p>
+          <p class="text-xs font-semibold uppercase tracking-[0.16em] text-ink/70" data-i18n="menuLanguage">{t.menuLanguage}</p>
           <div class="language-mini mt-3 inline-flex" aria-label="Language selector">
             <button type="button" data-lang-option="en">EN</button>
             <span>/</span>
@@ -111,8 +116,8 @@ const t = translations.en;
         </div>
 
         <div class="grid gap-4 border-t border-ink/14 pt-6">
-          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-muted" data-i18n="contactLocation">{t.contactLocation}</p>
-          <a class="display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto" data-i18n="navCall" data-cal-open>
+          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-ink/70" data-i18n="contactLocation">{t.contactLocation}</p>
+          <a class="menu-link display-font text-3xl font-semibold tracking-[-0.05em] transition hover:translate-x-2" href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto" data-i18n="navCall" data-cal-open>
             {t.navCall}
           </a>
         </div>

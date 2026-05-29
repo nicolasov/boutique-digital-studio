@@ -106,40 +106,11 @@ const initI18n = () => {
   const menuToggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const menuCloseButtons = document.querySelectorAll<HTMLElement>('[data-menu-close]');
   const overlay = document.querySelector<HTMLElement>('[data-menu-overlay]');
-  const activeScrollLocks = new Set<string>();
-  let scrollY = 0;
-
-  const setScrollLock = (key: string, isLocked: boolean) => {
-    const wasLocked = activeScrollLocks.size > 0;
-
-    if (isLocked) {
-      activeScrollLocks.add(key);
-    } else {
-      activeScrollLocks.delete(key);
-    }
-
-    const shouldLock = activeScrollLocks.size > 0;
-
-    if (!wasLocked && shouldLock) {
-      scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-    }
-
-    if (wasLocked && !shouldLock) {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, scrollY);
-    }
-  };
 
   const setMenuOpen = (isOpen: boolean) => {
     if (!menuToggle || !overlay) return;
     const isCurrentlyOpen = document.body.classList.contains('menu-open');
     if (isCurrentlyOpen === isOpen) return;
-    setScrollLock('menu', isOpen);
     document.documentElement.classList.toggle('menu-open', isOpen);
     document.body.classList.toggle('menu-open', isOpen);
     overlay.classList.toggle('is-open', isOpen);
@@ -163,12 +134,20 @@ const initI18n = () => {
     const body = getSolutionBody(detail);
     if (!body) return;
     detail.classList.remove('is-closing');
+    body.style.height = '0px';
     detail.open = true;
-    body.style.height = `${body.scrollHeight}px`;
 
-    window.setTimeout(() => {
-      if (detail.open && !detail.classList.contains('is-closing')) body.style.height = 'auto';
-    }, 430);
+    window.requestAnimationFrame(() => {
+      body.style.height = `${body.scrollHeight}px`;
+    });
+
+    const onTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== body || event.propertyName !== 'height') return;
+      body.style.height = 'auto';
+      body.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    body.addEventListener('transitionend', onTransitionEnd);
   };
 
   const collapseSolution = (detail: HTMLDetailsElement) => {
@@ -181,11 +160,15 @@ const initI18n = () => {
       body.style.height = '0px';
     });
 
-    window.setTimeout(() => {
+    const onTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== body || event.propertyName !== 'height') return;
       detail.open = false;
       detail.classList.remove('is-closing');
       body.style.height = '';
-    }, 430);
+      body.removeEventListener('transitionend', onTransitionEnd);
+    };
+
+    body.addEventListener('transitionend', onTransitionEnd);
   };
 
   const openSolution = (detail: HTMLDetailsElement) => {
@@ -446,10 +429,58 @@ const initI18n = () => {
   const backToTop = document.querySelector<HTMLButtonElement>('[data-back-to-top]');
   let backToTopRaf = 0;
 
+  const typewriter = document.querySelector<HTMLElement>('[data-typewriter]');
+  if (typewriter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const phrasesByLang: Record<Lang, string[]> = {
+      es: typewriter.dataset.typewriterPhrases?.split('|').filter(Boolean) ?? [],
+      en: ['digital solutions', 'more clarity for your clients', 'systems that generate opportunities'],
+    };
+    if (phrasesByLang.es.length > 1) {
+      let phraseIndex = 0;
+      typewriter.textContent = typewriter.textContent?.trim() || phrasesByLang.es[0] || '';
+      let characterIndex = typewriter.textContent.length;
+      let isDeleting = false;
+
+      const tick = () => {
+        const lang = (document.documentElement.dataset.activeLang ?? initialLang) as Lang;
+        const phrases = phrasesByLang[lang] ?? phrasesByLang.es;
+        const phrase = phrases[phraseIndex] ?? '';
+        typewriter.classList.remove('is-paused');
+
+        if (isDeleting) {
+          characterIndex = Math.max(0, characterIndex - 1);
+        } else {
+          characterIndex = Math.min(phrase.length, characterIndex + 1);
+        }
+
+        typewriter.textContent = phrase.slice(0, characterIndex);
+
+        let delay = isDeleting ? 34 : 48;
+        if (!isDeleting && characterIndex === phrase.length) {
+          typewriter.classList.add('is-paused');
+          isDeleting = true;
+          delay = 5200;
+        } else if (isDeleting && characterIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 520;
+        }
+
+        window.setTimeout(tick, delay);
+      };
+
+      window.setTimeout(tick, 720);
+    }
+  }
+
   const updateBackToTop = () => {
     if (!backToTop) return;
     const shouldShow = window.scrollY > Math.min(620, window.innerHeight * 0.72);
+    const pageBottom = document.documentElement.scrollHeight;
+    const footerHeight = document.querySelector<HTMLElement>('.site-footer')?.offsetHeight ?? 0;
+    const isOverFooter = window.scrollY + window.innerHeight >= pageBottom - footerHeight + 24;
     backToTop.classList.toggle('is-visible', shouldShow);
+    backToTop.classList.toggle('is-over-footer', isOverFooter);
   };
 
   const requestBackToTopUpdate = () => {

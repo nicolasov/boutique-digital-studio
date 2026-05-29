@@ -10,11 +10,12 @@ import Benefits from '../components/Benefits.astro';
 import { translations } from '../i18n/translations';
 import CalModal from '../components/CalModal.astro';
 import BackToTop from '../components/BackToTop.astro';
+import Process from '../components/Process.astro';
 ---
 
 <BaseLayout
-  title={translations.en.metaTitle}
-  description={translations.en.metaDescription}
+  title={translations.es.metaTitle}
+  description={translations.es.metaDescription}
 >
   <Header />
   <main class="site-main">
@@ -22,6 +23,7 @@ import BackToTop from '../components/BackToTop.astro';
     <Services />
     <Benefits />
     <Work />
+    <Process />
     <FinalCTA />
   </main>
   <Footer />

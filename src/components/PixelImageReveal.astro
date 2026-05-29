@@ -1,0 +1,266 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  intensity?: number;
+  speed?: number;
+  scale?: number;
+  triggerOnce?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt = '',
+  intensity = 0.32,
+  speed = 1,
+  scale = 1.03,
+  triggerOnce = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<figure
+  class={`pixel-image-reveal ${className}`}
+  data-pixel-image-reveal
+  data-src={src}
+  data-intensity={intensity}
+  data-speed={speed}
+  data-scale={scale}
+  data-trigger-once={String(triggerOnce)}
+>
+  <img class="pixel-image-reveal__fallback" src={src} alt={alt} loading="lazy" decoding="async" />
+  <canvas class="pixel-image-reveal__canvas" aria-hidden="true"></canvas>
+</figure>
+
+<script>
+  type PixelRevealElement = HTMLElement & { dataset: DOMStringMap };
+  const destroyers = new Set<() => void>();
+
+  const vertexShader = `
+    varying vec2 vUv;
+    uniform float uProgress;
+    uniform float uTime;
+    uniform float uIntensity;
+
+    void main() {
+      vUv = uv;
+      vec3 pos = position;
+      float wave = sin((uv.x * 7.0) + (uTime * 0.55)) * cos((uv.y * 5.0) + (uTime * 0.35));
+      pos.z += wave * (1.0 - uProgress) * uIntensity * 0.055;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    varying vec2 vUv;
+    uniform sampler2D uTexture;
+    uniform vec2 uPlaneResolution;
+    uniform vec2 uImageResolution;
+    uniform float uProgress;
+    uniform float uTime;
+    uniform float uIntensity;
+
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    }
+
+    vec2 coverUv(vec2 uv, vec2 plane, vec2 image) {
+      vec2 ratio = vec2(
+        min((plane.x / plane.y) / (image.x / image.y), 1.0),
+        min((plane.y / plane.x) / (image.y / image.x), 1.0)
+      );
+      return vec2(
+        uv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+        uv.y * ratio.y + (1.0 - ratio.y) * 0.5
+      );
+    }
+
+    void main() {
+      vec2 uv = coverUv(vUv, uPlaneResolution, uImageResolution);
+      float eased = smoothstep(0.0, 1.0, uProgress);
+      float reveal = smoothstep(0.08, 0.92, eased + (vUv.y - 0.5) * 0.18);
+      float pixelSize = mix(86.0, 1.0, reveal);
+      vec2 pixelGrid = floor(uv * uPlaneResolution / pixelSize);
+      vec2 pixelUv = (pixelGrid * pixelSize + pixelSize * 0.5) / uPlaneResolution;
+      float noise = hash(pixelGrid + floor(uTime * 8.0));
+      vec2 blockDrift = vec2(noise - 0.5, hash(pixelGrid + 17.0) - 0.5);
+      vec2 distortion = blockDrift * (1.0 - reveal) * uIntensity * 0.12;
+      vec2 sampleUv = mix(pixelUv + distortion, uv, reveal);
+      vec4 color = texture2D(uTexture, sampleUv);
+      float slice = step(abs(vUv.y - eased), 0.018);
+      color.rgb += (noise - 0.5) * (1.0 - reveal) * 0.12 + slice * 0.035;
+      float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+      color.rgb = vec3(gray);
+      gl_FragColor = color;
+    }
+  `;
+
+  const hasWebGL = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      return Boolean(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+    } catch {
+      return false;
+    }
+  };
+
+  const initPixelReveal = async (root: PixelRevealElement) => {
+    if (root.dataset.pixelReady === 'true') return;
+    root.dataset.pixelReady = 'true';
+
+    const canvas = root.querySelector<HTMLCanvasElement>('.pixel-image-reveal__canvas');
+    const fallback = root.querySelector<HTMLImageElement>('.pixel-image-reveal__fallback');
+    const src = root.dataset.src;
+    if (!canvas || !fallback || !src || !hasWebGL()) {
+      root.classList.add('is-fallback');
+      return;
+    }
+
+    const [{ gsap }, { ScrollTrigger }, THREE] = await Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+      import('three'),
+    ]);
+    gsap.registerPlugin(ScrollTrigger);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const intensity = Number(root.dataset.intensity ?? 0.32);
+    const speed = Number(root.dataset.speed ?? 1);
+    const scale = Number(root.dataset.scale ?? 1.03);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: false,
+      powerPreference: 'high-performance',
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 10);
+    camera.position.z = 1;
+
+    const uniforms = {
+      uTexture: { value: null as unknown },
+      uPlaneResolution: { value: new THREE.Vector2(1, 1) },
+      uImageResolution: { value: new THREE.Vector2(1, 1) },
+      uProgress: { value: prefersReducedMotion ? 1 : 0 },
+      uTime: { value: 0 },
+      uIntensity: { value: intensity },
+    };
+
+    const geometry = new THREE.PlaneGeometry(2, 2, 32, 32);
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    const resize = () => {
+      const rect = root.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width));
+      const height = Math.max(1, Math.round(rect.height));
+      renderer.setSize(width, height, false);
+      uniforms.uPlaneResolution.value.set(width, height);
+    };
+
+    let loadedTexture: { dispose: () => void } | null = null;
+    let introTween: { kill: () => void } | null = null;
+    let revealTween: { kill: () => void; scrollTrigger?: { kill: () => void } } | null = null;
+    let floatTween: { kill: () => void } | null = null;
+
+    const tick = () => {
+      uniforms.uTime.value += 0.016 * speed;
+      if (uniforms.uTexture.value) renderer.render(scene, camera);
+    };
+
+    const destroy = () => {
+      window.removeEventListener('resize', resize);
+      gsap.ticker.remove(tick);
+      introTween?.kill();
+      revealTween?.scrollTrigger?.kill();
+      revealTween?.kill();
+      floatTween?.kill();
+      loadedTexture?.dispose();
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+      renderer.forceContextLoss();
+      destroyers.delete(destroy);
+      root.dataset.pixelReady = 'false';
+    };
+
+    destroyers.add(destroy);
+
+    const loader = new THREE.TextureLoader();
+    loader.load(src, (texture) => {
+      loadedTexture = texture;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      uniforms.uTexture.value = texture;
+      uniforms.uImageResolution.value.set(texture.image.width || 1, texture.image.height || 1);
+      resize();
+      root.classList.add('is-webgl-ready');
+
+      if (prefersReducedMotion) {
+        uniforms.uProgress.value = 1;
+        root.classList.add('is-revealed');
+        renderer.render(scene, camera);
+        return;
+      }
+
+      introTween = gsap.fromTo(canvas, { y: 18, scale }, { y: 0, scale: 1, duration: 1.15, ease: 'power3.out' });
+      revealTween = gsap.to(uniforms.uProgress, {
+        value: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root,
+          start: 'top 88%',
+          end: 'bottom 48%',
+          scrub: 0.8 / Math.max(speed, 0.1),
+          once: root.dataset.triggerOnce !== 'false',
+          onUpdate: () => renderer.render(scene, camera),
+          onLeave: () => root.classList.add('is-revealed'),
+        },
+      });
+      floatTween = gsap.to(canvas, {
+        y: -4,
+        duration: 4.8,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 1.2,
+      });
+    }, undefined, () => {
+      root.classList.add('is-fallback');
+      destroy();
+    });
+
+    gsap.ticker.add(tick);
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+  };
+
+  const roots = Array.from(document.querySelectorAll<PixelRevealElement>('[data-pixel-image-reveal]'));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const root = entry.target as PixelRevealElement;
+        void initPixelReveal(root);
+        if (root.dataset.triggerOnce !== 'false') observer.unobserve(root);
+      });
+    },
+    { rootMargin: '18% 0px', threshold: 0.18 },
+  );
+
+  roots.forEach((root) => observer.observe(root));
+  window.addEventListener('pagehide', () => {
+    destroyers.forEach((destroy) => destroy());
+    observer.disconnect();
+  }, { once: true });
+</script>

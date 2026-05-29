@@ -1,33 +1,25 @@
 ---
 import { translations } from '../i18n/translations';
 
-const loopItems = ['heroLoopTwo', 'heroLoopOne', 'heroLoopThree', 'heroLoopFour', 'heroLoopFive'] as const;
-const t = translations.en;
+const t = translations.es;
 ---
 
 <section id="top" class="relative overflow-hidden pb-20 pt-12 sm:pb-28 sm:pt-20">
   <div class="section-shell">
-    <div class="grid gap-10 lg:grid-cols-[0.78fr_0.22fr] lg:items-end">
+    <div class="grid gap-10 lg:grid-cols-1 lg:items-end">
       <div>
-        <span class="eyebrow reveal w-fit" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
-        <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(3.65rem,9.2vw,9.4rem)] text-ink">
+        <span class="eyebrow reveal w-fit text-base font-normal normal-case" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
+        <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(2.2rem,5.5vw,4.84rem)] text-ink">
           <span data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
-          <a href="#soluciones-digitales" class="hero-highlight">
-            <span class="hero-highlight-part" data-i18n="heroTitleHighlightA">{t.heroTitleHighlightA}</span>
-            <span class="hero-highlight-part" data-i18n="heroTitleHighlightB">{t.heroTitleHighlightB}</span>
-          </a>
+          <span class="hero-typewriter" data-typewriter data-typewriter-phrases="soluciones digitales|más claridad para tus clientes|sistemas que generan oportunidades">soluciones digitales</span><span class="hero-title-period">.</span>
         </h1>
-      </div>
-
-      <div class="reveal reveal-delay-2 border-t border-ink/14 pt-5 lg:mb-3">
-        <p class="hero-loop-line text-base leading-7 sm:text-lg" aria-live="polite">
-          <span data-i18n="heroTextPrefix">{t.heroTextPrefix}</span>
-          <span class="loop-word" data-hero-loop data-loop-keys={loopItems.join(',')}>{t.heroLoopTwo}</span>
-        </p>
-        <div class="mt-7 flex flex-wrap gap-3 lg:flex-col">
+        <div class="reveal mt-6">
+          <p class="hero-loop-line text-base leading-7 sm:text-lg" data-i18n="heroText">{t.heroText}</p>
+        </div>
+        <div class="reveal mt-8">
           <a
             href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
-            class="btn btn-primary"
+            class="btn btn-primary w-full"
             data-i18n="heroPrimary"
             data-cal-open
           >
@@ -38,18 +30,15 @@ const t = translations.en;
     </div>
 
     <div class="reveal reveal-delay-3 mt-12">
-      <figure class="visual-frame relative h-[30rem] sm:h-[38rem] lg:h-[44rem]">
+      <figure class="visual-frame hero-visual relative h-[10rem] sm:h-[12rem] lg:h-[14rem]">
         <img class="image-cover" src="/assets/studio-cinematic.png" alt="Cinematic creative technology studio scene" loading="eager" />
-        <figcaption class="hero-caption absolute bottom-4 left-4 right-4 p-0 text-2xl font-semibold leading-9 text-white sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-2xl sm:text-3xl sm:leading-10">
-          <span data-i18n="heroNote">{t.heroNote}</span>
-        </figcaption>
       </figure>
     </div>
 
     <div class="mt-14 overflow-hidden border-y border-ink/12 py-4">
       <div class="marquee">
-        <span>Creative technology · Applied AI · Digital experiences · Editorial systems ·</span>
-        <span>Creative technology · Applied AI · Digital experiences · Editorial systems ·</span>
+        <span>Sitios web premium&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Diseño y dirección visual&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;IA y automatización&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Contenido visual&nbsp;&nbsp;&nbsp;·</span>
+        <span>Sitios web premium&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Diseño y dirección visual&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;IA y automatización&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Contenido visual&nbsp;&nbsp;&nbsp;·</span>
       </div>
     </div>
   </div>

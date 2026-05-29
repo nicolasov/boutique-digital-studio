@@ -8,13 +8,13 @@ interface Props {
 }
 
 const {
-  title = translations.en.metaTitle,
-  description = translations.en.metaDescription,
+  title = translations.es.metaTitle,
+  description = translations.es.metaDescription,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,7 +35,7 @@ const {
           document.documentElement.lang = lang;
           document.documentElement.dataset.activeLang = lang;
         } catch {
-          document.documentElement.lang = 'en';
+          document.documentElement.lang = 'es';
         }
       })();
     </script>

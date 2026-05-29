@@ -10,6 +10,14 @@ Stack:
 - Componentes reutilizables
 - Preparado para deploy en Vercel
 
+## PixelImageReveal
+
+`src/components/PixelImageReveal.astro` crea una revelacion premium con Three.js y GSAP para imagenes de proyectos.
+
+Uso recomendado: portfolio, proyectos, casos de estudio y filas visuales similares. Evitar en hero, navegacion, formularios y secciones puramente textuales.
+
+Props disponibles: `intensity`, `speed`, `scale` y `triggerOnce`.
+
 ## Estructura
 
 ```text

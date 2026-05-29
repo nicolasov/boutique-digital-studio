@@ -1,35 +1,62 @@
 ---
-import { translations } from '../i18n/translations';
+import PixelImageReveal from './PixelImageReveal.astro';
 
 const steps = [
-  ['processOneTitle', 'processOneText'],
-  ['processTwoTitle', 'processTwoText'],
-  ['processThreeTitle', 'processThreeText'],
-  ['processFourTitle', 'processFourText'],
-  ['processFiveTitle', 'processFiveText'],
-  ['processSixTitle', 'processSixText'],
+  {
+    number: '01',
+    title: 'Exploramos',
+    text: 'Entendemos tu negocio, tus objetivos, tu público y el contexto actual.',
+    image: '/assets/studio-cinematic.png',
+  },
+  {
+    number: '02',
+    title: 'Diseñamos',
+    text: 'Definimos estructura, estética, mensajes y experiencia con criterio estratégico.',
+    image: '/assets/system-abstract.png',
+  },
+  {
+    number: '03',
+    title: 'Construimos',
+    text: 'Desarrollamos el sitio, sistema, contenido o automatización necesaria.',
+    image: '/assets/hero-editorial.png',
+  },
+  {
+    number: '04',
+    title: 'Mejoramos',
+    text: 'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
+    image: '/assets/studio-cinematic.png',
+  },
 ];
-
-const t = translations.en;
 ---
 
-<section id="proceso" class="section-pad bg-paper">
+<section id="proceso" class="section-pad">
   <div class="section-shell">
     <div class="max-w-5xl scroll-reveal">
-      <span class="eyebrow" data-i18n="processEyebrow">{t.processEyebrow}</span>
-      <h2 class="section-heading mt-7 text-[clamp(3.4rem,8vw,8rem)]" data-i18n="processTitle">{t.processTitle}</h2>
+      <span class="eyebrow">Proceso</span>
+      <h2 class="process-heading section-heading mt-7 text-[clamp(2.6rem,6vw,5.4rem)]">Lo hacemos en pasos claros</h2>
     </div>
 
-    <div class="mt-16 grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-      {steps.map(([title, text], index) => (
-        <article class="editorial-rule scroll-reveal pt-5">
-          <span class="display-font text-6xl font-semibold tracking-[-0.08em] text-ink/18">
-            {(index + 1).toString().padStart(2, '0')}
-          </span>
-          <h3 class="display-font mt-12 text-3xl font-semibold tracking-[-0.05em]" data-i18n={title}>{t[title]}</h3>
-          <p class="mt-4 leading-7 text-muted" data-i18n={text}>{t[text]}</p>
-        </article>
-      ))}
+    <div class="process-step-list mt-16">
+      <div class="process-step-layout">
+        {steps.map((step) => (
+          <article class="process-step-card scroll-reveal">
+            <header class="process-step-header">
+              <span class="process-step-number">{step.number}</span>
+              <h3 class="process-step-title">{step.title}</h3>
+            </header>
+            <PixelImageReveal
+              class="process-step-image"
+              src={step.image}
+              alt={`Imagen del paso ${step.number}: ${step.title}`}
+              intensity={0.34}
+              speed={1}
+              scale={1.025}
+              triggerOnce
+            />
+            <p class="process-step-text">{step.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </section>

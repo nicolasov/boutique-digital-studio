@@ -2,53 +2,35 @@
 import { translations } from '../i18n/translations';
 
 const services = [
-  ['serviceWebTitle', 'serviceWebWhat', 'serviceWebUse', 'serviceWebBenefit'],
-  ['serviceBrandTitle', 'serviceBrandWhat', 'serviceBrandUse', 'serviceBrandBenefit'],
-  ['serviceUxTitle', 'serviceUxWhat', 'serviceUxUse', 'serviceUxBenefit'],
-  ['serviceAiTitle', 'serviceAiWhat', 'serviceAiUse', 'serviceAiBenefit'],
-  ['serviceIntegrationsTitle', 'serviceIntegrationsWhat', 'serviceIntegrationsUse', 'serviceIntegrationsBenefit'],
-  ['serviceGeoTitle', 'serviceGeoWhat', 'serviceGeoUse', 'serviceGeoBenefit'],
-  ['serviceCroTitle', 'serviceCroWhat', 'serviceCroUse', 'serviceCroBenefit'],
+  ['serviceWebTitle', 'serviceWebText'],
+  ['serviceBrandTitle', 'serviceBrandText'],
+  ['serviceAiTitle', 'serviceAiText'],
+  ['serviceContentTitle', 'serviceContentText'],
 ] as const;
 
-const t = translations.en;
+const t = translations.es;
 ---
 
 <section id="soluciones-digitales" class="section-pad bg-paper">
   <div class="section-shell">
-    <div class="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
-      <div class="scroll-reveal">
-        <span class="eyebrow" data-i18n="servicesEyebrow">{t.servicesEyebrow}</span>
-        <h2 class="section-heading mt-7 text-5xl sm:text-7xl" data-i18n="servicesTitle">
-          {t.servicesTitle}
-        </h2>
-      </div>
-      <p class="scroll-reveal max-w-2xl text-xl leading-8 text-muted lg:ml-auto" data-i18n="servicesIntro">
+    <div class="scroll-reveal max-w-5xl">
+      <p class="services-intro-statement display-font font-semibold tracking-[-0.055em] text-ink" data-i18n="servicesIntro">
         {t.servicesIntro}
       </p>
     </div>
 
     <div class="mt-14 divide-y divide-ink/12 border-y border-ink/12">
-      {services.map(([title, what, use, benefit]) => (
+      {services.map(([title, text]) => (
         <details class="solution-item group">
           <summary class="grid cursor-pointer list-none gap-5 py-6 md:grid-cols-[1fr_auto] md:items-center">
-            <h3 class="solution-title display-font text-3xl font-semibold leading-[0.98] tracking-[-0.055em] text-ink sm:text-5xl" data-i18n={title}>
+            <h3 class="solution-title display-font text-2xl font-semibold leading-[0.98] tracking-[-0.055em] text-ink sm:text-4xl" data-i18n={title}>
               {t[title]}
             </h3>
             <span class="solution-toggle" aria-hidden="true"></span>
           </summary>
           <div class="solution-body" data-solution-body>
-            <p>
-              <strong data-i18n="solutionWhat">{t.solutionWhat}</strong>
-              <span data-i18n={what}>{t[what]}</span>
-            </p>
-            <p>
-              <strong data-i18n="solutionUse">{t.solutionUse}</strong>
-              <span data-i18n={use}>{t[use]}</span>
-            </p>
-            <p>
-              <strong data-i18n="solutionBenefit">{t.solutionBenefit}</strong>
-              <span data-i18n={benefit}>{t[benefit]}</span>
+            <p class="solution-copy">
+              <span data-i18n={text}>{t[text]}</span>
             </p>
           </div>
         </details>
