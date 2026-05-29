@@ -37,26 +37,24 @@ const steps = [
     </div>
 
     <div class="process-step-list mt-16">
-      <div class="process-step-layout">
-        {steps.map((step) => (
-          <article class="process-step-card scroll-reveal">
-            <header class="process-step-header">
-              <span class="process-step-number">{step.number}</span>
-              <h3 class="process-step-title">{step.title}</h3>
-            </header>
-            <PixelImageReveal
-              class="process-step-image"
-              src={step.image}
-              alt={`Imagen del paso ${step.number}: ${step.title}`}
-              intensity={0.34}
-              speed={1}
-              scale={1.025}
-              triggerOnce
-            />
+      {steps.map((step, index) => (
+        <article class={`process-step-row ${index % 2 === 1 ? 'is-reversed' : ''} scroll-reveal`}>
+          <div class="process-step-copy">
+            <span class="process-step-number">{step.number}</span>
+            <h3 class="process-step-title">{step.title}</h3>
             <p class="process-step-text">{step.text}</p>
-          </article>
-        ))}
-      </div>
+          </div>
+          <PixelImageReveal
+            class="process-step-image"
+            src={step.image}
+            alt={`Imagen del paso ${step.number}: ${step.title}`}
+            intensity={0.62}
+            speed={1.08}
+            scale={1.035}
+            triggerOnce
+          />
+        </article>
+      ))}
     </div>
   </div>
 </section>

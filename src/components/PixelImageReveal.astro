@@ -80,16 +80,16 @@ const {
       vec2 uv = coverUv(vUv, uPlaneResolution, uImageResolution);
       float eased = smoothstep(0.0, 1.0, uProgress);
       float reveal = smoothstep(0.08, 0.92, eased + (vUv.y - 0.5) * 0.18);
-      float pixelSize = mix(86.0, 1.0, reveal);
+      float pixelSize = mix(132.0, 1.0, reveal);
       vec2 pixelGrid = floor(uv * uPlaneResolution / pixelSize);
       vec2 pixelUv = (pixelGrid * pixelSize + pixelSize * 0.5) / uPlaneResolution;
-      float noise = hash(pixelGrid + floor(uTime * 8.0));
+      float noise = hash(pixelGrid + floor(uTime * 10.0));
       vec2 blockDrift = vec2(noise - 0.5, hash(pixelGrid + 17.0) - 0.5);
-      vec2 distortion = blockDrift * (1.0 - reveal) * uIntensity * 0.12;
+      vec2 distortion = blockDrift * (1.0 - reveal) * uIntensity * 0.2;
       vec2 sampleUv = mix(pixelUv + distortion, uv, reveal);
       vec4 color = texture2D(uTexture, sampleUv);
-      float slice = step(abs(vUv.y - eased), 0.018);
-      color.rgb += (noise - 0.5) * (1.0 - reveal) * 0.12 + slice * 0.035;
+      float slice = step(abs(vUv.y - eased), 0.028);
+      color.rgb += (noise - 0.5) * (1.0 - reveal) * 0.16 + slice * 0.065;
       float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
       color.rgb = vec3(gray);
       gl_FragColor = color;
@@ -171,6 +171,7 @@ const {
     let introTween: { kill: () => void } | null = null;
     let revealTween: { kill: () => void; scrollTrigger?: { kill: () => void } } | null = null;
     let floatTween: { kill: () => void } | null = null;
+    let revealTrigger: { kill: () => void } | null = null;
 
     const tick = () => {
       uniforms.uTime.value += 0.016 * speed;
@@ -183,6 +184,7 @@ const {
       introTween?.kill();
       revealTween?.scrollTrigger?.kill();
       revealTween?.kill();
+      revealTrigger?.kill();
       floatTween?.kill();
       loadedTexture?.dispose();
       geometry.dispose();
@@ -204,6 +206,7 @@ const {
       uniforms.uTexture.value = texture;
       uniforms.uImageResolution.value.set(texture.image.width || 1, texture.image.height || 1);
       resize();
+      renderer.render(scene, camera);
       root.classList.add('is-webgl-ready');
 
       if (prefersReducedMotion) {
@@ -213,20 +216,40 @@ const {
         return;
       }
 
-      introTween = gsap.fromTo(canvas, { y: 18, scale }, { y: 0, scale: 1, duration: 1.15, ease: 'power3.out' });
+      introTween = gsap.fromTo(canvas, { y: 22, scale }, { y: 0, scale: 1, duration: 1.2 / Math.max(speed, 0.1), ease: 'power3.out' });
+
+      const triggerOnce = root.dataset.triggerOnce !== 'false';
       revealTween = gsap.to(uniforms.uProgress, {
         value: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: root,
-          start: 'top 88%',
-          end: 'bottom 48%',
-          scrub: 0.8 / Math.max(speed, 0.1),
-          once: root.dataset.triggerOnce !== 'false',
-          onUpdate: () => renderer.render(scene, camera),
-          onLeave: () => root.classList.add('is-revealed'),
+        duration: 1.35 / Math.max(speed, 0.1),
+        ease: 'power3.out',
+        paused: true,
+        onUpdate: () => renderer.render(scene, camera),
+        onComplete: () => root.classList.add('is-revealed'),
+      });
+
+      revealTrigger = ScrollTrigger.create({
+        trigger: root,
+        start: 'top 82%',
+        end: 'bottom 42%',
+        once: triggerOnce,
+        onEnter: () => revealTween?.restart(true),
+        onEnterBack: () => {
+          if (!triggerOnce) revealTween?.restart(true);
+        },
+        onLeaveBack: () => {
+          if (!triggerOnce && revealTween) {
+            uniforms.uProgress.value = 0;
+            revealTween.pause(0);
+            renderer.render(scene, camera);
+          }
         },
       });
+
+      const rootRect = root.getBoundingClientRect();
+      if (rootRect.top < window.innerHeight * 0.82 && rootRect.bottom > 0) {
+        revealTween.restart(true);
+      }
       floatTween = gsap.to(canvas, {
         y: -4,
         duration: 4.8,
