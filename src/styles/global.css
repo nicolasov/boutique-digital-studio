@@ -780,25 +780,13 @@ a {
   line-height: 1.04;
 }
 
-.benefit-item {
+.process-intro-copy {
   display: grid;
-  min-height: 9rem;
-  grid-template-columns: 4.5rem 1fr;
-  gap: 1rem;
-  align-items: start;
-  border: 1px solid var(--line);
-  background: rgba(255, 254, 250, 0.58);
-  padding: 1.15rem;
-  transition:
-    transform 260ms ease,
-    background-color 260ms ease,
-    border-color 260ms ease;
-}
-
-.benefit-item:hover {
-  transform: translateY(-3px);
-  border-color: rgba(17, 17, 17, 0.24);
-  background: rgba(255, 254, 250, 0.86);
+  gap: 1.15rem;
+  max-width: 58rem;
+  color: var(--ink);
+  font-size: clamp(1.18rem, 2vw, 1.7rem);
+  line-height: 1.38;
 }
 
 .contact-form {
@@ -1574,7 +1562,6 @@ a {
   .loop-word,
   .solution-item,
   .solution-body,
-  .benefit-item,
   .contact-form input,
   .contact-form textarea,
   .contact-submit,
@@ -1681,11 +1668,6 @@ a {
 
   .site-main {
     margin-bottom: var(--footer-height);
-  }
-
-  .benefit-item {
-    min-height: 8rem;
-    grid-template-columns: 3.5rem 1fr;
   }
 
   .contact-success {

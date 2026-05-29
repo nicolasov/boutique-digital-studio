@@ -9,7 +9,6 @@ const approvedCopy = {
     'Diseño, tecnología e inteligencia artificial para construir una presencia digital más clara, profesional y preparada para nuevas oportunidades.',
   navAbout: 'Qué hacemos',
   navServices: 'Qué hacemos',
-  navBenefits: 'Cómo trabajamos',
   navWork: 'Servicios',
   navProcess: 'Proceso',
   navHome: 'Inicio',
@@ -108,27 +107,6 @@ const approvedCopy = {
     'Si querés construir una presencia digital más clara, profesional y preparada para nuevas oportunidades, podemos empezar por una conversación.',
   serviceCroBenefit:
     'Si querés construir una presencia digital más clara, profesional y preparada para nuevas oportunidades, podemos empezar por una conversación.',
-  benefitsEyebrow: 'Cómo trabajamos',
-  benefitsTitle: 'Cómo trabajamos',
-  benefitsIntro:
-    'Trabajamos con un proceso claro para entender tu proyecto, detectar oportunidades y construir una solución digital alineada a tus objetivos.',
-  benefitsIntroSecondary:
-    'Creamos herramientas, experiencias y sistemas pensados para mejorar tu negocio, su presencia, comunicación y operación en el entorno digital.',
-  benefitClarity: 'Entendemos tu negocio, tus objetivos, tu público y el contexto actual.',
-  benefitLeads: 'Definimos estructura, estética, mensajes y experiencia con criterio estratégico.',
-  benefitBrand: 'Desarrollamos el sitio, sistema, contenido o automatización necesaria.',
-  benefitContact:
-    'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
-  benefitAutomation:
-    'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
-  benefitPresence:
-    'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
-  benefitExperience:
-    'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
-  benefitOneTitle: 'Exploramos',
-  benefitTwoTitle: 'Diseñamos',
-  benefitThreeTitle: 'Construimos',
-  benefitFourTitle: 'Mejoramos',
   workEyebrow: 'Servicios',
   workTitle: 'Servicios',
   workIntro: 'Sitios web premium',
@@ -190,7 +168,6 @@ const englishCopy = {
   metaDescription:
     'Design, technology and artificial intelligence to build a clearer, more professional digital presence ready for new opportunities.',
   navServices: 'What we do',
-  navBenefits: 'How we work',
   navWork: 'Services',
   navProcess: 'Process',
   navHome: 'Home',
@@ -222,14 +199,6 @@ const englishCopy = {
   serviceAiText: 'Applications, platforms and tools designed to solve specific needs and optimize processes.',
   serviceContentTitle: 'Audiovisual production',
   serviceContentText: 'Photography, video, drone and 360° experiences to communicate projects, spaces and brands with greater impact.',
-  benefitsEyebrow: 'How we work',
-  benefitsTitle: 'How we work',
-  benefitsIntro:
-    'We work through a clear process to understand your project, detect opportunities and build a digital solution aligned with your goals.',
-  benefitOneTitle: 'Explore',
-  benefitTwoTitle: 'Design',
-  benefitThreeTitle: 'Build',
-  benefitFourTitle: 'Improve',
   workEyebrow: 'Services',
   workTitle: 'Services',
   workOneTitle: 'Premium websites',
