@@ -673,9 +673,6 @@ const initI18n = () => {
       }
 
       if (siteHeader) {
-        const headerInner = siteHeader.querySelector<HTMLElement>('.section-shell');
-        const normalHeight = headerInner?.offsetHeight || 76;
-        const compactHeight = Math.max(44, normalHeight / 2);
         let isCompact = false;
         const setHeaderCompact = (compact: boolean) => {
           if (compact === isCompact) return;
@@ -684,10 +681,6 @@ const initI18n = () => {
           siteHeader.style.background = compact ? 'rgba(247,245,240,0.88)' : '';
           siteHeader.style.backdropFilter = compact ? 'blur(14px)' : '';
           siteHeader.style.webkitBackdropFilter = compact ? 'blur(14px)' : '';
-          if (headerInner) {
-            headerInner.style.transition = 'height 0.35s ease';
-            headerInner.style.height = `${compact ? compactHeight : normalHeight}px`;
-          }
         };
 
         let navRaf = 0;
