@@ -513,6 +513,191 @@ const initI18n = () => {
   window.addEventListener('scroll', requestBackToTopUpdate, { passive: true });
   window.addEventListener('resize', requestBackToTopUpdate);
   backToTop?.addEventListener('click', scrollToTopSmooth);
+
+  const initGsapAnimations = async () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    try {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const heroLine = document.querySelector<HTMLElement>('.hero-title-line');
+      const heroSubtitle = document.querySelector<HTMLElement>('.hero-loop-line');
+      const heroCta = document.querySelector<HTMLElement>('.hero-cta');
+      const heroImage = document.querySelector<HTMLElement>('.hero-visual img');
+      const processIntro = document.querySelector<HTMLElement>('.process-intro');
+      const genericReveal = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal')).filter(
+        (node) =>
+          !node.classList.contains('process-step-row') &&
+          !node.classList.contains('process-intro') &&
+          !node.closest('#work'),
+      );
+
+      if (heroLine) {
+        gsap.set(heroLine, { autoAlpha: 0, y: isMobile ? 32 : 60 });
+        gsap.to(heroLine, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          delay: 0.08,
+        });
+      }
+
+      if (heroSubtitle) {
+        gsap.set(heroSubtitle, { autoAlpha: 0, y: 20 });
+        gsap.to(heroSubtitle, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.85,
+          ease: 'power3.out',
+          delay: 0.32,
+        });
+      }
+
+      if (heroCta) {
+        gsap.set(heroCta, { autoAlpha: 0, scale: 0.92 });
+        gsap.to(heroCta, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.72,
+          ease: 'expo.out',
+          delay: 0.48,
+        });
+      }
+
+      if (heroImage) {
+        gsap.to(heroImage, {
+          y: isMobile ? -36 : -80,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroImage,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
+
+      if (processIntro) {
+        gsap.set(processIntro, { autoAlpha: 0, y: isMobile ? 20 : 30 });
+        gsap.to(processIntro, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: processIntro,
+            start: 'top 82%',
+            once: true,
+          },
+        });
+      }
+
+      gsap.set('.work-row', { autoAlpha: 0, x: isMobile ? -16 : -30 });
+      ScrollTrigger.batch('.work-row', {
+        start: 'top 86%',
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.86,
+            ease: 'power3.out',
+            stagger: 0.15,
+          });
+        },
+      });
+
+      document.querySelectorAll<HTMLElement>('.work-image-wrap').forEach((wrap) => {
+        const image = wrap.querySelector<HTMLElement>('.webgl-pixel-image');
+        if (!image) return;
+        gsap.to(image, {
+          y: isMobile ? -20 : -40,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrap,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      });
+
+      gsap.set('.process-step-row', { autoAlpha: 0, y: isMobile ? 20 : 40 });
+      ScrollTrigger.batch('.process-step-row', {
+        start: 'top 84%',
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.78,
+            ease: 'power2.out',
+            stagger: 0.1,
+          });
+        },
+      });
+
+      if (genericReveal.length) {
+        gsap.set(genericReveal, { autoAlpha: 0, y: isMobile ? 18 : 28 });
+        ScrollTrigger.batch(genericReveal, {
+          start: 'top 86%',
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.82,
+              ease: 'power3.out',
+              stagger: 0.08,
+            });
+          },
+        });
+      }
+
+      if (siteHeader) {
+        const headerInner = siteHeader.querySelector<HTMLElement>('.section-shell');
+        let isCompact = false;
+        const setHeaderCompact = (compact: boolean) => {
+          if (compact === isCompact) return;
+          isCompact = compact;
+          gsap.to(siteHeader, {
+            backgroundColor: compact ? 'rgba(247,245,240,0.85)' : 'rgba(255,255,255,0)',
+            backdropFilter: compact ? 'blur(12px)' : 'blur(0px)',
+            webkitBackdropFilter: compact ? 'blur(12px)' : 'blur(0px)',
+            duration: 0.3,
+            ease: 'power3.out',
+          });
+          if (headerInner) {
+            gsap.to(headerInner, {
+              height: compact ? 64 : 76,
+              duration: 0.3,
+              ease: 'power3.out',
+            });
+          }
+        };
+
+        ScrollTrigger.create({
+          start: 0,
+          end: 'max',
+          onUpdate: () => setHeaderCompact(window.scrollY > 12),
+        });
+        setHeaderCompact(window.scrollY > 12);
+      }
+
+      window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+      ScrollTrigger.refresh();
+    } catch (error) {
+      console.error('GSAP animations failed to initialize', error);
+    }
+  };
+
+  void initGsapAnimations();
 };
 
 if (document.readyState === 'loading') {

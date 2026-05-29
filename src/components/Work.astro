@@ -1,5 +1,5 @@
 ---
-import PixelImageReveal from './PixelImageReveal.astro';
+import WebGLPixelImage from './WebGLPixelImage.astro';
 import { translations } from '../i18n/translations';
 
 const workItems = [
@@ -33,15 +33,17 @@ const t = translations.es;
             </h3>
             <p class="mt-5 max-w-xl text-lg leading-7 text-muted" data-i18n={text}>{t[text]}</p>
           </div>
-          <PixelImageReveal
-            class="visual-frame h-72 transition duration-500 group-hover:scale-[0.985]"
-            src={image}
-            alt={t[title]}
-            intensity={0.28}
-            speed={1}
-            scale={1.025}
-            triggerOnce
-          />
+          <div class="work-image-wrap visual-frame h-72">
+            <WebGLPixelImage
+              class="h-full"
+              src={image}
+              alt={t[title]}
+              intensity={0.46}
+              speed={1}
+              scale={1.025}
+              triggerOnce
+            />
+          </div>
         </article>
       ))}
     </div>

@@ -10,13 +10,15 @@ const t = translations.es;
       <div>
         <span class="eyebrow reveal w-fit text-base font-normal normal-case" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
         <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(2.2rem,5.5vw,4.84rem)] text-ink">
-          <span data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
-          <span class="hero-typewriter" data-typewriter data-typewriter-phrases="soluciones digitales|más claridad para tus clientes|sistemas que generan oportunidades">soluciones digitales</span><span class="hero-title-period">.</span>
+          <span class="hero-title-line">
+            <span data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
+            <span class="hero-typewriter" data-typewriter data-typewriter-phrases="soluciones digitales|más claridad para tus clientes|sistemas que generan oportunidades">soluciones digitales</span><span class="hero-title-period">.</span>
+          </span>
         </h1>
         <div class="reveal mt-6">
           <p class="hero-loop-line text-base leading-7 sm:text-lg" data-i18n="heroText">{t.heroText}</p>
         </div>
-        <div class="reveal mt-8">
+        <div class="hero-cta reveal mt-8">
           <a
             href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
             class="btn btn-primary w-full"

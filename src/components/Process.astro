@@ -1,5 +1,5 @@
 ---
-import PixelImageReveal from './PixelImageReveal.astro';
+import WebGLPixelImage from './WebGLPixelImage.astro';
 
 const steps = [
   {
@@ -31,7 +31,7 @@ const steps = [
 
 <section id="proceso" class="section-pad">
   <div class="section-shell">
-    <div class="max-w-5xl scroll-reveal">
+    <div class="process-intro max-w-5xl scroll-reveal">
       <span class="eyebrow">Proceso</span>
       <h2 class="process-heading section-heading mt-7 text-[clamp(2.6rem,6vw,5.4rem)]">Lo hacemos en pasos claros</h2>
     </div>
@@ -44,7 +44,7 @@ const steps = [
             <h3 class="process-step-title">{step.title}</h3>
             <p class="process-step-text">{step.text}</p>
           </div>
-          <PixelImageReveal
+          <WebGLPixelImage
             class="process-step-image"
             src={step.image}
             alt={`Imagen del paso ${step.number}: ${step.title}`}

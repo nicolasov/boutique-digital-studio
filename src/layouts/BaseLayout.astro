@@ -14,7 +14,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,6 +27,8 @@ const {
     <script is:inline>
       (() => {
         try {
+          document.documentElement.classList.remove('no-js');
+          document.documentElement.classList.add('js');
           const stored = window.localStorage.getItem('bds-lang');
           const langs = [window.navigator.language, ...(window.navigator.languages || [])].filter(Boolean);
           const lang = stored === 'es' || stored === 'en'
