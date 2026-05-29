@@ -145,6 +145,12 @@ a {
 
 .hero-title-line {
   display: block;
+  overflow: hidden;
+}
+
+.hero-title-line-inner {
+  display: inline-block;
+  will-change: transform, opacity;
 }
 
 .hero-title-period {
@@ -593,6 +599,24 @@ a {
 }
 
 .webgl-pixel-image.is-fallback .webgl-pixel-fallback {
+  opacity: 1;
+}
+
+.js .hero-title-line-inner,
+.js .hero-loop-line,
+.js .hero-cta,
+.js .work-row,
+.js .process-intro,
+.js .process-card {
+  opacity: 0;
+}
+
+.no-js .hero-title-line-inner,
+.no-js .hero-loop-line,
+.no-js .hero-cta,
+.no-js .work-row,
+.no-js .process-intro,
+.no-js .process-card {
   opacity: 1;
 }
 

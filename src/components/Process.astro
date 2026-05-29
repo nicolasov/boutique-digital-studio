@@ -38,7 +38,7 @@ const steps = [
 
     <div class="process-step-list mt-16">
       {steps.map((step, index) => (
-        <article class={`process-step-row ${index % 2 === 1 ? 'is-reversed' : ''} scroll-reveal`}>
+        <article class={`process-card process-step-row ${index % 2 === 1 ? 'is-reversed' : ''} scroll-reveal`}>
           <div class="process-step-copy">
             <span class="process-step-number">{step.number}</span>
             <h3 class="process-step-title">{step.title}</h3>
