@@ -12,7 +12,7 @@ interface Props {
 const {
   src,
   alt = '',
-  intensity = 0.55,
+  intensity = 0.42,
   speed = 1,
   scale = 1.035,
   triggerOnce = true,
@@ -47,7 +47,7 @@ const {
       vUv = uv;
       vec3 pos = position;
       float wave = sin((uv.x * 8.0) + (uTime * 0.6)) * cos((uv.y * 6.0) + (uTime * 0.42));
-      pos.z += wave * (1.0 - uProgress) * uIntensity * 0.06;
+      pos.z += wave * (1.0 - uProgress) * uIntensity * 0.04;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
   `;
@@ -80,16 +80,16 @@ const {
       vec2 uv = coverUv(vUv, uPlaneResolution, uImageResolution);
       float eased = smoothstep(0.0, 1.0, uProgress);
       float reveal = smoothstep(0.05, 0.96, eased + (vUv.y - 0.5) * 0.2);
-      float pixelSize = mix(148.0, 1.0, reveal);
+      float pixelSize = mix(112.0, 1.0, reveal);
       vec2 pixelGrid = floor(uv * uPlaneResolution / pixelSize);
       vec2 pixelUv = (pixelGrid * pixelSize + pixelSize * 0.5) / uPlaneResolution;
       float noise = hash(pixelGrid + floor(uTime * 11.0));
       vec2 drift = vec2(noise - 0.5, hash(pixelGrid + 19.0) - 0.5);
-      vec2 sampleUv = mix(pixelUv + drift * (1.0 - reveal) * uIntensity * 0.22, uv, reveal);
+      vec2 sampleUv = mix(pixelUv + drift * (1.0 - reveal) * uIntensity * 0.14, uv, reveal);
       vec4 color = texture2D(uTexture, sampleUv);
       float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-      float scan = step(abs(vUv.y - eased), 0.03);
-      vec3 grayColor = vec3(gray) + (noise - 0.5) * (1.0 - reveal) * 0.16 + scan * 0.065;
+      float scan = step(abs(vUv.y - eased), 0.02);
+      vec3 grayColor = vec3(gray) + (noise - 0.5) * (1.0 - reveal) * 0.08 + scan * 0.035;
       color.rgb = mix(grayColor, color.rgb, smoothstep(0.18, 1.0, eased));
       gl_FragColor = color;
     }
@@ -126,7 +126,8 @@ const {
     gsap.registerPlugin(ScrollTrigger);
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const intensity = Number(root.dataset.intensity ?? 0.55);
+    const isMobile = window.innerWidth <= 768;
+    const intensity = Number(root.dataset.intensity ?? 0.42) * (isMobile ? 0.72 : 1);
     const speed = Number(root.dataset.speed ?? 1);
     const scale = Number(root.dataset.scale ?? 1.035);
     const renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: false });
@@ -214,8 +215,8 @@ const {
         paused: true,
         onUpdate: render,
       });
-      introTween = gsap.fromTo(canvas, { y: 22, scale }, { y: 0, scale: 1, duration: 1.15, ease: 'power3.out' });
-      floatTween = gsap.to(canvas, { y: -5, duration: 4.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.2 });
+      introTween = gsap.fromTo(canvas, { y: isMobile ? 8 : 14, scale }, { y: 0, scale: 1, duration: 1.05, ease: 'power3.out' });
+      floatTween = gsap.to(canvas, { y: isMobile ? -1.5 : -3, duration: 5.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.2 });
       trigger = ScrollTrigger.create({
         trigger: root,
         start: 'top 84%',

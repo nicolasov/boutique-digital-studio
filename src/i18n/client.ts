@@ -529,7 +529,7 @@ const initI18n = () => {
       const heroLines = Array.from(document.querySelectorAll<HTMLElement>('.hero-title-line-inner'));
       const heroSubtitle = document.querySelector<HTMLElement>('.hero-loop-line');
       const heroCta = document.querySelector<HTMLElement>('.hero-cta');
-      const heroImage = document.querySelector<HTMLElement>('.hero-visual img');
+      const heroImage = document.querySelector<HTMLElement>('.hero-visual');
       const processIntro = document.querySelector<HTMLElement>('.process-intro');
       const genericReveal = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal')).filter(
         (node) =>
@@ -677,10 +677,7 @@ const initI18n = () => {
         const setHeaderCompact = (compact: boolean) => {
           if (compact === isCompact) return;
           isCompact = compact;
-          siteHeader.style.transition = 'background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease';
-          siteHeader.style.background = compact ? 'rgba(247,245,240,0.88)' : '';
-          siteHeader.style.backdropFilter = compact ? 'blur(14px)' : '';
-          siteHeader.style.webkitBackdropFilter = compact ? 'blur(14px)' : '';
+          siteHeader.classList.toggle('is-scrolled', compact);
         };
 
         let navRaf = 0;

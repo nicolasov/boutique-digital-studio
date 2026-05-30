@@ -21,26 +21,26 @@ const t = translations.es;
         </h2>
     </div>
 
-    <div class="mt-16 grid gap-8">
+    <div class="mt-14 grid gap-8">
       {workItems.map(([title, text, image], index) => (
-        <article class="work-row group grid gap-5 border-t border-ink/14 pt-6 md:grid-cols-[0.16fr_0.46fr_0.38fr] md:items-center">
+        <article class="work-row group grid gap-7 border-t border-ink/14 pt-6 md:grid-cols-[0.12fr_0.48fr_0.4fr] md:items-center md:gap-9">
           <span class="display-font text-7xl font-bold tracking-[-0.08em] text-ink/16 transition group-hover:text-ink">
             0{index + 1}
           </span>
-          <div>
+          <div class="work-copy">
             <h3 class="display-font text-4xl font-semibold leading-[0.96] tracking-[-0.055em] sm:text-6xl" data-i18n={title}>
               {t[title]}
             </h3>
             <p class="mt-5 max-w-xl text-lg leading-7 text-muted" data-i18n={text}>{t[text]}</p>
           </div>
-          <div class="work-image-wrap visual-frame h-72">
+          <div class="work-image-wrap visual-frame h-72 md:h-80">
             <WebGLPixelImage
               class="h-full"
               src={image}
               alt={t[title]}
-              intensity={0.46}
-              speed={1}
-              scale={1.025}
+              intensity={0.32}
+              speed={0.92}
+              scale={1.014}
               triggerOnce
             />
           </div>

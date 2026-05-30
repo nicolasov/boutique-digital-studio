@@ -13,13 +13,15 @@ const t = translations.es;
 
 <section id="soluciones-digitales" class="section-pad bg-paper">
   <div class="section-shell">
-    <div class="scroll-reveal max-w-5xl">
-      <p class="services-intro-statement display-font font-semibold tracking-[-0.055em] text-ink" data-i18n="servicesIntro">
-        {t.servicesIntro}
-      </p>
-    </div>
+    {t.servicesIntro && (
+      <div class="scroll-reveal max-w-5xl">
+        <p class="services-intro-statement display-font font-semibold tracking-[-0.055em] text-ink" data-i18n="servicesIntro">
+          {t.servicesIntro}
+        </p>
+      </div>
+    )}
 
-    <div class="mt-14 divide-y divide-ink/12 border-y border-ink/12">
+    <div class="services-accordion divide-y divide-ink/12 border-b border-ink/12">
       {services.map(([title, text]) => (
         <details class="solution-item group">
           <summary class="grid cursor-pointer list-none gap-5 py-6 md:grid-cols-[1fr_auto] md:items-center">
