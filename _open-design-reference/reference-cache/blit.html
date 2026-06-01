@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html id="html" lang="en-US" prefix="og: https://ogp.me/ns#">
+<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>(()=>{class RocketLazyLoadScripts{constructor(){this.v="2.0.5",this.userEvents=["keydown","keyup","mousedown","mouseup","mousemove","mouseover","mouseout","touchmove","touchstart","touchend","touchcancel","wheel","click","dblclick","input"],this.attributeEvents=["onblur","onclick","oncontextmenu","ondblclick","onfocus","onmousedown","onmouseenter","onmouseleave","onmousemove","onmouseout","onmouseover","onmouseup","onmousewheel","onscroll","onsubmit"]}async t(){this.i(),this.o(),/iP(ad|hone)/.test(navigator.userAgent)&&this.h(),this.u(),this.l(this),this.m(),this.k(this),this.p(this),this._(),await Promise.all([this.R(),this.L()]),this.lastBreath=Date.now(),this.S(this),this.P(),this.D(),this.O(),this.M(),await this.C(this.delayedScripts.normal),await this.C(this.delayedScripts.defer),await this.C(this.delayedScripts.async),await this.T(),await this.F(),await this.j(),await this.A(),window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this.lastTouchEnd&&await new Promise(t=>setTimeout(t,500-Date.now()+this.lastTouchEnd)),this.I(),this.H(),this.U(),this.W()}i(){this.CSPIssue=sessionStorage.getItem("rocketCSPIssue"),document.addEventListener("securitypolicyviolation",t=>{this.CSPIssue||"script-src-elem"!==t.violatedDirective||"data"!==t.blockedURI||(this.CSPIssue=!0,sessionStorage.setItem("rocketCSPIssue",!0))},{isRocket:!0})}o(){window.addEventListener("pageshow",t=>{this.persisted=t.persisted,this.realWindowLoadedFired=!0},{isRocket:!0}),window.addEventListener("pagehide",()=>{this.onFirstUserAction=null},{isRocket:!0})}h(){let t;function e(e){t=e}window.addEventListener("touchstart",e,{isRocket:!0}),window.addEventListener("touchend",function i(o){o.changedTouches[0]&&t.changedTouches[0]&&Math.abs(o.changedTouches[0].pageX-t.changedTouches[0].pageX)<10&&Math.abs(o.changedTouches[0].pageY-t.changedTouches[0].pageY)<10&&o.timeStamp-t.timeStamp<200&&(window.removeEventListener("touchstart",e,{isRocket:!0}),window.removeEventListener("touchend",i,{isRocket:!0}),"INPUT"===o.target.tagName&&"text"===o.target.type||(o.target.dispatchEvent(new TouchEvent("touchend",{target:o.target,bubbles:!0})),o.target.dispatchEvent(new MouseEvent("mouseover",{target:o.target,bubbles:!0})),o.target.dispatchEvent(new PointerEvent("click",{target:o.target,bubbles:!0,cancelable:!0,detail:1,clientX:o.changedTouches[0].clientX,clientY:o.changedTouches[0].clientY})),event.preventDefault()))},{isRocket:!0})}q(t){this.userActionTriggered||("mousemove"!==t.type||this.firstMousemoveIgnored?"keyup"===t.type||"mouseover"===t.type||"mouseout"===t.type||(this.userActionTriggered=!0,this.onFirstUserAction&&this.onFirstUserAction()):this.firstMousemoveIgnored=!0),"click"===t.type&&t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),"touchstart"===this.lastEvent&&"touchend"===t.type&&(this.lastTouchEnd=Date.now()),"click"===t.type&&(this.lastTouchEnd=0),this.lastEvent=t.type,t.composedPath&&t.composedPath()[0].getRootNode()instanceof ShadowRoot&&(t.rocketTarget=t.composedPath()[0]),this.savedUserEvents.push(t)}u(){this.savedUserEvents=[],this.userEventHandler=this.q.bind(this),this.userEvents.forEach(t=>window.addEventListener(t,this.userEventHandler,{passive:!1,isRocket:!0})),document.addEventListener("visibilitychange",this.userEventHandler,{isRocket:!0})}U(){this.userEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!1,isRocket:!0})),document.removeEventListener("visibilitychange",this.userEventHandler,{isRocket:!0}),this.savedUserEvents.forEach(t=>{(t.rocketTarget||t.target).dispatchEvent(new window[t.constructor.name](t.type,t))})}m(){const t="return false",e=Array.from(this.attributeEvents,t=>"data-rocket-"+t),i="["+this.attributeEvents.join("],[")+"]",o="[data-rocket-"+this.attributeEvents.join("],[data-rocket-")+"]",s=(e,i,o)=>{o&&o!==t&&(e.setAttribute("data-rocket-"+i,o),e["rocket"+i]=new Function("event",o),e.setAttribute(i,t))};new MutationObserver(t=>{for(const n of t)"attributes"===n.type&&(n.attributeName.startsWith("data-rocket-")||this.everythingLoaded?n.attributeName.startsWith("data-rocket-")&&this.everythingLoaded&&this.N(n.target,n.attributeName.substring(12)):s(n.target,n.attributeName,n.target.getAttribute(n.attributeName))),"childList"===n.type&&n.addedNodes.forEach(t=>{if(t.nodeType===Node.ELEMENT_NODE)if(this.everythingLoaded)for(const i of[t,...t.querySelectorAll(o)])for(const t of i.getAttributeNames())e.includes(t)&&this.N(i,t.substring(12));else for(const e of[t,...t.querySelectorAll(i)])for(const t of e.getAttributeNames())this.attributeEvents.includes(t)&&s(e,t,e.getAttribute(t))})}).observe(document,{subtree:!0,childList:!0,attributeFilter:[...this.attributeEvents,...e]})}I(){this.attributeEvents.forEach(t=>{document.querySelectorAll("[data-rocket-"+t+"]").forEach(e=>{this.N(e,t)})})}N(t,e){const i=t.getAttribute("data-rocket-"+e);i&&(t.setAttribute(e,i),t.removeAttribute("data-rocket-"+e))}k(t){Object.defineProperty(HTMLElement.prototype,"onclick",{get(){return this.rocketonclick||null},set(e){this.rocketonclick=e,this.setAttribute(t.everythingLoaded?"onclick":"data-rocket-onclick","this.rocketonclick(event)")}})}S(t){function e(e,i){let o=e[i];e[i]=null,Object.defineProperty(e,i,{get:()=>o,set(s){t.everythingLoaded?o=s:e["rocket"+i]=o=s}})}e(document,"onreadystatechange"),e(window,"onload"),e(window,"onpageshow");try{Object.defineProperty(document,"readyState",{get:()=>t.rocketReadyState,set(e){t.rocketReadyState=e},configurable:!0}),document.readyState="loading"}catch(t){console.log("WPRocket DJE readyState conflict, bypassing")}}l(t){this.originalAddEventListener=EventTarget.prototype.addEventListener,this.originalRemoveEventListener=EventTarget.prototype.removeEventListener,this.savedEventListeners=[],EventTarget.prototype.addEventListener=function(e,i,o){o&&o.isRocket||!t.B(e,this)&&!t.userEvents.includes(e)||t.B(e,this)&&!t.userActionTriggered||e.startsWith("rocket-")||t.everythingLoaded?t.originalAddEventListener.call(this,e,i,o):(t.savedEventListeners.push({target:this,remove:!1,type:e,func:i,options:o}),"mouseenter"!==e&&"mouseleave"!==e||t.originalAddEventListener.call(this,e,t.savedUserEvents.push,o))},EventTarget.prototype.removeEventListener=function(e,i,o){o&&o.isRocket||!t.B(e,this)&&!t.userEvents.includes(e)||t.B(e,this)&&!t.userActionTriggered||e.startsWith("rocket-")||t.everythingLoaded?t.originalRemoveEventListener.call(this,e,i,o):t.savedEventListeners.push({target:this,remove:!0,type:e,func:i,options:o})}}J(t,e){this.savedEventListeners=this.savedEventListeners.filter(i=>{let o=i.type,s=i.target||window;return e!==o||t!==s||(this.B(o,s)&&(i.type="rocket-"+o),this.$(i),!1)})}H(){EventTarget.prototype.addEventListener=this.originalAddEventListener,EventTarget.prototype.removeEventListener=this.originalRemoveEventListener,this.savedEventListeners.forEach(t=>this.$(t))}$(t){t.remove?this.originalRemoveEventListener.call(t.target,t.type,t.func,t.options):this.originalAddEventListener.call(t.target,t.type,t.func,t.options)}p(t){let e;function i(e){return t.everythingLoaded?e:e.split(" ").map(t=>"load"===t||t.startsWith("load.")?"rocket-jquery-load":t).join(" ")}function o(o){function s(e){const s=o.fn[e];o.fn[e]=o.fn.init.prototype[e]=function(){return this[0]===window&&t.userActionTriggered&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(t=>{const e=arguments[0][t];delete arguments[0][t],arguments[0][i(t)]=e})),s.apply(this,arguments),this}}if(o&&o.fn&&!t.allJQueries.includes(o)){const e={DOMContentLoaded:[],"rocket-DOMContentLoaded":[]};for(const t in e)document.addEventListener(t,()=>{e[t].forEach(t=>t())},{isRocket:!0});o.fn.ready=o.fn.init.prototype.ready=function(i){function s(){parseInt(o.fn.jquery)>2?setTimeout(()=>i.bind(document)(o)):i.bind(document)(o)}return"function"==typeof i&&(t.realDomReadyFired?!t.userActionTriggered||t.fauxDomReadyFired?s():e["rocket-DOMContentLoaded"].push(s):e.DOMContentLoaded.push(s)),this},s("on"),s("one"),s("off"),t.allJQueries.push(o)}e=o}t.allJQueries=[],o(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){o(t)}})}P(){const t=new Map;document.write=document.writeln=function(e){const i=document.currentScript,o=document.createRange(),s=i.parentElement;let n=t.get(i);void 0===n&&(n=i.nextSibling,t.set(i,n));const c=document.createDocumentFragment();o.setStart(c,0),c.appendChild(o.createContextualFragment(e)),s.insertBefore(c,n)}}async R(){return new Promise(t=>{this.userActionTriggered?t():this.onFirstUserAction=t})}async L(){return new Promise(t=>{document.addEventListener("DOMContentLoaded",()=>{this.realDomReadyFired=!0,t()},{isRocket:!0})})}async j(){return this.realWindowLoadedFired?Promise.resolve():new Promise(t=>{window.addEventListener("load",t,{isRocket:!0})})}M(){this.pendingScripts=[];this.scriptsMutationObserver=new MutationObserver(t=>{for(const e of t)e.addedNodes.forEach(t=>{"SCRIPT"!==t.tagName||!t.src||t.noModule||t.isWPRocket||this.pendingScripts.push({script:t,promise:new Promise(e=>{const i=()=>{const i=this.pendingScripts.findIndex(e=>e.script===t);i>=0&&this.pendingScripts.splice(i,1),e()};t.addEventListener("load",i,{isRocket:!0}),t.addEventListener("error",i,{isRocket:!0}),setTimeout(i,1e3)})})})}),this.scriptsMutationObserver.observe(document,{childList:!0,subtree:!0})}async F(){await this.X(),this.pendingScripts.length?(await this.pendingScripts[0].promise,await this.F()):this.scriptsMutationObserver.disconnect()}D(){this.delayedScripts={normal:[],async:[],defer:[]},document.querySelectorAll("script[type$=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _(){await this.L();let t=[];document.querySelectorAll("script[type$=rocketlazyloadscript][data-rocket-src]").forEach(e=>{let i=e.getAttribute("data-rocket-src");if(i&&!i.startsWith("data:")){i.startsWith("//")&&(i=location.protocol+i);try{const o=new URL(i).origin;o!==location.origin&&t.push({src:o,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}catch(t){}}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this.Y(t,"preconnect")}async G(t){if(await this.K(),!0!==t.noModule||!("noModule"in HTMLScriptElement.prototype))return new Promise(e=>{let i;function o(){(i||t).setAttribute("data-rocket-status","executed"),e()}try{if(navigator.userAgent.includes("Firefox/")||""===navigator.vendor||this.CSPIssue)i=document.createElement("script"),[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),i.setAttribute(e,t.nodeValue))}),t.text&&(i.text=t.text),t.nonce&&(i.nonce=t.nonce),i.hasAttribute("src")?(i.addEventListener("load",o,{isRocket:!0}),i.addEventListener("error",()=>{i.setAttribute("data-rocket-status","failed-network"),e()},{isRocket:!0}),setTimeout(()=>{i.isConnected||e()},1)):(i.text=t.text,o()),i.isWPRocket=!0,t.parentNode.replaceChild(i,t);else{const i=t.getAttribute("data-rocket-type"),s=t.getAttribute("data-rocket-src");i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",o,{isRocket:!0}),t.addEventListener("error",i=>{this.CSPIssue&&i.target.src.startsWith("data:")?(console.log("WPRocket: CSP fallback activated"),t.removeAttribute("src"),this.G(t).then(e)):(t.setAttribute("data-rocket-status","failed-network"),e())},{isRocket:!0}),s?(t.fetchPriority="high",t.removeAttribute("data-rocket-src"),t.src=s):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}}catch(i){t.setAttribute("data-rocket-status","failed-transform"),e()}});t.setAttribute("data-rocket-status","skipped")}async C(t){const e=t.shift();return e?(e.isConnected&&await this.G(e),this.C(t)):Promise.resolve()}O(){this.Y([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}Y(t,e){this.trash=this.trash||[];let i=!0;var o=document.createDocumentFragment();t.forEach(t=>{const s=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(s&&!s.startsWith("data:")){const n=document.createElement("link");n.href=s,n.rel=e,"preconnect"!==e&&(n.as="script",n.fetchPriority=i?"high":"low"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),t.nonce&&(n.nonce=t.nonce),o.appendChild(n),this.trash.push(n),i=!1}}),document.head.appendChild(o)}W(){this.trash.forEach(t=>t.remove())}async T(){try{document.readyState="interactive"}catch(t){}this.fauxDomReadyFired=!0;try{await this.K(),this.J(document,"readystatechange"),document.dispatchEvent(new Event("rocket-readystatechange")),await this.K(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this.K(),this.J(document,"DOMContentLoaded"),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this.K(),this.J(window,"DOMContentLoaded"),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}catch(t){console.error(t)}}async A(){try{document.readyState="complete"}catch(t){}try{await this.K(),this.J(document,"readystatechange"),document.dispatchEvent(new Event("rocket-readystatechange")),await this.K(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this.K(),this.J(window,"load"),window.dispatchEvent(new Event("rocket-load")),await this.K(),window.rocketonload&&window.rocketonload(),await this.K(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this.K(),this.J(window,"pageshow");const t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this.K(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}catch(t){console.error(t)}}async K(){Date.now()-this.lastBreath>45&&(await this.X(),this.lastBreath=Date.now())}async X(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}B(t,e=window){return e===document&&"readystatechange"===t||(e===document&&"DOMContentLoaded"===t||(e===window&&"DOMContentLoaded"===t||(e===window&&"load"===t||e===window&&"pageshow"===t)))}static run(){(new RocketLazyLoadScripts).t()}}RocketLazyLoadScripts.run()})();
+</script>
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimal-ui, viewport-fit=cover">
+    <meta name="google" content="notranslate">
+    <base href="/">
+
+    <title>Studio - blit</title>
+<link data-rocket-prefetch href="https://cdn-cookieyes.com" rel="dns-prefetch">
+<link data-rocket-prefetch href="https://calendly.com" rel="dns-prefetch"><link rel="preload" data-rocket-preload as="image" href="https://blit.studio/wp-content/uploads/2025/04/logo-white.svg" fetchpriority="high">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://blit.studio/wp-content/themes/blit/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="https://blit.studio/wp-content/themes/blit/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://blit.studio/wp-content/themes/blit/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://blit.studio/wp-content/themes/blit/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://blit.studio/wp-content/themes/blit/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://blit.studio/wp-content/themes/blit/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://blit.studio/wp-content/themes/blit/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://blit.studio/wp-content/themes/blit/img/favicon/favicon.ico" rel="shortcut icon">
+    <link data-minify="1" href="https://blit.studio/wp-content/cache/min/1/wp-content/themes/blit/style.css?ver=1778695762" rel="stylesheet">
+
+    <link rel="preload" href="https://blit.studio/wp-content/themes/blit/js/vendor.min.js" as="script">
+    <link rel="preload" href="https://blit.studio/wp-content/themes/blit/js/app.min.js" as="script">
+
+        <script type="text/rocketlazyloadscript">history.scrollRestoration = "manual"</script>
+    
+    <link rel="alternate" hreflang="en" href="https://blit.studio/studio/" />
+<link rel="alternate" hreflang="x-default" href="https://blit.studio/studio/" />
+<script type="text/rocketlazyloadscript" data-minify="1" id="cookieyes" data-rocket-type="text/javascript" data-rocket-src="https://blit.studio/wp-content/cache/min/1/client_data/5b5b5e2eec7af84927ca9c68/script.js?ver=1778695763" data-rocket-defer defer></script>
+<!-- Search Engine Optimization by Rank Math - https://rankmath.com/ -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://blit.studio/studio/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Studio - blit" />
+<meta property="og:url" content="https://blit.studio/studio/" />
+<meta property="og:site_name" content="Blit Studio" />
+<meta property="og:updated_time" content="2026-05-05T12:34:48+02:00" />
+<meta property="article:published_time" content="2025-04-15T15:53:26+02:00" />
+<meta property="article:modified_time" content="2026-05-05T12:34:48+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Studio - blit" />
+<meta name="twitter:label1" content="Time to read" />
+<meta name="twitter:data1" content="Less than a minute" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":["ProfessionalService","Organization"],"@id":"https://blit.studio/#organization","name":"blit","url":"https://blit.studio","openingHours":["Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday 09:00-17:00"]},{"@type":"WebSite","@id":"https://blit.studio/#website","url":"https://blit.studio","name":"Blit Studio","publisher":{"@id":"https://blit.studio/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://blit.studio/studio/#webpage","url":"https://blit.studio/studio/","name":"Studio - blit","datePublished":"2025-04-15T15:53:26+02:00","dateModified":"2026-05-05T12:34:48+02:00","isPartOf":{"@id":"https://blit.studio/#website"},"inLanguage":"en-US"},{"@type":"Person","@id":"https://blit.studio/author/blit/","name":"blit","url":"https://blit.studio/author/blit/","image":{"@type":"ImageObject","@id":"https://secure.gravatar.com/avatar/85b86c233c5ce887d1dc13a606f6fcc781bc9c81be256985cd2f208df65ae32b?s=96&amp;d=mm&amp;r=g","url":"https://secure.gravatar.com/avatar/85b86c233c5ce887d1dc13a606f6fcc781bc9c81be256985cd2f208df65ae32b?s=96&amp;d=mm&amp;r=g","caption":"blit","inLanguage":"en-US"},"sameAs":["http://local.blitweb.es"],"worksFor":{"@id":"https://blit.studio/#organization"}},{"@type":"Article","headline":"Studio - blit","datePublished":"2025-04-15T15:53:26+02:00","dateModified":"2026-05-05T12:34:48+02:00","author":{"@id":"https://blit.studio/author/blit/","name":"blit"},"publisher":{"@id":"https://blit.studio/#organization"},"name":"Studio - blit","@id":"https://blit.studio/studio/#richSnippet","isPartOf":{"@id":"https://blit.studio/studio/#webpage"},"inLanguage":"en-US","mainEntityOfPage":{"@id":"https://blit.studio/studio/#webpage"}}]}</script>
+<!-- /Rank Math WordPress SEO plugin -->
+
+
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://blit.studio/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblit.studio%2Fstudio%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://blit.studio/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblit.studio%2Fstudio%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+
+
+<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href='https://blit.studio/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css?ver=1' media='all' />
+<style id="wpml-legacy-horizontal-list-0-inline-css">
+.wpml-ls-statics-footer a, .wpml-ls-statics-footer .wpml-ls-sub-menu a, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link, .wpml-ls-statics-footer li:not(.wpml-ls-current-language) .wpml-ls-link, .wpml-ls-statics-footer li:not(.wpml-ls-current-language) .wpml-ls-link:link {color:#444444;background-color:#ffffff;}.wpml-ls-statics-footer .wpml-ls-sub-menu a:hover,.wpml-ls-statics-footer .wpml-ls-sub-menu a:focus, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link:hover, .wpml-ls-statics-footer .wpml-ls-sub-menu a:link:focus {color:#000000;background-color:#eeeeee;}.wpml-ls-statics-footer .wpml-ls-current-language > a {color:#444444;background-color:#ffffff;}.wpml-ls-statics-footer .wpml-ls-current-language:hover>a, .wpml-ls-statics-footer .wpml-ls-current-language>a:focus {color:#000000;background-color:#eeeeee;}
+/*# sourceURL=wpml-legacy-horizontal-list-0-inline-css */
+</style>
+<script id="wpml-cookie-js-extra">
+var wpml_cookies = {"wp-wpml_current_language":{"value":"en","expires":1,"path":"/"}};
+var wpml_cookies = {"wp-wpml_current_language":{"value":"en","expires":1,"path":"/"}};
+//# sourceURL=wpml-cookie-js-extra
+</script>
+<script type="text/rocketlazyloadscript" data-minify="1" data-wp-strategy="defer" defer id="wpml-cookie-js" data-rocket-src="https://blit.studio/wp-content/cache/min/1/wp-content/plugins/sitepress-multilingual-cms/res/js/cookies/language-cookie.js?ver=1778695763"></script>
+<link rel="https://api.w.org/" href="https://blit.studio/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://blit.studio/wp-json/wp/v2/pages/248" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blit.studio/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 7.0" />
+<link rel='shortlink' href='https://blit.studio/?p=248' />
+<meta name="generator" content="WPML ver:4.9.2.1 stt:1;" />
+<meta name="generator" content="WP Rocket 3.21.3" data-wpr-features="wpr_delay_js wpr_defer_js wpr_minify_js wpr_preconnect_external_domains wpr_oci wpr_image_dimensions wpr_minify_css wpr_desktop" /></head>
+<body class="wp-singular page-template page-template-template-flexible page-template-template-flexible-php page page-id-248 wp-theme-blit studio" id="top">
+
+    
+    <div  id="app" data-taxi>
+
+
+
+<div  id="flexible" class="flexible" data-taxi-view="default" data-taxi-slug="studio" data-section="studio">
+
+            <div  class="background"></div>
+        <div  class="inner">
+
+            <div class="canvas">
+    <div id="unfolded-webgl" class="unfolded-webgl"></div>
+</div>
+
+            
+            
+                            
+                                        
+                    
+<section class="component component--hero-studio hero-studio"  data-component="hero-studio">
+        <div class="container --xlarge --m-medium">
+        <div class="text-group">
+                            <div class="title --medium" data-increment="0.8">Designers of experiential conditions that outlive the moment.
+</div>                                        <div class="wysiwyg --xsmall" data-increment="0.8"><p><strong>blit.</strong> creates immersive visual environments for culture, brands, and moments meant to be shared.</p>
+</div>                    </div>
+        <div class="sticky">
+            <div class="image">
+                <svg width="1395" height="433" viewBox="0 0 1395 433" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M215.853 432.045C334.961 432.045 431.518 335.488 431.518 216.38C431.518 97.2714 334.961 0.714844 215.853 0.714844C96.744 0.714844 0.1875 97.2714 0.1875 216.38C0.1875 335.488 96.744 432.045 215.853 432.045Z" fill="white"/>
+                    <path d="M913.104 0.585938H481.518V432.172H913.104V0.585938Z" fill="white"/>
+                    <path d="M1328.73 0.648915L963.104 366.273L1028.94 432.107L1394.56 66.4821L1328.73 0.648915Z" fill="white"/>
+                </svg>
+                <!--                                             <img loading="eager" src="https://blit.studio/wp-content/uploads/2025/05/01hero-frame.svg" alt="" width="0" height="0">
+                                     -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--subhero-studio subhero-studio"  data-component="subhero-studio">
+        <div class="container --large">
+        <div class="text-group">
+                            <div class="wysiwyg --xxlarge" data-increment="0.8"><p>since 2015, museums, cultural institutions, brands, and event creators have turned to blit. when the aim isn’t simply to show something, but to shape how it’s felt and how long it stays.</p>
+</div>                    </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--block-4 block-4"  data-component="block-4">
+        <div class="container --large">
+        <div class="first --parallax" data-parallax="-80">
+            <div class="wysiwyg --xsmall" data-increment="0.8"><p>from digital scenography and large-scale installations to interactive and virtual experiences, blit. designs situations where space, story, and presence collide and meaning appears through experiencing, not watching.</p>
+</div>        </div>
+        <div class="second --parallax">
+            <div class="image " style="aspect-ratio: 0.85714285714286;"><img width="200" height="233" src="https://blit.studio/wp-content/uploads/2025/10/STUDIO_Foto_01-200x233.png" data-src="https://blit.studio/wp-content/uploads/2025/10/STUDIO_Foto_01.png" alt=""></div>            <div class="title --medium" data-increment="0.8">no format is too big, no challenge too complex.
+</div>        </div>
+        <div class="third --parallax" data-parallax="-105">
+            <div class="wysiwyg --xxlarge" data-increment="0.8"><p>Alongside commissioned work, the studio authors <strong>blit. ORIGINALS</strong>, its own experiential platforms, not just one-off projects. Experiences like <strong>NOCTURNA™</strong>, <strong>ECHOES™</strong>, and <strong>PORTALIS™</strong> are developed, owned, and evolved from within the studio, existing as ready-to-deploy platforms.</p>
+</div>        </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--team team"  data-component="team">
+        <div class="container --xlarge --m-xxlarge">
+        <div class="first">
+                            <div class="image --parallax">
+                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2025/04/02studio.jpg" alt="" width="1920" height="940">
+                                                            </div>
+                    </div>
+        <div class="second --parallax">
+                            <div class="title --medium" data-increment="0.8">Some call it immersive.<br />
+Others call it experiential.<br />
+Audiences all say the same thing: It’s the thing that stays with you.
+</div>                    </div>
+        <div class="third">
+            <div class="left">
+                                                            <div class="card-team">
+                                                            <div class="image">
+                                                                                                            <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_Lara.jpg" alt="" width="360" height="480">
+                                                                                                </div>
+                                                        <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Lara de la Puente Aldea</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Motion designer & TouchDesigner Artist</div>                                                                    </div>
+                            </div>
+                        </div>
+                                            <div class="card-team">
+                                                            <div class="image">
+                                                                                                            <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_julio.jpg" alt="" width="360" height="480">
+                                                                                                </div>
+                                                        <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Julio César Romero</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Video Editor & Composer</div>                                                                    </div>
+                            </div>
+                        </div>
+                                            <div class="card-team">
+                                                            <div class="image">
+                                                                                                            <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_ivan.jpg" alt="" width="360" height="480">
+                                                                                                </div>
+                                                        <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Ivan Anfruns</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">VR developer</div>                                                                    </div>
+                            </div>
+                        </div>
+                                            <div class="card-team">
+                                                            <div class="image">
+                                                                                                            <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_laia.jpg" alt="" width="360" height="480">
+                                                                                                </div>
+                                                        <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Laia Claver</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Script &  copywritter</div>                                                                    </div>
+                            </div>
+                        </div>
+                                            <div class="card-team">
+                                                            <div class="image">
+                                                                                                                                </div>
+                                                        <div class="member">
+                                <div class="name">
+                                                                    </div>
+                                <div class="position">
+                                                                    </div>
+                            </div>
+                        </div>
+                                                </div>
+            <div class="right">
+                                                            <div class="card-team --2">
+                            <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Marc Colomines</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Creative Managing Director</div>                                                                    </div>
+                            </div>
+                                                            <div class="image">
+                                                                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_marc.jpg" alt="" width="360" height="480">
+                                                                                                            </div>
+                                                    </div>
+                                            <div class="card-team --2">
+                            <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Paul González</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Creative Director</div>                                                                    </div>
+                            </div>
+                                                            <div class="image">
+                                                                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_paul.jpg" alt="" width="360" height="480">
+                                                                                                            </div>
+                                                    </div>
+                                            <div class="card-team --2">
+                            <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Hector Mas</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Project Manager</div>                                                                    </div>
+                            </div>
+                                                            <div class="image">
+                                                                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_hector.jpg" alt="" width="360" height="480">
+                                                                                                            </div>
+                                                    </div>
+                                            <div class="card-team --2">
+                            <div class="member">
+                                <div class="name">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Francesco Venturini</div>                                                                    </div>
+                                <div class="position">
+                                                                            <div class="wysiwyg --xsmall --na" data-increment="0.8">Project Manager</div>                                                                    </div>
+                            </div>
+                                                            <div class="image">
+                                                                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/02/Plao_americano_francesco.jpg" alt="" width="360" height="480">
+                                                                                                            </div>
+                                                    </div>
+                                            <div class="card-team --2">
+                            <div class="member">
+                                <div class="name">
+                                                                    </div>
+                                <div class="position">
+                                                                    </div>
+                            </div>
+                                                            <div class="image">
+                                                                                                                                                </div>
+                                                    </div>
+                                                </div>
+        </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--awards awards"  data-component="awards">
+        <div class="container --large --m-xxlarge">
+        <div class="first --parallax">
+                            <div class="wysiwyg --xsmall" data-increment="0.8"><p>awards</p>
+</div>                                        <div class="wysiwyg --xxlarge" data-increment="0.8"><p>blit. has been recognized with awards like the LAUS and Evento Plus, and we’ve made our mark internationally, earning top honors at Moscow’s Circle of Light festival.</p>
+</div>                    </div>
+        <div class="second --parallax" data-parallax="-75">
+                            <div class="wysiwyg --xsmall" data-increment="0.8"><p>We’ve also participated in many major design and audiovisual festivals along the way. But accolades aside, what truly drives us is the pursuit of the unexpected. We don’t think outside the box—we’ve already flattened it and turned it into something entirely new.</p>
+</div>                                        <div class="image">
+                                                                        <img loading="eager" src="https://blit.studio/wp-content/uploads/2026/01/blit_atic.jpg" alt="" width="1440" height="720">
+                                                            </div>
+                    </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--explore-projects explore-projects"  data-component="explore-projects">
+        <div class="container --large --m-mlarge">
+            </div>
+    <div class="container --xxxlarge">
+        <div class="second">
+            <div class="video-group --m-auto">
+                <div class="video">
+                    <div class="video__player">
+                                                    <video preload="metadata" loop playsinline muted autoplay-onscroll data-desktop>
+                                <source src="https://blit.studio/wp-content/uploads/2025/04/06projects.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                                                                            <video preload="metadata" loop playsinline muted autoplay-onscroll data-mobile>
+                                <source src="https://blit.studio/wp-content/uploads/2025/04/06projects.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                                            </div>
+                    <div class="video__trigger" data-mobile>
+                        <div class="video__trigger__circle"></div>
+                        <div class="video__trigger__hover"></div>
+                        <div class="play">play</div>
+                    </div>
+                </div>
+                                    <div class="player">
+                        <div class="player__mask"></div>
+                        <div class="player__inner">
+                            <div class="floating --center">
+                                                                    <video preload="none" playsinline controls controlslist="nodownload" disablePictureInPicture data-desktop>
+                                        <source src="https://blit.studio/wp-content/uploads/2025/04/06projects.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                                                                                    <video preload="none" playsinline controls controlslist="nodownload" disablePictureInPicture data-mobile>
+                                        <source src="https://blit.studio/wp-content/uploads/2025/04/06projects.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                                            </div>
+                        </div>
+                        <div class="player__closer closer floating --top">
+                            <div class="closer__icon">
+                                <div class="closer__icon__item --top"></div>
+                                <div class="closer__icon__item --middle"></div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--contact contact"  data-component="contact">
+        <div class="container --large">
+        <div class="text-group">
+                            <div class="wysiwyg --xsmall" data-increment="0.8"><p>And the question we asked ourselves: what got us here?<br />
+Well… not knowing how to say no.</p>
+</div>                                        <h1 class="title --medium" data-increment="0.8">like Mark Twain said, &#8220;they didn’t know it was impossible, so they did it.&#8221;
+</h1>                                        <div class="wysiwyg --xsmall" data-increment="0.8"><p>And that’s exactly how we roll.<br />
+Ready to create something unforgettable?</p>
+</div>                    </div>
+                    <a href="/contact/" class="link --xlarge"><div  class="text">let´s talk</div></a>            </div>
+</section>
+
+
+                
+                                        
+                    
+<section class="component component--careers careers"  data-component="careers">
+        <div class="container --xlarge">
+        <div class="text-group">
+                            <div class="title --xlarge" data-increment="0.8">Careers
+</div>                                        <div class="wysiwyg --xxlarge" data-increment="0.8"><p>ready for something different? check out our open positions and contact us to join our studio.</p>
+</div>                    </div>
+    </div>
+    <div  class="container --wide">
+        <div class="careers-group">
+                            <div class="item --1">
+                                            <div class="wysiwyg --small" data-increment="0.8">Technical Artist</div>                        <div class="link --text info-trigger" data-id="technical-artist">View offer</div>
+                                    </div>
+                            <div class="item --2">
+                                            <div class="wysiwyg --small" data-increment="0.8">Environment artist - Unreal engine</div>                        <div class="link --text info-trigger" data-id="Environment artist - Unreal engine">View offer</div>
+                                    </div>
+                            <div class="item --3">
+                                            <div class="wysiwyg --small" data-increment="0.8">Freelancers</div>                        <div class="link --text info-trigger" data-id="Freelancers">View offer</div>
+                                    </div>
+                    </div>
+    </div>
+
+    <div class="info popup-info" id="popup-info">
+        <div  class="modal">
+            <div class="info__mask"></div>
+            <div class="info__inner">
+                <svg class="closer" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.2843 13.173L29.0129 0.444342L31.8413 3.27277L19.1127 16.0014L31.8399 28.7286L29.0115 31.557L16.2843 18.8298L3.55704 31.557L0.728612 28.7286L13.4558 16.0014L0.727231 3.27277L3.55566 0.444342L16.2843 13.173Z" fill="black"/>
+                </svg>
+                <div class="scroll" data-lenis-prevent data-desktop>
+                    <div class="columns">
+                        <div class="columns__item sticky">
+                            <div class="text-group">
+                                <div class="wysiwyg --xsmall">
+                                    Careers                                </div>
+                                <div class="wysiwyg --xxlarge">
+                                    See all our open <br>positions                                </div>
+                            </div>
+                            <div class="info__nav">
+                                                                    <div class="item" data-id="technical-artist">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8">Technical Artist</div>                                                                            </div>
+                                                                    <div class="item" data-id="Environment artist - Unreal engine">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8">Environment artist - Unreal engine</div>                                                                            </div>
+                                                                    <div class="item" data-id="Freelancers">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8">Freelancers</div>                                                                            </div>
+                                                            </div>
+                        </div>
+                        <div class="columns__item">
+                                                            <div class="item" data-id="technical-artist">
+                                                                            <div class="wysiwyg --small" data-increment="0.8"><h3><strong>Technical Artist</strong></h3>
+<p>We are looking for a talented and passionate Technical Artist to join our creative team. This role sits at the intersection of art and technology, acting as a key bridge between creative vision and technical execution. You will ensure that artistic concepts are efficiently and accurately implemented in real-time and offline engines, contributing to visually compelling, technically robust projects.</p>
+<h3>Key Responsibilities:</h3>
+<ul>
+<li>Bridge creative and technical teams across the production pipeline.</li>
+<li>Design and optimize shaders, materials, and lighting for real-time and rendering engines.</li>
+<li>Ensure visual quality, performance, and technical feasibility.</li>
+<li>Define and improve tools, workflows, and technical standards.</li>
+<li>Resolve complex technical and rendering challenges.</li>
+</ul>
+<h3>Core skills:</h3>
+<ul>
+<li>Expert knowledge of real-time rendering pipelines and PBR workflows.</li>
+<li>Proven experience in VR and/or LBVR projects.</li>
+<li>Advanced experience with shaders and materials in Unreal Engine and/or Unity.</li>
+<li>Strong understanding of optimisation, lighting, and look development.</li>
+<li>Proficiency with major DCC tools.</li>
+<li>Senior-level problem solving and cross-disciplinary communication.</li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have a collaborative mindset, a strong set of design tools and a great team attitude, send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>                                                                    </div>
+                                                            <div class="item" data-id="Environment artist - Unreal engine">
+                                                                            <div class="wysiwyg --small" data-increment="0.8"><h3>Environment artist &#8211; Unreal engine</h3>
+<p>We are looking for a senior Environment Artist to join us on a specific project, responsible for creating high-quality 3D environments in Unreal Engine. This role is focused on cinematographic scenes, with strong attention to detail, lighting, composition, and atmosphere.<br aria-hidden="true" />You will work closely with the creative and technical teams to build visually compelling environments designed for camera-driven shots rather than gameplay.</p>
+<h3>Key Responsibilities:</h3>
+<ul>
+<li>Create detailed, high-quality 3D environments in Unreal Engine.</li>
+<li>Develop cinematic scenes with strong composition, scale, and visual storytelling.</li>
+<li>Define lighting, mood, and atmosphere to support cinematographic shots.</li>
+<li>Integrate assets, materials, and set dressing with high attention to detail.</li>
+<li>Optimize scenes while maintaining visual quality.</li>
+<li>Collaborate with creative direction to ensure visual consistency.</li>
+</ul>
+<h3>Core skills:</h3>
+<ul>
+<li>Proven experience as an Environment Artist in Unreal Engine.</li>
+<li>Strong sense of composition, lighting, and cinematic framing.</li>
+<li>High attention to detail and visual polish.</li>
+<li>Solid understanding of materials, shaders, and PBR workflows.</li>
+<li>Experience with DCC tools such as Maya, Blender, or Cinema 4D.</li>
+<li>Ability to work autonomously and take ownership of environment creation.</li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have a collaborative mindset, a strong set of design tools and a great team attitude, send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>                                                                    </div>
+                                                            <div class="item" data-id="Freelancers">
+                                                                            <div class="wysiwyg --small" data-increment="0.8"><p>We’re always looking to connect with talented creatives and production professionals. We’re building an ongoing <b>portfolio of collaborators</b> to support current and future projects across motion, animation, post-production, and creative direction.</p>
+<p>If you match one of the profiles below and are interested in collaborating with us on a freelance or project basis, we’d love to hear from you.</p>
+<h3>Profiles We’re Currently Looking For:</h3>
+<ul>
+<li>Project Manager</li>
+<li>Art Director</li>
+<li>Senior After Effects Artist</li>
+<li>Senior 3D Generalist</li>
+<li>3D modeler</li>
+<li>VFX Artist (Unity)</li>
+<li>Senior Video Editor (Montador)</li>
+</ul>
+<p>These roles support a wide range of projects including brand content, motion graphics, animation, audiovisual installations, and experimental formats.</p>
+<article class="text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto scroll-mt-(--header-height)" dir="auto" tabindex="-1" data-turn-id="464363c4-cfe1-4392-9aca-c6813c3cd9fa" data-testid="conversation-turn-3" data-scroll-anchor="false" data-turn="user"></article>
+<article class="text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]" dir="auto" tabindex="-1" data-turn-id="request-WEB:b4987209-8321-4985-a111-b5cbf992d8fd-2" data-testid="conversation-turn-4" data-scroll-anchor="false" data-turn="assistant">
+<div class="text-base my-auto mx-auto [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)">
+<div class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn" tabindex="-1">
+<div class="flex max-w-full flex-col grow">
+<div class="min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1" dir="auto" data-message-author-role="assistant" data-message-id="57a9bc71-4429-49b6-92b1-400d8d5afd69" data-message-model-slug="gpt-5-2-thinking">
+<div class="flex w-full flex-col gap-1 empty:hidden first:pt-[1px]">
+<div class="markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling">
+<p data-start="0" data-end="108" data-is-last-node="" data-is-only-node="">If you feel you match one of these roles and you’d like to work with us, don’t hesitate to send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<p>&nbsp;</p>
+</div>                                                                    </div>
+                                                    </div>
+                    </div>
+                </div>
+                <div class="scroll" data-lenis-prevent data-mobile>
+                    <div class="text-group">
+                        <div class="wysiwyg --xsmall">
+                            Careers                        </div>
+                        <div class="wysiwyg --xxlarge">
+                            See all our open <br>positions                        </div>
+                    </div>
+                    <div class="dropdowns">
+                                                    <div class="dropdown" data-id="technical-artist">
+                                <div class="head">
+                                                                            <div class="wysiwyg --small" data-increment="0.8">Technical Artist</div>                                                                    </div>
+                                <div class="content" data-id="technical-artist">
+                                    <div class="inset">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8"><h3><strong>Technical Artist</strong></h3>
+<p>We are looking for a talented and passionate Technical Artist to join our creative team. This role sits at the intersection of art and technology, acting as a key bridge between creative vision and technical execution. You will ensure that artistic concepts are efficiently and accurately implemented in real-time and offline engines, contributing to visually compelling, technically robust projects.</p>
+<h3>Key Responsibilities:</h3>
+<ul>
+<li>Bridge creative and technical teams across the production pipeline.</li>
+<li>Design and optimize shaders, materials, and lighting for real-time and rendering engines.</li>
+<li>Ensure visual quality, performance, and technical feasibility.</li>
+<li>Define and improve tools, workflows, and technical standards.</li>
+<li>Resolve complex technical and rendering challenges.</li>
+</ul>
+<h3>Core skills:</h3>
+<ul>
+<li>Expert knowledge of real-time rendering pipelines and PBR workflows.</li>
+<li>Proven experience in VR and/or LBVR projects.</li>
+<li>Advanced experience with shaders and materials in Unreal Engine and/or Unity.</li>
+<li>Strong understanding of optimisation, lighting, and look development.</li>
+<li>Proficiency with major DCC tools.</li>
+<li>Senior-level problem solving and cross-disciplinary communication.</li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have a collaborative mindset, a strong set of design tools and a great team attitude, send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>                                                                            </div>
+                                </div>
+                            </div>
+                                                    <div class="dropdown" data-id="Environment artist - Unreal engine">
+                                <div class="head">
+                                                                            <div class="wysiwyg --small" data-increment="0.8">Environment artist - Unreal engine</div>                                                                    </div>
+                                <div class="content" data-id="Environment artist - Unreal engine">
+                                    <div class="inset">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8"><h3>Environment artist &#8211; Unreal engine</h3>
+<p>We are looking for a senior Environment Artist to join us on a specific project, responsible for creating high-quality 3D environments in Unreal Engine. This role is focused on cinematographic scenes, with strong attention to detail, lighting, composition, and atmosphere.<br aria-hidden="true" />You will work closely with the creative and technical teams to build visually compelling environments designed for camera-driven shots rather than gameplay.</p>
+<h3>Key Responsibilities:</h3>
+<ul>
+<li>Create detailed, high-quality 3D environments in Unreal Engine.</li>
+<li>Develop cinematic scenes with strong composition, scale, and visual storytelling.</li>
+<li>Define lighting, mood, and atmosphere to support cinematographic shots.</li>
+<li>Integrate assets, materials, and set dressing with high attention to detail.</li>
+<li>Optimize scenes while maintaining visual quality.</li>
+<li>Collaborate with creative direction to ensure visual consistency.</li>
+</ul>
+<h3>Core skills:</h3>
+<ul>
+<li>Proven experience as an Environment Artist in Unreal Engine.</li>
+<li>Strong sense of composition, lighting, and cinematic framing.</li>
+<li>High attention to detail and visual polish.</li>
+<li>Solid understanding of materials, shaders, and PBR workflows.</li>
+<li>Experience with DCC tools such as Maya, Blender, or Cinema 4D.</li>
+<li>Ability to work autonomously and take ownership of environment creation.</li>
+</ul>
+<p>&nbsp;</p>
+<p>If you have a collaborative mindset, a strong set of design tools and a great team attitude, send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>                                                                            </div>
+                                </div>
+                            </div>
+                                                    <div class="dropdown" data-id="Freelancers">
+                                <div class="head">
+                                                                            <div class="wysiwyg --small" data-increment="0.8">Freelancers</div>                                                                    </div>
+                                <div class="content" data-id="Freelancers">
+                                    <div class="inset">
+                                                                                    <div class="wysiwyg --small" data-increment="0.8"><p>We’re always looking to connect with talented creatives and production professionals. We’re building an ongoing <b>portfolio of collaborators</b> to support current and future projects across motion, animation, post-production, and creative direction.</p>
+<p>If you match one of the profiles below and are interested in collaborating with us on a freelance or project basis, we’d love to hear from you.</p>
+<h3>Profiles We’re Currently Looking For:</h3>
+<ul>
+<li>Project Manager</li>
+<li>Art Director</li>
+<li>Senior After Effects Artist</li>
+<li>Senior 3D Generalist</li>
+<li>3D modeler</li>
+<li>VFX Artist (Unity)</li>
+<li>Senior Video Editor (Montador)</li>
+</ul>
+<p>These roles support a wide range of projects including brand content, motion graphics, animation, audiovisual installations, and experimental formats.</p>
+<article class="text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto scroll-mt-(--header-height)" dir="auto" tabindex="-1" data-turn-id="464363c4-cfe1-4392-9aca-c6813c3cd9fa" data-testid="conversation-turn-3" data-scroll-anchor="false" data-turn="user"></article>
+<article class="text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]" dir="auto" tabindex="-1" data-turn-id="request-WEB:b4987209-8321-4985-a111-b5cbf992d8fd-2" data-testid="conversation-turn-4" data-scroll-anchor="false" data-turn="assistant">
+<div class="text-base my-auto mx-auto [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)">
+<div class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn" tabindex="-1">
+<div class="flex max-w-full flex-col grow">
+<div class="min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1" dir="auto" data-message-author-role="assistant" data-message-id="57a9bc71-4429-49b6-92b1-400d8d5afd69" data-message-model-slug="gpt-5-2-thinking">
+<div class="flex w-full flex-col gap-1 empty:hidden first:pt-[1px]">
+<div class="markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling">
+<p data-start="0" data-end="108" data-is-last-node="" data-is-only-node="">If you feel you match one of these roles and you’d like to work with us, don’t hesitate to send us your CV+reel to <a href="mailto:jobs@blitstudio.com" target="_blank" rel="noopener noreferrer" aria-haspopup="menu">jobs@blitstudio.com</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<p>&nbsp;</p>
+</div>                                                                            </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+                            
+            
+<footer class="footer" id="footer" data-component="footer">
+    <div class="container --xlarge --m-mlarge">
+        <div id="logo" class="footer__logo">
+            <!-- <a href="https://blit.studio/" class="logo --light">
+                <img src="https://blit.studio/wp-content/uploads/2025/04/logo-dark.svg" class="logo-color" alt="Go to Home page" width="100%" height="100%">
+            </a> -->
+            <a href="https://blit.studio/" class="logo --dark" aria-label="Go to Home page">
+                <img fetchpriority="high" src="https://blit.studio/wp-content/uploads/2025/04/logo-white.svg" class="logo-white" alt="Go to Home page" width="100%" height="100%">
+            </a>
+        </div>
+                    <div class="wysiwyg --small --text-left --na" data-increment="0.8"><p>design, art,<br />
+and technology.</p>
+</div>                <div class="columns columns--bottom">
+            <div class="item">
+                <ul id="menu-social" class="menu menu--social"><li id="menu-item-730" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-730 menu-item-&lt;i-class=&quot;fa-brands-fa-instagram&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://www.instagram.com/blit.studio_"><i class="fa-brands fa-instagram"></i></a></li>
+<li id="menu-item-731" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-731 menu-item-&lt;i-class=&quot;fab-fa-linkedin-in&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F69209684"><i class="fab fa-linkedin-in"></i></a></li>
+<li id="menu-item-732" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-732 menu-item-&lt;i-class=&quot;fa-brands-fa-vimeo-v&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://vimeo.com/blitstudio"><i class="fa-brands fa-vimeo-v"></i></a></li>
+</ul>                <!-- <div class="menu--lang" id="lang">
+                                        <div class="content">
+                        
+<div role="navigation" aria-label="Language Switcher" class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">
+	<ul><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-current-language wpml-ls-first-item wpml-ls-last-item wpml-ls-item-legacy-list-horizontal">
+				<a href="https://blit.studio/studio/" hreflang="en" lang="en" class="wpml-ls-link" aria-current="page" aria-label="Switch to English (English)" title="Switch to English (English)">
+					<span class="wpml-ls-native">English</span></a>
+			</li></ul>
+</div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="item">
+                <div class="image shapes">
+                    <img src="https://blit.studio/wp-content/uploads/2025/05/01hero-frame.svg" alt="blit shapes" width="100%" height="100%">
+                </div>
+                <div class="copyright">
+                                            <div class="wysiwyg --xxsmall --text-left --na" data-increment="0.8"><p>Blit Entertainment ©2025 BLIT &#8211; <a class="link --text" href="/legal-notice/">Legal Notice</a></p>
+</div>                                    </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        </div>
+    
+</div>
+
+
+
+
+    </div>
+
+    <div  id="vhr"></div>
+
+    
+<header  id="header" class="header" data-component="header" data-desktop>
+    <div class="container --wide">
+        <div  id="logo" class="header__logo">
+            <a href="https://blit.studio/" class="logo --secondary">
+                <img src="https://blit.studio/wp-content/uploads/2025/04/logo-white.svg" class="logo-white" alt="Go to Home page" width="100%" height="100%">
+            </a>
+        </div>
+        <div  class="header__menu">
+            <nav>
+                <ul id="menu-main-menu" class="menu__header"><li id="menu-item-708" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-708 menu-item-works"><a href="https://blit.studio/works/">works</a></li>
+<li id="menu-item-257" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-248 current_page_item menu-item-257 is-active menu-item-studio"><a href="https://blit.studio/studio/" aria-current="page">studio</a></li>
+<li id="menu-item-256" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-256 menu-item-raw-stuff"><a href="https://blit.studio/raw-stuff/">raw stuff</a></li>
+<li id="menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-255 menu-item-unfolded"><a href="https://blit.studio/unfolded/">unfolded</a></li>
+</ul>            </nav>
+        </div>
+    </div>
+    <div  id="color-mode" class="color-mode" data-desktop>
+        <svg xmlns="http://www.w3.org/2000/svg" width="33.94" height="33.978" viewBox="0 0 33.94 33.978">
+            <g id="Grupo_2241" data-name="Grupo 2241" transform="translate(-1810 -10)">
+                <circle id="Elipse_23" data-name="Elipse 23" cx="15" cy="15" r="15" transform="translate(1810 10)" fill="#fff"/>
+                <path id="Trazado_4702" data-name="Trazado 4702" d="M14,0A14,14,0,1,1,0,14,14,14,0,0,1,14,0Z" transform="translate(1811 11)" fill="#0c0c15"/>
+                <g id="Grupo_2241-2" data-name="Grupo 2241" transform="translate(149.319 -783.121) rotate(25)">
+                <path id="Rectángulo_100" data-name="Rectángulo 100" d="M0,0H0A14.47,14.47,0,0,1,14.47,14.47v.283a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(1860 10)" fill="#fff"/>
+                <path id="Rectángulo_101" data-name="Rectángulo 101" d="M0,0H14.47a0,0,0,0,1,0,0V.283A14.47,14.47,0,0,1,0,14.753H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(1860 23.77)" fill="#fff"/>
+                </g>
+            </g>
+        </svg>
+    </div>
+</header>
+<div  class="cta" data-desktop>
+    <a href="/contact" class="link">let´s talk</a>
+</div>
+<div  class="circle"></div>
+
+<header  id="header" class="header" data-component="header" data-mobile>
+    <div  id="logo" class="header__logo">
+        <a href="https://blit.studio/" class="logo --secondary">
+            <img src="https://blit.studio/wp-content/uploads/2025/04/logo-white.svg" class="logo-white" alt="Go to Home page" width="100%" height="100%">
+        </a>
+    </div>
+</header>
+    <div  id="menu-complete-trigger" class="menu-complete-trigger trigger" data-mobile>
+    <div  class="wysiwyg --small">menu</div>
+    <div  class="trigger__icon">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.15202 5.00007L0.333372 1.18142L1.18135 0.333442L5 4.15209L8.81865 0.333442L9.66663 1.18142L5.84798 5.00007L9.66663 8.81872L8.81865 9.6667L5 5.84805L1.18135 9.6667L0.333372 8.81872L4.15202 5.00007Z" fill="white"/>
+        </svg>
+    </div>
+</div>
+    
+<div  id="menu-complete" class="menu-complete" data-mobile>
+    <div  class="menu-complete__overlay"></div>
+    <div  class="menu-complete__inner" prevent-scrolling-disabled>
+        <ul id="menu-main-menu-1" class="menu__header"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-708 menu-item-works"><a href="https://blit.studio/works/">works</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-248 current_page_item menu-item-257 is-active menu-item-studio"><a href="https://blit.studio/studio/" aria-current="page">studio</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-256 menu-item-raw-stuff"><a href="https://blit.studio/raw-stuff/">raw stuff</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-255 menu-item-unfolded"><a href="https://blit.studio/unfolded/">unfolded</a></li>
+</ul>    </div>
+    <div  class="menu-complete__footer">
+        <div  id="color-mode" class="color-mode">
+            <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.4412 22.0586C16.1713 23.3692 13.4738 23.7243 10.9421 23.0459C8.41032 22.3675 6.25176 20.7112 4.94123 18.4413C3.63071 16.1714 3.27557 13.4739 3.95395 10.9422C4.63232 8.41042 6.28865 6.25186 8.55854 4.94134L13.4999 13.5L18.4412 22.0586Z" fill="black"/>
+                <mask id="path-2-inside-1_1281_11254" fill="white">
+                <path d="M8.55866 4.94137C10.8286 3.63085 13.5261 3.27571 16.0578 3.95409C18.5896 4.63246 20.7481 6.28878 22.0586 8.55868C23.3692 10.8286 23.7243 13.5261 23.0459 16.0578C22.3676 18.5896 20.7112 20.7481 18.4413 22.0587L13.5 13.5L8.55866 4.94137Z"/>
+                </mask>
+                <path d="M8.55866 4.94137C10.8286 3.63085 13.5261 3.27571 16.0578 3.95409C18.5896 4.63246 20.7481 6.28878 22.0586 8.55868C23.3692 10.8286 23.7243 13.5261 23.0459 16.0578C22.3676 18.5896 20.7112 20.7481 18.4413 22.0587L13.5 13.5L8.55866 4.94137Z" fill="white" stroke="black" stroke-width="1.31772" mask="url(#path-2-inside-1_1281_11254)"/>
+            </svg>
+        </div>
+        <div  class="cta">
+            <a href="/contact" class="link --small">let´s talk</a>
+        </div>
+        <ul id="menu-social-1" class="menu menu--social"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-730 menu-item-&lt;i-class=&quot;fa-brands-fa-instagram&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://www.instagram.com/blit.studio_"><i class="fa-brands fa-instagram"></i></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-731 menu-item-&lt;i-class=&quot;fab-fa-linkedin-in&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F69209684"><i class="fab fa-linkedin-in"></i></a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-732 menu-item-&lt;i-class=&quot;fa-brands-fa-vimeo-v&quot;&gt;&lt;/i&gt;"><a target="_blank" href="https://vimeo.com/blitstudio"><i class="fa-brands fa-vimeo-v"></i></a></li>
+</ul>    </div>
+</div>
+    
+<div  class="popup-form" id="popup-form">
+    <div class="modal">
+        <div  class="popup-form__mask"></div>
+        <div  class="popup-form__inner">
+            <div class="floating --bottomcenter">
+                <i class="fa-solid fa-xmark closer"></i>
+                <div class="scroll" data-lenis-prevent>
+                                        <iframe src="https://calendly.com/unfolded-wecr/unfolded_experience?embed_domain=blit.studio&amp;embed_type=PopupWidget" width="100%" height="100%" frameborder="0" title="Select a Date &amp; Time - Calendly"></iframe>
+                </div>
+                <div class="gradient"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div  id="cursor">
+    <div  class="cursor__dot">
+        <div  class="bg"></div>
+        <div  class="icon center"></div>
+    </div>
+    <div  class="cursor__book">
+        <div  class="text">
+            <span class="link --large">book your visit</span>
+        </div>
+    </div>
+    <div  class="cursor__reel video__trigger">
+        <div  class="text">
+            <span>+</span>
+        </div>
+    </div>
+    <div  class="cursor__more">
+        <div  class="text">
+            <span>
+                <svg width="24" height="30" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.85718 2.14307L21.8572 15.0002L1.85718 27.8574V2.14307Z" stroke="white" stroke-width="2.85714" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div  class="cursor__small">
+        <div class="text">
+            <span>+</span>
+        </div>
+    </div>
+</div>
+    
+    
+    <script defer type="text/javascript" src="https://blit.studio/wp-content/themes/blit/js/vendor.min.js"></script>
+    <script defer type="text/javascript" src="https://blit.studio/wp-content/themes/blit/js/app.min.js"></script>
+    </body>
+</html>
+
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
