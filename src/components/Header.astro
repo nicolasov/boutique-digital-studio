@@ -8,7 +8,6 @@ const primaryNav = [
 ];
 
 const overlayNav = [
-  { key: 'navHome', href: '#top' },
   { key: 'navServices', href: '#soluciones-digitales' },
   { key: 'navWork', href: '#work' },
   { key: 'navProcess', href: '#proceso' },
@@ -20,13 +19,13 @@ const t = translations.es;
 
 <header class="site-header fixed inset-x-0 top-0 z-[100]" data-site-header>
   <div class="section-shell flex h-[76px] items-center justify-between gap-6">
-    <a href="#top" class="flex items-center gap-3" aria-label="SOK">
-      <span class="site-logo display-font text-2xl font-bold tracking-[-0.03em] text-ink">SOK</span>
+    <a href="#top" class="site-brand flex items-center gap-3" aria-label="SOK">
+      <span class="site-logo text-2xl font-bold text-ink">SOK</span>
     </a>
 
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
       {primaryNav.map((item) => (
-        <a class="magnetic-link main-nav-link text-sm font-medium text-ink transition hover:text-ink/90" href={item.href} data-i18n={item.key}>
+        <a class="magnetic-link main-nav-link text-sm font-medium text-ink" href={item.href} data-i18n={item.key}>
           {t[item.key as keyof typeof t]}
         </a>
       ))}
@@ -72,9 +71,12 @@ const t = translations.es;
   </div>
 </header>
 
-<div id="site-menu" class="menu-overlay fixed inset-0 z-[999] overflow-y-auto bg-white text-ink" aria-hidden="true" data-menu-overlay>
-  <div class="section-shell flex min-h-dvh flex-col py-4">
-    <div class="flex items-center justify-end gap-6">
+<div id="site-menu" class="menu-overlay fixed inset-0 z-[999] overflow-y-auto" aria-hidden="true" data-menu-overlay>
+  <div class="section-shell site-menu-inner flex min-h-dvh flex-col py-4">
+    <div class="site-menu-top flex items-center justify-between gap-6">
+      <a href="#top" class="site-brand overlay-brand flex items-center gap-3" aria-label="SOK" data-menu-close>
+        <span class="site-logo text-2xl font-bold">SOK</span>
+      </a>
       <button
         class="menu-close-button btn btn-secondary"
         type="button"
@@ -89,12 +91,12 @@ const t = translations.es;
       </button>
     </div>
 
-    <div class="flex-1 pb-8 pt-3 sm:pt-4">
+    <div class="site-menu-content flex-1 pb-8 pt-3 sm:pt-4">
       <nav class="menu-links grid gap-0" aria-label="Menú principal">
         {overlayNav.map((item, index) => (
           <a
             href={item.href}
-            class="menu-link display-font block border-t border-ink/14 py-3 text-[clamp(2.35rem,7.2vw,7.1rem)] font-bold leading-[0.9] tracking-[-0.064em] sm:py-4"
+            class="menu-link display-font block py-3 text-[clamp(2.35rem,7.2vw,7.1rem)] font-bold leading-[0.9] tracking-[-0.064em] sm:py-4"
             style={`--stagger: ${index * 70}ms`}
             data-i18n={item.key}
             data-menu-close
