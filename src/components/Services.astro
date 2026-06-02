@@ -1,39 +1,61 @@
 ---
 import { translations } from '../i18n/translations';
+import WebGLPixelImage from './WebGLPixelImage.astro';
 
 const services = [
-  ['serviceWebTitle', 'serviceWebText'],
-  ['serviceBrandTitle', 'serviceBrandText'],
-  ['serviceAiTitle', 'serviceAiText'],
-  ['serviceContentTitle', 'serviceContentText'],
+  {
+    title: 'Sitios web premium',
+    text: translations.es.workOneText,
+    image: '/assets/hero-editorial.png',
+  },
+  {
+    title: 'Branding y dirección visual',
+    text: translations.es.workTwoText,
+    image: '/assets/studio-cinematic.png',
+  },
+  {
+    title: 'Automatización e inteligencia artificial',
+    text: translations.es.serviceAiWhat,
+    image: '/assets/system-abstract.png',
+  },
+  {
+    title: 'Contenido visual',
+    text: translations.es.workFourText,
+    image: '/assets/studio-cinematic.png',
+  },
+  {
+    title: 'Dirección digital continua',
+    text: translations.es.workFiveText,
+    image: '/assets/system-abstract.png',
+  },
 ] as const;
-
-const t = translations.es;
 ---
 
 <section id="soluciones-digitales" class="services-section section-pad">
   <div class="section-shell">
-    {t.servicesIntro && (
-      <div class="services-intro scroll-reveal">
-        <p class="services-intro-statement display-font" data-i18n="servicesIntro">
-          {t.servicesIntro}
-        </p>
-      </div>
-    )}
-
     <div class="services-accordion">
-      {services.map(([title, text]) => (
-        <details class="solution-item group">
+      {services.map((service, index) => (
+        <details class="solution-item group" name="services-editorial" open={index === 0}>
           <summary class="solution-summary">
-            <h3 class="solution-title display-font" data-i18n={title}>
-              {t[title]}
+            <h3 class="solution-title display-font">
+              {service.title}
             </h3>
             <span class="solution-toggle" aria-hidden="true"></span>
           </summary>
           <div class="solution-body" data-solution-body>
-            <p class="solution-copy">
-              <span data-i18n={text}>{t[text]}</span>
-            </p>
+            <div class="solution-copy-wrap">
+              <p class="solution-copy">{service.text}</p>
+              <span class="solution-indicator" aria-hidden="true"></span>
+            </div>
+            <WebGLPixelImage
+              class="solution-image"
+              src={service.image}
+              alt={`Imagen editorial para ${service.title}`}
+              intensity={0.32}
+              speed={0.74}
+              scale={1.01}
+              triggerOnce={false}
+            />
           </div>
         </details>
       ))}

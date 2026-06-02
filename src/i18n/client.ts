@@ -6,6 +6,18 @@ const contactEndpoint =
 const calLink = 'nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto';
 const calOrigin = 'https://cal.com';
 const calNamespace = 'boutiqueDigitalStudio';
+const contactCopy = {
+  es: {
+    title: 'Hablemos.',
+    text: 'Contanos qué necesitás construir, mejorar o automatizar. Puede ser una web, una identidad, contenido visual o una idea que todavía necesita forma.',
+    submit: 'Enviar consulta',
+  },
+  en: {
+    title: 'Let’s talk.',
+    text: 'Tell us what you need to build, improve, or automate. It can be a website, an identity, visual content, or an idea that still needs shape.',
+    submit: 'Send inquiry',
+  },
+} satisfies Record<Lang, { title: string; text: string; submit: string }>;
 
 type CalApi = ((...args: unknown[]) => void) & {
   loaded?: boolean;
@@ -39,6 +51,10 @@ const applyLang = (lang: Lang) => {
     const key = node.dataset.i18n as keyof typeof dictionary;
     if (dictionary[key]) node.textContent = dictionary[key];
   });
+
+  document.querySelector<HTMLElement>('[data-contact-title]')?.replaceChildren(contactCopy[lang].title);
+  document.querySelector<HTMLElement>('[data-contact-text]')?.replaceChildren(contactCopy[lang].text);
+  document.querySelector<HTMLElement>('[data-contact-submit-label]')?.replaceChildren(contactCopy[lang].submit);
 
   document.querySelectorAll<HTMLElement>('[data-lang-option]').forEach((node) => {
     const isActive = node.dataset.langOption === lang;
@@ -421,7 +437,7 @@ const initI18n = () => {
       if (submitButton) {
         submitButton.disabled = false;
         submitButton.removeAttribute('aria-busy');
-        if (submitLabel) submitLabel.textContent = dictionary.formSubmit;
+        if (submitLabel) submitLabel.textContent = contactCopy[(document.documentElement.dataset.activeLang ?? initialLang) as Lang].submit;
       }
     }
   });
@@ -716,6 +732,8 @@ const initI18n = () => {
       const heroCta = document.querySelector<HTMLElement>('.hero-cta');
       const heroImage = document.querySelector<HTMLElement>('.hero-visual');
       const processIntro = document.querySelector<HTMLElement>('.process-intro');
+      const processHeadingWords = Array.from(document.querySelectorAll<HTMLElement>('.process-heading-word'));
+      const processIntroCopy = document.querySelector<HTMLElement>('.process-intro-copy');
       const genericReveal = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal')).filter(
         (node) =>
           !node.classList.contains('process-step-row') &&
@@ -771,17 +789,35 @@ const initI18n = () => {
 
       if (processIntro) {
         gsap.set(processIntro, { autoAlpha: 1 });
-        gsap.from(processIntro, {
-          opacity: 0,
-          y: isMobile ? 14 : 28,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: processIntro,
-            start: 'top 80%',
-            once: true,
-          },
-        });
+        if (processHeadingWords.length) {
+          gsap.set(processHeadingWords, { yPercent: 72, autoAlpha: 0 });
+          gsap.to(processHeadingWords, {
+            yPercent: 0,
+            autoAlpha: 1,
+            duration: 1.05,
+            ease: 'expo.out',
+            stagger: 0.065,
+            scrollTrigger: {
+              trigger: processIntro,
+              start: 'top 78%',
+              once: true,
+            },
+          });
+        }
+        if (processIntroCopy) {
+          gsap.from(processIntroCopy, {
+            opacity: 0,
+            y: isMobile ? 12 : 22,
+            duration: 0.9,
+            delay: 0.18,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: processIntro,
+              start: 'top 78%',
+              once: true,
+            },
+          });
+        }
       }
 
       const workRows = Array.from(document.querySelectorAll<HTMLElement>('.work-row'));

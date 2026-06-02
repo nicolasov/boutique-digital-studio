@@ -15,13 +15,7 @@ const t = translations.es;
 
 <section id="work" class="section-pad">
   <div class="section-shell">
-    <div class="scroll-reveal">
-        <h2 class="section-heading text-[clamp(3.5rem,8vw,8.4rem)]" data-i18n="workTitle">
-          {t.workTitle}
-        </h2>
-    </div>
-
-    <div class="mt-14 grid gap-8">
+    <div class="grid gap-8">
       {workItems.map(([title, text, image], index) => (
         <article class="work-row group grid gap-7 border-t border-ink/14 pt-6 md:grid-cols-[0.12fr_0.48fr_0.4fr] md:items-center md:gap-9">
           <span class="display-font text-7xl font-bold tracking-[-0.08em] text-ink/16 transition group-hover:text-ink">
