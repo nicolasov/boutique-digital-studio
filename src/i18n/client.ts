@@ -2,7 +2,7 @@ import { defaultLang, supportedLangs, translations, type Lang } from './translat
 
 const storageKey = 'bds-lang';
 const contactEndpoint =
-  ((import.meta.env.PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim() || '/api/contact');
+  ((import.meta.env.PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim() || 'https://formspree.io/f/mnjrwddb');
 const calLink = 'nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto';
 const calOrigin = 'https://cal.com';
 const calNamespace = 'boutiqueDigitalStudio';
@@ -718,6 +718,9 @@ const initI18n = () => {
   const initGsapAnimations = async () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // Marca JS activo — activa las reglas CSS de opacity:0 para revelar con GSAP
+    document.documentElement.classList.add('js');
+
     try {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([
         import('gsap'),
@@ -790,16 +793,15 @@ const initI18n = () => {
       if (processIntro) {
         gsap.set(processIntro, { autoAlpha: 1 });
         if (processHeadingWords.length) {
-          gsap.set(processHeadingWords, { yPercent: 72, autoAlpha: 0 });
+          gsap.set(processHeadingWords, { y: '115%' });
           gsap.to(processHeadingWords, {
-            yPercent: 0,
-            autoAlpha: 1,
-            duration: 1.05,
+            y: '0%',
+            duration: 1.15,
             ease: 'expo.out',
-            stagger: 0.065,
+            stagger: 0.075,
             scrollTrigger: {
               trigger: processIntro,
-              start: 'top 78%',
+              start: 'top 82%',
               once: true,
             },
           });
@@ -930,6 +932,10 @@ const initI18n = () => {
       ScrollTrigger.refresh();
     } catch (error) {
       console.error('GSAP animations failed to initialize', error);
+      // Fallback: hacer visibles todos los elementos animados si GSAP falla
+      document.querySelectorAll<HTMLElement>('.process-intro, .process-card, .work-row').forEach((el) => {
+        el.style.opacity = '1';
+      });
     }
   };
 
