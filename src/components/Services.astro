@@ -4,26 +4,28 @@ import WebGLPixelImage from './WebGLPixelImage.astro';
 
 const services = [
   {
-    title: 'Sitios web premium',
-    text: translations.es.workOneText,
+    titleKey: 'workOneTitle',
+    textKey: 'workOneText',
     image: '/assets/service-web.png',
   },
   {
-    title: 'Identidad de marca',
-    text: translations.es.workTwoText,
+    titleKey: 'workTwoTitle',
+    textKey: 'workTwoText',
     image: '/assets/service-branding.png',
   },
   {
-    title: 'Automatización e inteligencia artificial',
-    text: translations.es.serviceAiWhat,
+    titleKey: 'workThreeTitle',
+    textKey: 'workThreeText',
     image: '/assets/service-ai.png',
   },
   {
-    title: 'Contenido visual',
-    text: translations.es.workFourText,
+    titleKey: 'workFourTitle',
+    textKey: 'workFourText',
     image: '/assets/service-contenido.png',
   },
 ] as const;
+
+const t = translations.es;
 ---
 
 <section id="soluciones-digitales" class="services-section section-pad">
@@ -32,20 +34,20 @@ const services = [
       {services.map((service, index) => (
         <details class="solution-item group" name="services-editorial" open={index === 0}>
           <summary class="solution-summary">
-            <h3 class="solution-title display-font">
-              {service.title}
+            <h3 class="solution-title display-font" data-i18n={service.titleKey}>
+              {t[service.titleKey]}
             </h3>
             <span class="solution-toggle" aria-hidden="true"></span>
           </summary>
           <div class="solution-body" data-solution-body>
             <div class="solution-copy-wrap">
-              <p class="solution-copy">{service.text}</p>
+              <p class="solution-copy" data-i18n={service.textKey}>{t[service.textKey]}</p>
               <span class="solution-indicator" aria-hidden="true"></span>
             </div>
             <WebGLPixelImage
               class="solution-image service-image-wrap"
               src={service.image}
-              alt={`Imagen editorial para ${service.title}`}
+              alt={`Imagen editorial para ${t[service.titleKey]}`}
               intensity={0.32}
               speed={0.74}
               scale={1.01}

@@ -27,21 +27,4 @@ import Process from '../components/Process.astro';
   </div>
   <CalModal />
   <BackToTop />
-  <script>
-    const setDarkEndOffset = () => {
-      const darkEnd = document.querySelector<HTMLElement>('.dark-end');
-      const main = document.querySelector<HTMLElement>('.site-main');
-      if (!darkEnd || !main) return;
-      main.style.marginBottom = `${darkEnd.offsetHeight}px`;
-    };
-
-    setDarkEndOffset();
-    window.addEventListener('load', setDarkEndOffset, { once: true });
-    window.addEventListener('resize', setDarkEndOffset);
-
-    const darkEnd = document.querySelector<HTMLElement>('.dark-end');
-    if ('ResizeObserver' in window && darkEnd) {
-      new ResizeObserver(setDarkEndOffset).observe(darkEnd);
-    }
-  </script>
 </BaseLayout>

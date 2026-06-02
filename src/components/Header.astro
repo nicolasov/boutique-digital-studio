@@ -119,3 +119,45 @@ const t = translations.es;
     </div>
   </div>
 </div>
+
+<script>
+  import { translations } from '../i18n/translations';
+
+  type Lang = 'es' | 'en';
+
+  function applyLang(lang: Lang) {
+    const t = translations[lang];
+    document.documentElement.setAttribute('data-active-lang', lang);
+    try { localStorage.setItem('lang', lang); } catch (_) {}
+
+    document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n') as keyof typeof t;
+      if (key && key in t) {
+        el.textContent = String(t[key]);
+      }
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-lang-option]').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.getAttribute('data-lang-option') === lang);
+    });
+  }
+
+  function initLang() {
+    let saved: Lang = 'es';
+    try {
+      const stored = localStorage.getItem('lang');
+      if (stored === 'en' || stored === 'es') saved = stored;
+    } catch (_) {}
+    applyLang(saved);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initLang();
+    document.querySelectorAll<HTMLButtonElement>('[data-lang-option]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang-option') as Lang;
+        if (lang === 'en' || lang === 'es') applyLang(lang);
+      });
+    });
+  });
+</script>

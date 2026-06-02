@@ -38,7 +38,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--bg);
+  background: #090909;
   overflow-x: hidden;
 }
 
@@ -56,9 +56,9 @@ body {
 .site-main {
   position: relative;
   z-index: 2;
-  margin-bottom: var(--footer-height);
+  margin-bottom: 0;
   background: var(--bg);
-  box-shadow: none;
+  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.15);
 }
 
 html.menu-open,
@@ -1316,7 +1316,7 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   min-height: 0;
   aspect-ratio: 16 / 11.4;
   background: #080808;
-  opacity: 0.92;
+  opacity: 1;
   transition:
     opacity 320ms ease,
     transform 320ms ease;
@@ -1326,11 +1326,6 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
 .solution-image img {
   filter: grayscale(100%) contrast(1.08);
   transition: filter 0.5s var(--ease-out);
-}
-
-.solution-item[open] .solution-image canvas,
-.solution-item[open] .solution-image img {
-  filter: grayscale(0%) contrast(1);
 }
 
 .solution-item:hover .solution-image,
@@ -1385,9 +1380,10 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
 }
 
 .process-heading {
+  font-family: var(--font-display);
   font-size: clamp(3.05rem, 5.9vw, 7rem);
   font-weight: 400;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.03em;
   line-height: 0.96;
 }
 
@@ -1399,14 +1395,13 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  padding-bottom: 0.08em;
+  padding-bottom: 0.12em;
 }
 
 .process-heading-word {
   display: inline-block;
   margin-right: 0.12em;
-  transform: translateY(0);
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 .process-intro-copy {
@@ -1457,7 +1452,7 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
 }
 
 .contact-heading {
-  max-width: 7ch;
+  max-width: 12ch;
   color: #ffffff;
   font-family: var(--font-display);
   font-size: clamp(3.35rem, 7.2vw, 8rem);
@@ -2061,6 +2056,7 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   position: relative;
   overflow: hidden;
   min-height: 2.75rem;
+  min-width: 13.5rem;
   padding-inline: 1rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -2364,13 +2360,8 @@ body.menu-open .site-header .header-call-button:hover,
 }
 
 .site-footer {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: var(--footer-height);
+  position: relative;
   z-index: 1;
-  overflow: hidden;
   background: #000000;
   color: #ffffff;
 }
@@ -2383,7 +2374,6 @@ body.menu-open .site-header .header-call-button:hover,
   position: relative;
   z-index: 1;
   display: flex;
-  height: 100%;
   flex-direction: column;
   justify-content: space-between;
   gap: clamp(1.5rem, 3vw, 2.5rem);
@@ -2405,17 +2395,20 @@ body.menu-open .site-header .header-call-button:hover,
 .footer-logo {
   margin: 0;
   color: #ffffff;
+  font-family: var(--font-mono);
   font-size: clamp(2.2rem, 4.5vw, 4.8rem);
-  font-weight: 700;
-  letter-spacing: -0.055em;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   line-height: 0.9;
+  text-transform: uppercase;
 }
 
 .footer-brand {
   margin: 0;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-mono);
   font-size: clamp(0.68rem, 0.8vw, 0.78rem);
-  font-weight: 650;
+  font-weight: 500;
   letter-spacing: 0.16em;
   line-height: 1;
   text-transform: uppercase;
@@ -2436,12 +2429,13 @@ body.menu-open .site-header .header-call-button:hover,
   justify-content: end;
   color: #ffffff;
   font-size: clamp(0.9rem, 1vw, 1rem);
-  font-weight: 650;
+  font-weight: 400;
   line-height: 1.2;
 }
 
 .footer-link {
   width: fit-content;
+  font-weight: 400;
   transition:
     color 220ms ease,
     transform 220ms ease;
@@ -2733,6 +2727,12 @@ body.menu-open .site-header .header-call-button:hover,
   }
 }
 
+.dark-end {
+  position: relative;
+  background: #090909;
+  color: var(--inverse-fg);
+}
+
 @media (max-width: 767px) {
   :root {
     --footer-height: 24rem;
@@ -2819,7 +2819,7 @@ body.menu-open .site-header .header-call-button:hover,
   }
 
   .site-main {
-    margin-bottom: var(--footer-height);
+    margin-bottom: 0;
   }
 
   .contact-success {
