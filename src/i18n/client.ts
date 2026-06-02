@@ -431,14 +431,33 @@ const initI18n = () => {
 
   const typewriter = document.querySelector<HTMLElement>('[data-typewriter]');
   if (typewriter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const typewriterPrefix = typewriter.querySelector<HTMLElement>('[data-typewriter-prefix]');
+    const typewriterTail = typewriter.querySelector<HTMLElement>('[data-typewriter-tail]');
     const phrasesByLang: Record<Lang, string[]> = {
       es: typewriter.dataset.typewriterPhrases?.split('|').filter(Boolean) ?? [],
-      en: ['digital solutions', 'more clarity for your clients', 'systems that generate opportunities'],
+      en: ['digital solutions.', 'more clarity for your clients.', 'systems that generate opportunities.'],
     };
     if (phrasesByLang.es.length > 1) {
+      const renderTypewriterText = (value: string) => {
+        if (!typewriterPrefix || !typewriterTail) {
+          typewriter.textContent = value;
+          return;
+        }
+
+        const tailMatch = value.match(/(\S+)$/);
+        if (!tailMatch?.index) {
+          typewriterPrefix.textContent = '';
+          typewriterTail.textContent = value;
+          return;
+        }
+
+        typewriterPrefix.textContent = value.slice(0, tailMatch.index);
+        typewriterTail.textContent = tailMatch[0];
+      };
       let phraseIndex = 0;
-      typewriter.textContent = typewriter.textContent?.trim() || phrasesByLang.es[0] || '';
-      let characterIndex = typewriter.textContent.length;
+      const initialPhrase = typewriter.textContent?.trim() || phrasesByLang.es[0] || '';
+      renderTypewriterText(initialPhrase);
+      let characterIndex = initialPhrase.length;
       let isDeleting = false;
 
       const tick = () => {
@@ -453,13 +472,13 @@ const initI18n = () => {
           characterIndex = Math.min(phrase.length, characterIndex + 1);
         }
 
-        typewriter.textContent = phrase.slice(0, characterIndex);
+        renderTypewriterText(phrase.slice(0, characterIndex));
 
         let delay = isDeleting ? 34 : 48;
         if (!isDeleting && characterIndex === phrase.length) {
           typewriter.classList.add('is-paused');
           isDeleting = true;
-          delay = 5200;
+          delay = 10400;
         } else if (isDeleting && characterIndex === 0) {
           isDeleting = false;
           phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -513,6 +532,172 @@ const initI18n = () => {
   window.addEventListener('scroll', requestBackToTopUpdate, { passive: true });
   window.addEventListener('resize', requestBackToTopUpdate);
   backToTop?.addEventListener('click', scrollToTopSmooth);
+
+  const initPremiumInteractionLayer = () => {
+    const canUsePointerLayer =
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canUsePointerLayer) return;
+
+    const heroSection = document.querySelector<HTMLElement>('#top');
+    const cursor = document.createElement('div');
+    const cursorDot = document.createElement('span');
+    const trailCanvas = document.createElement('canvas');
+    const trailContext = trailCanvas.getContext('2d', { alpha: true });
+
+    cursor.className = 'premium-cursor';
+    cursorDot.className = 'premium-cursor__dot';
+    trailCanvas.className = 'hero-cursor-trail';
+    trailCanvas.setAttribute('aria-hidden', 'true');
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.appendChild(cursorDot);
+    document.body.appendChild(cursor);
+    heroSection?.appendChild(trailCanvas);
+    document.documentElement.classList.add('has-premium-cursor');
+
+    const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const rendered = { x: pointer.x, y: pointer.y };
+    const trailPoints = Array.from({ length: 6 }, () => ({ x: pointer.x, y: pointer.y }));
+    const magneticTargets = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '.hero-primary, .header-call-button, .menu-button, .main-nav-link, .menu-link',
+      ),
+    );
+    let activeTarget: HTMLElement | null = null;
+    let cursorState: 'default' | 'link' | 'cta' | 'menu' = 'default';
+    let frame = 0;
+    let isVisible = false;
+
+    const setCursorState = (state: typeof cursorState) => {
+      cursorState = state;
+      cursor.dataset.cursorState = state;
+    };
+
+    const resizeTrail = () => {
+      if (!heroSection || !trailContext) return;
+      const rect = heroSection.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      trailCanvas.width = Math.max(1, Math.round(rect.width * dpr));
+      trailCanvas.height = Math.max(1, Math.round(rect.height * dpr));
+      trailCanvas.style.width = `${rect.width}px`;
+      trailCanvas.style.height = `${rect.height}px`;
+      trailContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const getTargetState = (target: HTMLElement): typeof cursorState => {
+      if (target.matches('.menu-button, .menu-link')) return 'menu';
+      if (target.matches('.btn, .header-call-button, .hero-primary')) return 'cta';
+      return 'link';
+    };
+
+    const resetTarget = (target: HTMLElement | null) => {
+      if (!target) return;
+      target.classList.remove('is-magnetic');
+      target.style.setProperty('--magnetic-x', '0px');
+      target.style.setProperty('--magnetic-y', '0px');
+    };
+
+    magneticTargets.forEach((target) => {
+      target.dataset.magnetic = 'true';
+      target.addEventListener('pointerenter', () => {
+        activeTarget = target;
+        setCursorState(getTargetState(target));
+        target.classList.add('is-magnetic');
+      });
+      target.addEventListener('pointerleave', () => {
+        if (activeTarget === target) activeTarget = null;
+        resetTarget(target);
+        setCursorState('default');
+      });
+    });
+
+    const handlePointerMove = (event: PointerEvent) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        cursor.classList.add('is-visible');
+      }
+
+      if (!activeTarget) return;
+      const rect = activeTarget.getBoundingClientRect();
+      const distanceX = event.clientX - (rect.left + rect.width / 2);
+      const distanceY = event.clientY - (rect.top + rect.height / 2);
+      const magnetX = Math.max(-10, Math.min(10, distanceX * 0.12));
+      const magnetY = Math.max(-10, Math.min(10, distanceY * 0.12));
+      activeTarget.style.setProperty('--magnetic-x', `${magnetX.toFixed(2)}px`);
+      activeTarget.style.setProperty('--magnetic-y', `${magnetY.toFixed(2)}px`);
+    };
+
+    const handlePointerLeave = () => {
+      isVisible = false;
+      cursor.classList.remove('is-visible');
+      resetTarget(activeTarget);
+      activeTarget = null;
+      setCursorState('default');
+    };
+
+    const drawTrail = () => {
+      if (!heroSection || !trailContext) return;
+      const rect = heroSection.getBoundingClientRect();
+      const isHeroVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+      trailContext.clearRect(0, 0, rect.width, rect.height);
+      if (!isHeroVisible) return;
+
+      trailPoints[0].x += (pointer.x - rect.left - trailPoints[0].x) * 0.28;
+      trailPoints[0].y += (pointer.y - rect.top - trailPoints[0].y) * 0.28;
+      for (let index = 1; index < trailPoints.length; index += 1) {
+        trailPoints[index].x += (trailPoints[index - 1].x - trailPoints[index].x) * 0.22;
+        trailPoints[index].y += (trailPoints[index - 1].y - trailPoints[index].y) * 0.22;
+      }
+
+      trailContext.save();
+      trailContext.lineCap = 'round';
+      trailContext.lineJoin = 'round';
+      for (let index = trailPoints.length - 1; index > 0; index -= 1) {
+        const point = trailPoints[index];
+        const next = trailPoints[index - 1];
+        const alpha = (1 - index / trailPoints.length) * 0.16;
+        trailContext.strokeStyle = `rgba(17, 17, 17, ${alpha})`;
+        trailContext.lineWidth = Math.max(0.45, 1.7 - index * 0.1);
+        trailContext.beginPath();
+        trailContext.moveTo(point.x, point.y);
+        trailContext.lineTo(next.x, next.y);
+        trailContext.stroke();
+      }
+      trailContext.restore();
+    };
+
+    const render = () => {
+      rendered.x += (pointer.x - rendered.x) * 0.68;
+      rendered.y += (pointer.y - rendered.y) * 0.68;
+      cursor.style.transform = `translate3d(${rendered.x.toFixed(2)}px, ${rendered.y.toFixed(2)}px, 0)`;
+      drawTrail();
+      frame = window.requestAnimationFrame(render);
+    };
+
+    setCursorState('default');
+    resizeTrail();
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerleave', handlePointerLeave);
+    window.addEventListener('blur', handlePointerLeave);
+    window.addEventListener('resize', resizeTrail, { passive: true });
+    frame = window.requestAnimationFrame(render);
+
+    window.addEventListener('pagehide', () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerleave', handlePointerLeave);
+      window.removeEventListener('blur', handlePointerLeave);
+      window.removeEventListener('resize', resizeTrail);
+      resetTarget(activeTarget);
+      cursor.remove();
+      trailCanvas.remove();
+      document.documentElement.classList.remove('has-premium-cursor');
+    }, { once: true });
+  };
+
+  initPremiumInteractionLayer();
 
   const initGsapAnimations = async () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -674,10 +859,21 @@ const initI18n = () => {
 
       if (siteHeader) {
         let isCompact = false;
+        let stickyLeaveTimer = 0;
         const setHeaderCompact = (compact: boolean) => {
           if (compact === isCompact) return;
           isCompact = compact;
-          siteHeader.classList.toggle('is-scrolled', compact);
+          window.clearTimeout(stickyLeaveTimer);
+          if (compact) {
+            siteHeader.classList.remove('is-sticky-leaving');
+            siteHeader.classList.add('is-scrolled');
+            return;
+          }
+          siteHeader.classList.add('is-sticky-leaving');
+          siteHeader.classList.remove('is-scrolled');
+          stickyLeaveTimer = window.setTimeout(() => {
+            siteHeader.classList.remove('is-sticky-leaving');
+          }, 340);
         };
 
         let navRaf = 0;

@@ -1,53 +1,63 @@
 ---
 import { translations } from '../i18n/translations';
-import WebGLPixelImage from './WebGLPixelImage.astro';
+import HeroWebGLVisual from './HeroWebGLVisual.astro';
 
 const t = translations.es;
 ---
 
-<section id="top" class="relative overflow-hidden pb-20 pt-16 sm:pb-28 sm:pt-24">
-  <div class="section-shell">
-    <div class="grid gap-10 lg:grid-cols-1 lg:items-end">
-      <div>
-        <span class="hero-eyebrow eyebrow reveal w-fit text-base font-normal normal-case" data-i18n="heroEyebrow" data-header-trigger>{t.heroEyebrow}</span>
-        <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 max-w-6xl text-[clamp(2.42rem,6.05vw,5.32rem)] text-ink">
+<section id="top" class="hero-section relative overflow-hidden">
+  <div class="section-shell hero-shell">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="hero-kicker reveal" data-header-trigger>
+          <span class="hero-kicker-line" aria-hidden="true"></span>
+          <span class="hero-kicker-lang hero-kicker-lang-es">Estudio creativo y tecnológico</span>
+          <span class="hero-kicker-lang hero-kicker-lang-en">Creative Technology Studio</span>
+        </div>
+        <h1 class="hero-title section-heading reveal reveal-delay-1 mt-7 text-ink">
           <span class="hero-title-line">
             <span class="hero-title-line-inner">
-              <span data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
-              <span class="hero-typewriter" data-typewriter data-typewriter-phrases="soluciones digitales|más claridad para tus clientes|sistemas que generan oportunidades">soluciones digitales</span><span class="hero-title-period">.</span>
+              <span class="hero-title-prefix" data-i18n="heroTitlePrefix">{t.heroTitlePrefix}</span>
+              <span class="hero-typewriter-line">
+                <span class="hero-typewriter-wrap">
+                  <span class="hero-typewriter" data-typewriter data-typewriter-phrases="soluciones digitales.|más claridad para tus clientes.|sistemas que generan oportunidades.">
+                    <span data-typewriter-prefix>soluciones </span><span class="hero-typewriter-tail" data-typewriter-tail>digitales.</span>
+                  </span>
+                </span>
+              </span>
             </span>
           </span>
         </h1>
-        <div class="reveal mt-6">
-          <p class="hero-loop-line text-base leading-7 sm:text-lg" data-i18n="heroText">{t.heroText}</p>
+        <div class="hero-subgrid">
+          <div class="reveal">
+            <p class="hero-loop-line text-base leading-7 sm:text-lg" data-i18n="heroText">{t.heroText}</p>
+          </div>
+          <div class="hero-cta reveal">
+            <a
+              href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary hero-primary"
+              data-i18n="heroPrimary"
+            >
+              <span>{t.heroPrimary}</span>
+            </a>
+          </div>
         </div>
-        <div class="hero-cta reveal mt-8">
-          <a
-            href="https://cal.com/nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary hero-primary w-full"
-            data-i18n="heroPrimary"
-          >
-            {t.heroPrimary}
-          </a>
+      </div>
+
+      <div class="hero-visual reveal reveal-delay-3">
+        <div class="hero-visual-card">
+          <HeroWebGLVisual />
+          <div class="hero-visual-label" aria-hidden="true">
+            <span>Web. Branding. IA. Automatizacion. Experiencia.</span>
+            <span>01 / 01</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="reveal reveal-delay-3 mt-12">
-      <WebGLPixelImage
-        class="visual-frame hero-visual relative h-[11.5rem] sm:h-[13.8rem] lg:h-[16.1rem]"
-        src="/assets/studio-cinematic.png"
-        alt="Cinematic creative technology studio scene"
-        intensity={0.28}
-        speed={0.86}
-        scale={1.012}
-        triggerOnce
-      />
-    </div>
-
-    <div class="mt-14 overflow-hidden border-y border-ink/12 py-4">
+    <div class="hero-marquee overflow-hidden border-y border-ink/12 py-4">
       <div class="marquee">
         <span>Sitios web premium&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Diseño y dirección visual&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;IA y automatización&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Contenido visual&nbsp;&nbsp;&nbsp;·</span>
         <span>Sitios web premium&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Diseño y dirección visual&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;IA y automatización&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Contenido visual&nbsp;&nbsp;&nbsp;·</span>
