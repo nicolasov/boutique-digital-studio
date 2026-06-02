@@ -29,17 +29,17 @@ const steps = [
 ];
 ---
 
-<section id="proceso" class="section-pad">
+<section id="proceso" class="process-section section-pad">
   <div class="section-shell">
-    <div class="process-intro mx-auto max-w-5xl text-center scroll-reveal">
-      <h2 class="process-heading section-heading text-[clamp(2.15rem,5vw,4.4rem)]">Lo hacemos en pasos claros</h2>
-      <div class="process-intro-copy mt-5">
+    <div class="process-intro scroll-reveal">
+      <h2 class="process-heading section-heading">Lo hacemos en pasos claros</h2>
+      <div class="process-intro-copy">
         <p>Trabajamos con un proceso claro para entender tu proyecto, detectar oportunidades y construir una solución digital alineada a tus objetivos.</p>
         <p>Creamos herramientas, experiencias y sistemas pensados para mejorar tu negocio, su presencia, comunicación y operación en el entorno digital.</p>
       </div>
     </div>
 
-    <div class="process-step-list mt-16">
+    <div class="process-step-list">
       {steps.map((step, index) => (
         <article class={`process-card process-step-row ${index % 2 === 1 ? 'is-reversed' : ''} scroll-reveal`}>
           <div class="process-step-copy">
