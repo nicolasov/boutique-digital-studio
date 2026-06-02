@@ -41,9 +41,9 @@
     }
 
     float organicShape(vec2 p, float scale, float offset) {
-      float field = noise(p * scale + vec2(uTime * 0.075 + offset, -uTime * 0.045));
-      field += noise(p * scale * 2.18 - vec2(uTime * 0.035, uTime * 0.052 + offset)) * 0.42;
-      field += sin((p.x * 2.4 + p.y * 1.15 + field) * 3.14159 + uTime * 0.16) * 0.16;
+      float field = noise(p * scale + vec2(uTime * 0.026 + offset, -uTime * 0.018));
+      field += noise(p * scale * 1.82 - vec2(uTime * 0.014, uTime * 0.021 + offset)) * 0.34;
+      field += sin((p.x * 1.75 + p.y * 0.9 + field) * 3.14159 + uTime * 0.055) * 0.08;
       return field;
     }
 
@@ -53,21 +53,22 @@
       vec2 p = (uv - 0.5) * aspect;
       vec2 mouse = (uMouse - 0.5) * aspect;
 
-      float field = organicShape(p, 3.25, 0.0);
-      float contour = smoothstep(0.44, 0.52, field) - smoothstep(0.58, 0.7, field);
-      float softMass = smoothstep(0.34, 0.82, field);
-      float rings = abs(sin((field + p.y * 0.32 - p.x * 0.12) * 19.0));
-      float linework = smoothstep(0.76, 0.9, rings) * 0.26;
+      float field = organicShape(p, 2.72, 0.0);
+      float contour = smoothstep(0.48, 0.55, field) - smoothstep(0.62, 0.74, field);
+      float softMass = smoothstep(0.32, 0.86, field);
+      float rings = abs(sin((field + p.y * 0.24 - p.x * 0.08) * 12.0));
+      float linework = smoothstep(0.84, 0.96, rings) * 0.14;
 
       float pointer = distance(p, mouse);
-      float ripple = sin((pointer - uTime * 0.13) * 32.0) * 0.024 / (1.0 + pointer * 16.0);
-      float verticalBands = smoothstep(0.48, 0.5, sin((p.x + field * 0.16 + ripple) * 16.0));
-      float vignette = smoothstep(1.02, 0.16, length(p * vec2(0.86, 1.08)));
-      float grain = hash(uv * uResolution + floor(uTime * 42.0)) * 0.075;
+      float ripple = sin((pointer - uTime * 0.045) * 22.0) * 0.012 / (1.0 + pointer * 18.0);
+      float verticalBands = smoothstep(0.58, 0.62, sin((p.x + field * 0.1 + ripple) * 10.0));
+      float vignette = smoothstep(1.08, 0.2, length(p * vec2(0.82, 1.02)));
+      float grain = hash(uv * uResolution + floor(uTime * 18.0)) * 0.026;
 
-      float tone = softMass * 0.52 + contour * 0.3 + linework + verticalBands * 0.16 + grain;
+      float tone = softMass * 0.46 + contour * 0.18 + linework + verticalBands * 0.055 + grain;
+      tone = smoothstep(0.08, 0.82, tone);
       tone *= vignette;
-      vec3 ink = mix(vec3(0.025), vec3(0.96), tone);
+      vec3 ink = mix(vec3(0.055), vec3(0.88), tone);
 
       gl_FragColor = vec4(ink, 1.0);
     }
@@ -162,7 +163,7 @@
 
       gl.uniform2f(uResolution, canvas.width, canvas.height);
       gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.uniform1f(uTime, prefersReducedMotion ? 4.5 : time * 0.001);
+      gl.uniform1f(uTime, prefersReducedMotion ? 4.5 : time * 0.00072);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
 
       if (!prefersReducedMotion) frame = window.requestAnimationFrame(render);
