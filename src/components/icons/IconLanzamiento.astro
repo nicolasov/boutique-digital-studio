@@ -1,0 +1,19 @@
+---
+interface Props {
+  size?: number;
+  color?: string;
+  class?: string;
+}
+const { size = 48, color = "currentColor", class: className = "" } = Astro.props;
+---
+<svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class={className} aria-hidden="true">
+  <!-- Center -->
+  <circle cx="24" cy="24" r="5" stroke={color} stroke-width="1.5"/>
+  <!-- Top arc -->
+  <path d="M 10,14 A 18 18 0 0 1 38,14" stroke={color} stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Bottom arc -->
+  <path d="M 38,34 A 18 18 0 0 1 10,34" stroke={color} stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Satellite nodes -->
+  <circle cx="10" cy="14" r="3.5" stroke={color} stroke-width="1.5"/>
+  <circle cx="38" cy="34" r="3.5" stroke={color} stroke-width="1.5"/>
+</svg>
