@@ -1,4 +1,9 @@
 ---
+import IconConstruccion from './icons/IconConstruccion.astro';
+import IconDiagnostico from './icons/IconDiagnostico.astro';
+import IconDireccionCreativa from './icons/IconDireccionCreativa.astro';
+import IconLanzamiento from './icons/IconLanzamiento.astro';
+
 const steps = [
   {
     number: '01',
@@ -20,9 +25,9 @@ const steps = [
   },
   {
     number: '04',
-    title: 'Automatización útil',
+    title: 'Lanzamiento y ajuste',
     text: 'Revisamos, ajustamos y dejamos una base preparada para evolucionar con el tiempo.',
-    icon: 'automation',
+    icon: 'launch',
   },
 ];
 ---
@@ -53,51 +58,60 @@ const steps = [
             <p class="process-step-text">{step.text}</p>
           </div>
           <div class="process-step-visual" aria-hidden="true">
-            {step.icon === 'diagnosis' && (
-              <svg class="process-icon" viewBox="0 0 160 160" fill="none">
-                <circle cx="70" cy="70" r="34" />
-                <path d="M95 95L124 124" />
-                <path d="M48 68H92" />
-                <path d="M70 46V90" />
-                <path d="M38 124H72" />
-                <path d="M38 112H90" />
-              </svg>
-            )}
-            {step.icon === 'direction' && (
-              <svg class="process-icon" viewBox="0 0 160 160" fill="none">
-                <circle cx="80" cy="80" r="48" />
-                <path d="M96 46L72 88L64 114L88 72L96 46Z" />
-                <path d="M80 20V36" />
-                <path d="M80 124V140" />
-                <path d="M20 80H36" />
-                <path d="M124 80H140" />
-              </svg>
-            )}
-            {step.icon === 'build' && (
-              <svg class="process-icon" viewBox="0 0 160 160" fill="none">
-                <path d="M32 38H128V122H32V38Z" />
-                <path d="M32 64H128" />
-                <path d="M60 38V122" />
-                <path d="M92 64V122" />
-                <path d="M60 92H128" />
-              </svg>
-            )}
-            {step.icon === 'automation' && (
-              <svg class="process-icon" viewBox="0 0 160 160" fill="none">
-                <circle cx="42" cy="80" r="13" />
-                <circle cx="82" cy="44" r="13" />
-                <circle cx="118" cy="84" r="13" />
-                <circle cx="82" cy="120" r="13" />
-                <path d="M52 72L72 52" />
-                <path d="M92 54L108 74" />
-                <path d="M108 94L92 112" />
-                <path d="M69 114L53 88" />
-                <path d="M55 80H105" />
-              </svg>
-            )}
+            {step.icon === 'diagnosis' && <IconDiagnostico size={64} color="currentColor" class="process-icon" />}
+            {step.icon === 'direction' && <IconDireccionCreativa size={64} color="currentColor" class="process-icon" />}
+            {step.icon === 'build' && <IconConstruccion size={64} color="currentColor" class="process-icon" />}
+            {step.icon === 'launch' && <IconLanzamiento size={64} color="currentColor" class="process-icon" />}
           </div>
         </article>
       ))}
     </div>
   </div>
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReduced) {
+      document.documentElement.classList.add('js');
+
+      gsap.fromTo(
+        '.process-intro',
+        { opacity: 0, y: 28, clipPath: 'inset(0 0 100% 0)' },
+        {
+          opacity: 1,
+          y: 0,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.88,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.process-intro',
+            start: 'top 85%',
+            once: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        '.process-card',
+        { opacity: 0, y: 32, clipPath: 'inset(0 0 100% 0)' },
+        {
+          opacity: 1,
+          y: 0,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.82,
+          ease: 'power3.out',
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: '.process-step-list',
+            start: 'top 85%',
+            once: true,
+          },
+        },
+      );
+    }
+  </script>
 </section>

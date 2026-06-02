@@ -431,6 +431,10 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   mix-blend-mode: difference;
 }
 
+.hero-visual-label span:last-child {
+  display: none;
+}
+
 .hero-marquee {
   margin-top: clamp(1.5rem, 3vw, 2.75rem);
 }
@@ -697,7 +701,6 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   }
 
   .process-heading {
-    max-width: 100%;
     font-size: clamp(2.4rem, 11vw, 4.6rem);
     line-height: 0.98;
   }
@@ -1313,18 +1316,26 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
   min-height: 0;
   aspect-ratio: 16 / 11.4;
   background: #080808;
-  filter: grayscale(1) contrast(0.96);
   opacity: 0.92;
   transition:
-    filter 320ms ease,
     opacity 320ms ease,
     transform 320ms ease;
+}
+
+.solution-image canvas,
+.solution-image img {
+  filter: grayscale(100%) contrast(1.08);
+  transition: filter 0.5s var(--ease-out);
+}
+
+.solution-item[open] .solution-image canvas,
+.solution-item[open] .solution-image img {
+  filter: grayscale(0%) contrast(1);
 }
 
 .solution-item:hover .solution-image,
 .solution-item[open] .solution-image {
   opacity: 1;
-  filter: grayscale(1) contrast(1.02);
 }
 
 @media (max-width: 900px) {
@@ -1374,7 +1385,6 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
 }
 
 .process-heading {
-  max-width: min(100%, 12.4ch);
   font-size: clamp(3.05rem, 5.9vw, 7rem);
   font-weight: 400;
   letter-spacing: -0.05em;
@@ -1400,7 +1410,6 @@ html[data-active-lang="en"] .hero-kicker-lang-en {
 }
 
 .process-intro-copy {
-  max-width: 50rem;
   margin-top: 0;
   color: color-mix(in srgb, var(--fg) 76%, var(--bg));
   font-size: clamp(1.25rem, 1.85vw, 2rem);

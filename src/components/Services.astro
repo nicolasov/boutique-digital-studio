@@ -6,27 +6,22 @@ const services = [
   {
     title: 'Sitios web premium',
     text: translations.es.workOneText,
-    image: '/assets/hero-editorial.png',
+    image: '/assets/service-web.png',
   },
   {
-    title: 'Branding y dirección visual',
+    title: 'Identidad de marca',
     text: translations.es.workTwoText,
-    image: '/assets/studio-cinematic.png',
+    image: '/assets/service-branding.png',
   },
   {
     title: 'Automatización e inteligencia artificial',
     text: translations.es.serviceAiWhat,
-    image: '/assets/system-abstract.png',
+    image: '/assets/service-ai.png',
   },
   {
     title: 'Contenido visual',
     text: translations.es.workFourText,
-    image: '/assets/studio-cinematic.png',
-  },
-  {
-    title: 'Dirección digital continua',
-    text: translations.es.workFiveText,
-    image: '/assets/system-abstract.png',
+    image: '/assets/service-contenido.png',
   },
 ] as const;
 ---
@@ -48,7 +43,7 @@ const services = [
               <span class="solution-indicator" aria-hidden="true"></span>
             </div>
             <WebGLPixelImage
-              class="solution-image"
+              class="solution-image service-image-wrap"
               src={service.image}
               alt={`Imagen editorial para ${service.title}`}
               intensity={0.32}
