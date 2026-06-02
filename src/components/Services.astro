@@ -4,22 +4,26 @@ import WebGLPixelImage from './WebGLPixelImage.astro';
 
 const services = [
   {
-    title: 'Sitios web premium',
+    titleLine1: 'Sitios web',
+    titleLine2: 'premium',
     text: translations.es.workOneText,
     image: '/assets/service-web.png',
   },
   {
-    title: 'Identidad de marca',
+    titleLine1: 'Identidad',
+    titleLine2: 'de marca',
     text: translations.es.workTwoText,
     image: '/assets/service-branding.png',
   },
   {
-    title: 'Automatización e inteligencia artificial',
+    titleLine1: 'Automatización e',
+    titleLine2: 'inteligencia artificial',
     text: translations.es.serviceAiWhat,
     image: '/assets/service-ai.png',
   },
   {
-    title: 'Contenido visual',
+    titleLine1: 'Contenido',
+    titleLine2: 'visual',
     text: translations.es.workFourText,
     image: '/assets/service-contenido.png',
   },
@@ -33,7 +37,7 @@ const services = [
         <details class="solution-item group" name="services-editorial" open={index === 0}>
           <summary class="solution-summary">
             <h3 class="solution-title display-font">
-              {service.title}
+              {service.titleLine1}<br />{service.titleLine2}
             </h3>
             <span class="solution-toggle" aria-hidden="true"></span>
           </summary>
@@ -45,7 +49,7 @@ const services = [
             <WebGLPixelImage
               class="solution-image service-image-wrap"
               src={service.image}
-              alt={`Imagen editorial para ${service.title}`}
+              alt={`Imagen editorial para ${service.titleLine1} ${service.titleLine2}`}
               intensity={0.32}
               speed={0.74}
               scale={1.01}
