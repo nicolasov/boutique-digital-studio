@@ -5,23 +5,38 @@ import WebGLPixelImage from './WebGLPixelImage.astro';
 const services = [
   {
     titleKey: 'workOneTitle',
+    titleLineOneKey: 'workOneTitleLineOne',
+    titleLineTwoKey: 'workOneTitleLineTwo',
     textKey: 'workOneText',
     image: '/assets/service-web.png',
   },
   {
     titleKey: 'workTwoTitle',
+    titleLineOneKey: 'workTwoTitleLineOne',
+    titleLineTwoKey: 'workTwoTitleLineTwo',
     textKey: 'workTwoText',
     image: '/assets/service-branding.png',
   },
   {
     titleKey: 'workThreeTitle',
+    titleLineOneKey: 'workThreeTitleLineOne',
+    titleLineTwoKey: 'workThreeTitleLineTwo',
     textKey: 'workThreeText',
     image: '/assets/service-ai.png',
   },
   {
     titleKey: 'workFourTitle',
+    titleLineOneKey: 'workFourTitleLineOne',
+    titleLineTwoKey: 'workFourTitleLineTwo',
     textKey: 'workFourText',
     image: '/assets/service-contenido.png',
+  },
+  {
+    titleKey: 'workFiveTitle',
+    titleLineOneKey: 'workFiveTitleLineOne',
+    titleLineTwoKey: 'workFiveTitleLineTwo',
+    textKey: 'workFiveText',
+    image: '/assets/system-abstract.png',
   },
 ] as const;
 
@@ -34,8 +49,9 @@ const t = translations.es;
       {services.map((service, index) => (
         <details class="solution-item group" name="services-editorial" open={index === 0}>
           <summary class="solution-summary">
-            <h3 class="solution-title display-font" data-i18n={service.titleKey}>
-              {t[service.titleKey]}
+            <h3 class="solution-title display-font">
+              <span data-i18n={service.titleLineOneKey}>{t[service.titleLineOneKey]}</span><br />
+              <span data-i18n={service.titleLineTwoKey}>{t[service.titleLineTwoKey]}</span>
             </h3>
             <span class="solution-toggle" aria-hidden="true"></span>
           </summary>
@@ -48,10 +64,11 @@ const t = translations.es;
               class="solution-image service-image-wrap"
               src={service.image}
               alt={`Imagen editorial para ${t[service.titleKey]}`}
-              intensity={0.32}
-              speed={0.74}
+              intensity={0.36}
+              speed={0.9}
               scale={1.01}
               triggerOnce={false}
+              hover={true}
             />
           </div>
         </details>

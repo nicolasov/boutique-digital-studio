@@ -6,6 +6,7 @@ interface Props {
   speed?: number;
   scale?: number;
   triggerOnce?: boolean;
+  hover?: boolean;
   class?: string;
 }
 
@@ -16,6 +17,7 @@ const {
   speed = 1,
   scale = 1.035,
   triggerOnce = true,
+  hover = false,
   class: className = '',
 } = Astro.props;
 ---
@@ -28,6 +30,7 @@ const {
   data-speed={speed}
   data-scale={scale}
   data-trigger-once={String(triggerOnce)}
+  data-hover={String(hover)}
 >
   <img class="webgl-pixel-fallback" src={src} alt={alt} loading="lazy" decoding="async" />
   <canvas class="webgl-pixel-canvas" aria-hidden="true"></canvas>
@@ -40,6 +43,7 @@ const {
   const vertexShader = `
     varying vec2 vUv;
     uniform float uProgress;
+    uniform float uHover;
     uniform float uTime;
     uniform float uIntensity;
 
@@ -86,6 +90,13 @@ const {
       float noise = hash(pixelGrid + floor(uTime * 11.0));
       vec2 drift = vec2(noise - 0.5, hash(pixelGrid + 19.0) - 0.5);
       vec2 sampleUv = mix(pixelUv + drift * (1.0 - reveal) * uIntensity * 0.14, uv, reveal);
+      float hover = smoothstep(0.0, 1.0, uHover);
+      float hoverPixelSize = mix(1.0, 18.0, hover);
+      vec2 hoverGrid = floor(uv * uPlaneResolution / hoverPixelSize);
+      vec2 hoverUv = (hoverGrid * hoverPixelSize + hoverPixelSize * 0.5) / uPlaneResolution;
+      float hoverNoise = hash(hoverGrid + floor(uTime * 22.0));
+      vec2 hoverDrift = vec2(hoverNoise - 0.5, hash(hoverGrid + 43.0) - 0.5);
+      sampleUv = mix(sampleUv, hoverUv + hoverDrift * hover * uIntensity * 0.08, hover * 0.72);
       vec4 color = texture2D(uTexture, sampleUv);
       float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
       float scan = step(abs(vUv.y - eased), 0.02);
@@ -142,6 +153,7 @@ const {
       uPlaneResolution: { value: new THREE.Vector2(1, 1) },
       uImageResolution: { value: new THREE.Vector2(1, 1) },
       uProgress: { value: prefersReducedMotion ? 1 : 0 },
+      uHover: { value: 0 },
       uTime: { value: 0 },
       uIntensity: { value: intensity },
     };
@@ -160,6 +172,7 @@ const {
 
     let loadedTexture: { dispose: () => void } | null = null;
     let revealTween: { kill: () => void; restart: (includeDelay?: boolean) => void; pause: (atTime?: number) => void } | null = null;
+    let hoverTween: { kill: () => void } | null = null;
     let introTween: { kill: () => void } | null = null;
     let floatTween: { kill: () => void } | null = null;
     let trigger: { kill: () => void } | null = null;
@@ -178,6 +191,7 @@ const {
       gsap.ticker.remove(tick);
       trigger?.kill();
       revealTween?.kill();
+      hoverTween?.kill();
       introTween?.kill();
       floatTween?.kill();
       loadedTexture?.dispose();
@@ -235,6 +249,31 @@ const {
 
       const rect = root.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.84 && rect.bottom > 0) revealTween.restart(true);
+
+      if (
+        root.dataset.hover === 'true' &&
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches
+      ) {
+        root.addEventListener('pointerenter', () => {
+          hoverTween?.kill();
+          hoverTween = gsap.to(uniforms.uHover, {
+            value: 1,
+            duration: 0.34,
+            ease: 'power2.out',
+            onUpdate: render,
+          });
+        });
+        root.addEventListener('pointerleave', () => {
+          hoverTween?.kill();
+          hoverTween = gsap.to(uniforms.uHover, {
+            value: 0,
+            duration: 0.48,
+            ease: 'power3.out',
+            onUpdate: render,
+          });
+        });
+      }
+
       gsap.ticker.add(tick);
       ScrollTrigger.refresh();
     }, undefined, () => {

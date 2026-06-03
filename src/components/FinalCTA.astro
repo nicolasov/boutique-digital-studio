@@ -10,9 +10,12 @@ const t = translations.es;
       <div class="contact-copy">
         <span class="contact-eyebrow" data-i18n="ctaEyebrow">{t.ctaEyebrow}</span>
         <h2 class="contact-heading section-heading" data-contact-title>
-          Hablemos.
+          Hablemos
         </h2>
-        <p class="contact-lede" data-contact-text>Contanos qué necesitás construir, mejorar o automatizar. Puede ser una web, una identidad, contenido visual o una idea que todavía necesita forma.</p>
+        <p class="contact-lede" data-contact-text>
+          <span>Contanos qué necesitás construir, mejorar o automatizar.</span>
+          <span>Puede ser una web, una identidad, contenido visual o una idea que todavía necesita forma.</span>
+        </p>
       </div>
       <form class="contact-form" data-contact-form>
         <div class="contact-form-fields" data-contact-fields>
@@ -49,7 +52,10 @@ const t = translations.es;
           </label>
           <p class="contact-form-error" hidden data-contact-error data-i18n="formError" aria-live="polite">{t.formError}</p>
           <button class="btn btn-primary contact-submit" type="submit" data-contact-submit>
-            <span class="contact-submit-label" data-contact-submit-label>Enviar consulta</span>
+            <svg class="contact-submit-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <rect fill="none" width="100%" height="100%" pathLength="100"></rect>
+            </svg>
+            <span class="contact-submit-label" data-contact-submit-label>{t.formSubmit}</span>
             <span class="contact-submit-loader" aria-hidden="true"></span>
           </button>
         </div>

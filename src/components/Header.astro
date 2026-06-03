@@ -3,7 +3,7 @@ import { translations } from '../i18n/translations';
 
 const overlayNav = [
   { key: 'navServices', href: '#soluciones-digitales' },
-  { key: 'navWork', href: '#work' },
+  { key: 'navWork', href: '#soluciones-digitales' },
   { key: 'navProcess', href: '#proceso' },
   { key: 'navContact', href: '#contacto' },
 ];
@@ -128,7 +128,7 @@ const t = translations.es;
   function applyLang(lang: Lang) {
     const t = translations[lang];
     document.documentElement.setAttribute('data-active-lang', lang);
-    try { localStorage.setItem('lang', lang); } catch (_) {}
+    try { localStorage.setItem('bds-lang', lang); } catch (_) {}
 
     document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n') as keyof typeof t;
@@ -145,7 +145,7 @@ const t = translations.es;
   function initLang() {
     let saved: Lang = 'es';
     try {
-      const stored = localStorage.getItem('lang');
+      const stored = localStorage.getItem('bds-lang');
       if (stored === 'en' || stored === 'es') saved = stored;
     } catch (_) {}
     applyLang(saved);

@@ -6,18 +6,25 @@ const contactEndpoint =
 const calLink = 'nicolas-oliva-velez-iehecs/hablemos-de-tu-proyecto';
 const calOrigin = 'https://cal.com';
 const calNamespace = 'boutiqueDigitalStudio';
+const activeScrollLocks = new Set<string>();
 const contactCopy = {
   es: {
-    title: 'Hablemos.',
-    text: 'Contanos qué necesitás construir, mejorar o automatizar. Puede ser una web, una identidad, contenido visual o una idea que todavía necesita forma.',
-    submit: 'Enviar consulta',
+    title: 'Hablemos',
+    text: [
+      'Contanos qué necesitás construir, mejorar o automatizar.',
+      'Puede ser una web, una identidad, contenido visual o una idea que todavía necesita forma.',
+    ],
+    submit: 'Enviar',
   },
   en: {
-    title: 'Let’s talk.',
-    text: 'Tell us what you need to build, improve, or automate. It can be a website, an identity, visual content, or an idea that still needs shape.',
-    submit: 'Send inquiry',
+    title: 'Let’s talk',
+    text: [
+      'Tell us what you need to build, improve, or automate.',
+      'It can be a website, an identity, visual content, or an idea that still needs shape.',
+    ],
+    submit: 'Submit',
   },
-} satisfies Record<Lang, { title: string; text: string; submit: string }>;
+} satisfies Record<Lang, { title: string; text: string[]; submit: string }>;
 
 type CalApi = ((...args: unknown[]) => void) & {
   loaded?: boolean;
@@ -33,6 +40,18 @@ declare global {
 
 const isLang = (value: string | null): value is Lang =>
   Boolean(value && supportedLangs.includes(value as Lang));
+
+const setScrollLock = (key: string, isLocked: boolean) => {
+  if (isLocked) {
+    activeScrollLocks.add(key);
+  } else {
+    activeScrollLocks.delete(key);
+  }
+
+  const hasLocks = activeScrollLocks.size > 0;
+  document.documentElement.classList.toggle('scroll-locked', hasLocks);
+  document.body.classList.toggle('scroll-locked', hasLocks);
+};
 
 const detectLang = (): Lang => {
   const stored = window.localStorage.getItem(storageKey);
@@ -53,7 +72,16 @@ const applyLang = (lang: Lang) => {
   });
 
   document.querySelector<HTMLElement>('[data-contact-title]')?.replaceChildren(contactCopy[lang].title);
-  document.querySelector<HTMLElement>('[data-contact-text]')?.replaceChildren(contactCopy[lang].text);
+  const contactText = document.querySelector<HTMLElement>('[data-contact-text]');
+  if (contactText) {
+    contactText.replaceChildren(
+      ...contactCopy[lang].text.map((line) => {
+        const span = document.createElement('span');
+        span.textContent = line;
+        return span;
+      }),
+    );
+  }
   document.querySelector<HTMLElement>('[data-contact-submit-label]')?.replaceChildren(contactCopy[lang].submit);
 
   document.querySelectorAll<HTMLElement>('[data-lang-option]').forEach((node) => {
@@ -143,74 +171,78 @@ const initI18n = () => {
     button.addEventListener('click', () => setMenuOpen(false));
   });
 
-  const getSolutionBody = (detail: HTMLDetailsElement) =>
-    detail.querySelector<HTMLElement>('[data-solution-body]');
+  const enableAnimatedServicesAccordion = false;
+  // Temporarily disabled for performance QA
+  if (enableAnimatedServicesAccordion) {
+    const getSolutionBody = (detail: HTMLDetailsElement) =>
+      detail.querySelector<HTMLElement>('[data-solution-body]');
 
-  const expandSolution = (detail: HTMLDetailsElement) => {
-    const body = getSolutionBody(detail);
-    if (!body) return;
-    detail.classList.remove('is-closing');
-    body.style.height = '0px';
-    detail.open = true;
-
-    window.requestAnimationFrame(() => {
-      body.style.height = `${body.scrollHeight}px`;
-    });
-
-    const onTransitionEnd = (event: TransitionEvent) => {
-      if (event.target !== body || event.propertyName !== 'height') return;
-      body.style.height = 'auto';
-      body.removeEventListener('transitionend', onTransitionEnd);
-    };
-
-    body.addEventListener('transitionend', onTransitionEnd);
-  };
-
-  const collapseSolution = (detail: HTMLDetailsElement) => {
-    const body = getSolutionBody(detail);
-    if (!body || !detail.open) return;
-    body.style.height = `${body.scrollHeight}px`;
-    detail.classList.add('is-closing');
-
-    window.requestAnimationFrame(() => {
-      body.style.height = '0px';
-    });
-
-    const onTransitionEnd = (event: TransitionEvent) => {
-      if (event.target !== body || event.propertyName !== 'height') return;
-      detail.open = false;
+    const expandSolution = (detail: HTMLDetailsElement) => {
+      const body = getSolutionBody(detail);
+      if (!body) return;
       detail.classList.remove('is-closing');
-      body.style.height = '';
-      body.removeEventListener('transitionend', onTransitionEnd);
+      body.style.height = '0px';
+      detail.open = true;
+
+      window.requestAnimationFrame(() => {
+        body.style.height = `${body.scrollHeight}px`;
+      });
+
+      const onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== body || event.propertyName !== 'height') return;
+        body.style.height = 'auto';
+        body.removeEventListener('transitionend', onTransitionEnd);
+      };
+
+      body.addEventListener('transitionend', onTransitionEnd);
     };
 
-    body.addEventListener('transitionend', onTransitionEnd);
-  };
+    const collapseSolution = (detail: HTMLDetailsElement) => {
+      const body = getSolutionBody(detail);
+      if (!body || !detail.open) return;
+      body.style.height = `${body.scrollHeight}px`;
+      detail.classList.add('is-closing');
 
-  const openSolution = (detail: HTMLDetailsElement) => {
-    expandSolution(detail);
-    document.querySelectorAll<HTMLDetailsElement>('.solution-item[open]').forEach((other) => {
-      if (other !== detail) collapseSolution(other);
-    });
-  };
+      window.requestAnimationFrame(() => {
+        body.style.height = '0px';
+      });
 
-  document.querySelectorAll<HTMLDetailsElement>('.solution-item').forEach((detail) => {
-    const summary = detail.querySelector('summary');
+      const onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== body || event.propertyName !== 'height') return;
+        detail.open = false;
+        detail.classList.remove('is-closing');
+        body.style.height = '';
+        body.removeEventListener('transitionend', onTransitionEnd);
+      };
 
-    summary?.addEventListener('click', (event) => {
-      event.preventDefault();
-      if (detail.open && !detail.classList.contains('is-closing')) {
-        collapseSolution(detail);
-      } else {
+      body.addEventListener('transitionend', onTransitionEnd);
+    };
+
+    const openSolution = (detail: HTMLDetailsElement) => {
+      expandSolution(detail);
+      document.querySelectorAll<HTMLDetailsElement>('.solution-item[open]').forEach((other) => {
+        if (other !== detail) collapseSolution(other);
+      });
+    };
+
+    document.querySelectorAll<HTMLDetailsElement>('.solution-item').forEach((detail) => {
+      const summary = detail.querySelector('summary');
+
+      summary?.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (detail.open && !detail.classList.contains('is-closing')) {
+          collapseSolution(detail);
+        } else {
+          openSolution(detail);
+        }
+      });
+
+      detail.addEventListener('mouseenter', () => {
+        if (!window.matchMedia('(hover: hover)').matches) return;
         openSolution(detail);
-      }
+      });
     });
-
-    detail.addEventListener('mouseenter', () => {
-      if (!window.matchMedia('(hover: hover)').matches) return;
-      openSolution(detail);
-    });
-  });
+  }
 
   const loopNode = document.querySelector<HTMLElement>('[data-hero-loop]');
   const loopKeys = loopNode?.dataset.loopKeys?.split(',') ?? [];
@@ -511,11 +543,23 @@ const initI18n = () => {
   const updateBackToTop = () => {
     if (!backToTop) return;
     const shouldShow = window.scrollY > Math.min(620, window.innerHeight * 0.72);
-    const pageBottom = document.documentElement.scrollHeight;
-    const footerHeight = document.querySelector<HTMLElement>('.site-footer')?.offsetHeight ?? 0;
-    const isOverFooter = window.scrollY + window.innerHeight >= pageBottom - footerHeight + 24;
+    const buttonRect = backToTop.getBoundingClientRect();
+    const sampleX = buttonRect.left + buttonRect.width / 2;
+    const sampleY = buttonRect.top + buttonRect.height / 2;
+    const isOverDarkSurface = Array.from(
+      document.querySelectorAll<HTMLElement>('.contact-section'),
+    ).some((surface) => {
+      const surfaceRect = surface.getBoundingClientRect();
+      return (
+        sampleX >= surfaceRect.left &&
+        sampleX <= surfaceRect.right &&
+        sampleY >= surfaceRect.top &&
+        sampleY <= surfaceRect.bottom
+      );
+    });
+
     backToTop.classList.toggle('is-visible', shouldShow);
-    backToTop.classList.toggle('is-over-footer', isOverFooter);
+    backToTop.classList.toggle('is-over-dark', isOverDarkSurface);
   };
 
   const requestBackToTopUpdate = () => {
@@ -544,66 +588,115 @@ const initI18n = () => {
     window.requestAnimationFrame(step);
   };
 
+  const initDarkEndReveal = () => {
+    const siteMain = document.querySelector<HTMLElement>('.site-main');
+    const darkEnd = document.querySelector<HTMLElement>('.dark-end');
+    if (!siteMain || !darkEnd) return;
+
+    const root = document.documentElement;
+    let offsetRaf = 0;
+    let positionRaf = 0;
+    let darkEndHeight = 0;
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(Math.max(value, min), max);
+
+    const updateDarkEndPosition = () => {
+      positionRaf = 0;
+      if (!root.classList.contains('has-dark-end-reveal')) return;
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      const mainBottom = siteMain.offsetTop + siteMain.offsetHeight;
+      const revealStart = Math.max(0, mainBottom - viewportHeight);
+      const progress = clamp((window.scrollY - revealStart) / Math.max(darkEndHeight, 1), 0, 1);
+      const oversize = Math.max(0, darkEndHeight - viewportHeight);
+      root.style.setProperty('--dark-end-reveal-y', `${(oversize * (1 - progress)).toFixed(2)}px`);
+    };
+
+    const requestDarkEndPosition = () => {
+      if (positionRaf) return;
+      positionRaf = window.requestAnimationFrame(updateDarkEndPosition);
+    };
+
+    const setDarkEndOffset = () => {
+      offsetRaf = 0;
+      root.classList.add('has-dark-end-reveal');
+      darkEndHeight = Math.max(1, Math.ceil(darkEnd.scrollHeight));
+      root.style.setProperty('--dark-end-offset', `${darkEndHeight}px`);
+      updateDarkEndPosition();
+      requestBackToTopUpdate();
+    };
+
+    const requestDarkEndOffset = () => {
+      if (offsetRaf) return;
+      offsetRaf = window.requestAnimationFrame(setDarkEndOffset);
+    };
+
+    setDarkEndOffset();
+    window.addEventListener('load', requestDarkEndOffset, { once: true });
+    window.addEventListener('resize', requestDarkEndOffset);
+    window.addEventListener('scroll', requestDarkEndPosition, { passive: true });
+    window.setTimeout(setDarkEndOffset, 500);
+    document.fonts?.ready.then(requestDarkEndOffset).catch(() => undefined);
+
+    darkEnd.querySelectorAll('img').forEach((image) => {
+      if (image.complete) return;
+      image.addEventListener('load', requestDarkEndOffset, { once: true });
+      image.addEventListener('error', requestDarkEndOffset, { once: true });
+    });
+  };
+
+  initDarkEndReveal();
   updateBackToTop();
   window.addEventListener('scroll', requestBackToTopUpdate, { passive: true });
   window.addEventListener('resize', requestBackToTopUpdate);
   backToTop?.addEventListener('click', scrollToTopSmooth);
 
   const initPremiumInteractionLayer = () => {
+    const enablePremiumInteractionLayer = true;
+    if (!enablePremiumInteractionLayer) return;
+
     const canUsePointerLayer =
       window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!canUsePointerLayer) return;
 
-    const heroSection = document.querySelector<HTMLElement>('#top');
     const cursor = document.createElement('div');
+    const cursorTrail = document.createElement('span');
     const cursorDot = document.createElement('span');
-    const trailCanvas = document.createElement('canvas');
-    const trailContext = trailCanvas.getContext('2d', { alpha: true });
-
     cursor.className = 'premium-cursor';
+    cursorTrail.className = 'premium-cursor__trail';
     cursorDot.className = 'premium-cursor__dot';
-    trailCanvas.className = 'hero-cursor-trail';
-    trailCanvas.setAttribute('aria-hidden', 'true');
     cursor.setAttribute('aria-hidden', 'true');
+    cursor.appendChild(cursorTrail);
     cursor.appendChild(cursorDot);
     document.body.appendChild(cursor);
-    heroSection?.appendChild(trailCanvas);
     document.documentElement.classList.add('has-premium-cursor');
 
     const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const rendered = { x: pointer.x, y: pointer.y };
-    const trailPoints = Array.from({ length: 6 }, () => ({ x: pointer.x, y: pointer.y }));
-    const magneticTargets = Array.from(
+    const trailed = { x: pointer.x, y: pointer.y };
+    const hoverTargets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        '.hero-primary, .header-call-button, .menu-button, .main-nav-link, .menu-link',
+        'a, button, summary, .solution-image, .hero-visual-card, .process-step-visual',
       ),
     );
+    const magneticTargets = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '.hero-primary, .header-call-button, .contact-submit',
+      ),
+    );
+    const targetHandlers: Array<{ target: HTMLElement; onEnter: () => void; onLeave: () => void }> = [];
     let activeTarget: HTMLElement | null = null;
-    let cursorState: 'default' | 'link' | 'cta' | 'menu' = 'default';
+    let cursorState: 'default' | 'hover' | 'cta' = 'default';
     let frame = 0;
     let isVisible = false;
 
     const setCursorState = (state: typeof cursorState) => {
+      if (cursorState === state) return;
       cursorState = state;
       cursor.dataset.cursorState = state;
-    };
-
-    const resizeTrail = () => {
-      if (!heroSection || !trailContext) return;
-      const rect = heroSection.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      trailCanvas.width = Math.max(1, Math.round(rect.width * dpr));
-      trailCanvas.height = Math.max(1, Math.round(rect.height * dpr));
-      trailCanvas.style.width = `${rect.width}px`;
-      trailCanvas.style.height = `${rect.height}px`;
-      trailContext.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const getTargetState = (target: HTMLElement): typeof cursorState => {
-      if (target.matches('.menu-button, .menu-link')) return 'menu';
-      if (target.matches('.btn, .header-call-button, .hero-primary')) return 'cta';
-      return 'link';
+      scheduleRender();
     };
 
     const resetTarget = (target: HTMLElement | null) => {
@@ -613,18 +706,58 @@ const initI18n = () => {
       target.style.setProperty('--magnetic-y', '0px');
     };
 
-    magneticTargets.forEach((target) => {
-      target.dataset.magnetic = 'true';
-      target.addEventListener('pointerenter', () => {
+    const scheduleRender = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(render);
+    };
+
+    const render = () => {
+      frame = 0;
+      rendered.x += (pointer.x - rendered.x) * 0.22;
+      rendered.y += (pointer.y - rendered.y) * 0.22;
+      trailed.x += (pointer.x - trailed.x) * 0.11;
+      trailed.y += (pointer.y - trailed.y) * 0.11;
+      const trailX = trailed.x - rendered.x;
+      const trailY = trailed.y - rendered.y;
+      const trailScale = cursorState === 'cta' ? 1.18 : cursorState === 'hover' ? 1.04 : 0.88;
+      cursor.style.transform = `translate3d(${rendered.x.toFixed(2)}px, ${rendered.y.toFixed(2)}px, 0)`;
+      cursorTrail.style.transform = `translate3d(${trailX.toFixed(2)}px, ${trailY.toFixed(2)}px, 0) translate3d(-50%, -50%, 0) scale(${trailScale})`;
+
+      if (
+        Math.abs(pointer.x - rendered.x) > 0.1 ||
+        Math.abs(pointer.y - rendered.y) > 0.1 ||
+        Math.abs(pointer.x - trailed.x) > 0.1 ||
+        Math.abs(pointer.y - trailed.y) > 0.1
+      ) {
+        scheduleRender();
+      }
+    };
+
+    const getTargetState = (target: HTMLElement): typeof cursorState =>
+      target.matches('.btn, .header-call-button, .hero-primary, .contact-submit') ? 'cta' : 'hover';
+
+    hoverTargets.forEach((target) => {
+      target.dataset.cursorTarget = 'true';
+      const onEnter = () => {
         activeTarget = target;
         setCursorState(getTargetState(target));
-        target.classList.add('is-magnetic');
-      });
-      target.addEventListener('pointerleave', () => {
+      };
+      const onLeave = () => {
         if (activeTarget === target) activeTarget = null;
-        resetTarget(target);
-        setCursorState('default');
-      });
+        if (!activeTarget) setCursorState('default');
+      };
+      target.addEventListener('pointerenter', onEnter);
+      target.addEventListener('pointerleave', onLeave);
+      targetHandlers.push({ target, onEnter, onLeave });
+    });
+
+    magneticTargets.forEach((target) => {
+      target.dataset.magnetic = 'true';
+      const onEnter = () => target.classList.add('is-magnetic');
+      const onLeave = () => resetTarget(target);
+      target.addEventListener('pointerenter', onEnter);
+      target.addEventListener('pointerleave', onLeave);
+      targetHandlers.push({ target, onEnter, onLeave });
     });
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -635,14 +768,17 @@ const initI18n = () => {
         cursor.classList.add('is-visible');
       }
 
-      if (!activeTarget) return;
-      const rect = activeTarget.getBoundingClientRect();
-      const distanceX = event.clientX - (rect.left + rect.width / 2);
-      const distanceY = event.clientY - (rect.top + rect.height / 2);
-      const magnetX = Math.max(-10, Math.min(10, distanceX * 0.12));
-      const magnetY = Math.max(-10, Math.min(10, distanceY * 0.12));
-      activeTarget.style.setProperty('--magnetic-x', `${magnetX.toFixed(2)}px`);
-      activeTarget.style.setProperty('--magnetic-y', `${magnetY.toFixed(2)}px`);
+      if (activeTarget && magneticTargets.includes(activeTarget)) {
+        const rect = activeTarget.getBoundingClientRect();
+        const distanceX = event.clientX - (rect.left + rect.width / 2);
+        const distanceY = event.clientY - (rect.top + rect.height / 2);
+        const magnetX = Math.max(-7, Math.min(7, distanceX * 0.08));
+        const magnetY = Math.max(-7, Math.min(7, distanceY * 0.08));
+        activeTarget.style.setProperty('--magnetic-x', `${magnetX.toFixed(2)}px`);
+        activeTarget.style.setProperty('--magnetic-y', `${magnetY.toFixed(2)}px`);
+      }
+
+      scheduleRender();
     };
 
     const handlePointerLeave = () => {
@@ -650,65 +786,26 @@ const initI18n = () => {
       cursor.classList.remove('is-visible');
       resetTarget(activeTarget);
       activeTarget = null;
+      magneticTargets.forEach(resetTarget);
       setCursorState('default');
     };
 
-    const drawTrail = () => {
-      if (!heroSection || !trailContext) return;
-      const rect = heroSection.getBoundingClientRect();
-      const isHeroVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-      trailContext.clearRect(0, 0, rect.width, rect.height);
-      if (!isHeroVisible) return;
-
-      trailPoints[0].x += (pointer.x - rect.left - trailPoints[0].x) * 0.28;
-      trailPoints[0].y += (pointer.y - rect.top - trailPoints[0].y) * 0.28;
-      for (let index = 1; index < trailPoints.length; index += 1) {
-        trailPoints[index].x += (trailPoints[index - 1].x - trailPoints[index].x) * 0.22;
-        trailPoints[index].y += (trailPoints[index - 1].y - trailPoints[index].y) * 0.22;
-      }
-
-      trailContext.save();
-      trailContext.lineCap = 'round';
-      trailContext.lineJoin = 'round';
-      for (let index = trailPoints.length - 1; index > 0; index -= 1) {
-        const point = trailPoints[index];
-        const next = trailPoints[index - 1];
-        const alpha = (1 - index / trailPoints.length) * 0.16;
-        trailContext.strokeStyle = `rgba(17, 17, 17, ${alpha})`;
-        trailContext.lineWidth = Math.max(0.45, 1.7 - index * 0.1);
-        trailContext.beginPath();
-        trailContext.moveTo(point.x, point.y);
-        trailContext.lineTo(next.x, next.y);
-        trailContext.stroke();
-      }
-      trailContext.restore();
-    };
-
-    const render = () => {
-      rendered.x += (pointer.x - rendered.x) * 0.68;
-      rendered.y += (pointer.y - rendered.y) * 0.68;
-      cursor.style.transform = `translate3d(${rendered.x.toFixed(2)}px, ${rendered.y.toFixed(2)}px, 0)`;
-      drawTrail();
-      frame = window.requestAnimationFrame(render);
-    };
-
     setCursorState('default');
-    resizeTrail();
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', handlePointerLeave);
     window.addEventListener('blur', handlePointerLeave);
-    window.addEventListener('resize', resizeTrail, { passive: true });
-    frame = window.requestAnimationFrame(render);
 
     window.addEventListener('pagehide', () => {
-      window.cancelAnimationFrame(frame);
+      if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
-      window.removeEventListener('resize', resizeTrail);
+      targetHandlers.forEach(({ target, onEnter, onLeave }) => {
+        target.removeEventListener('pointerenter', onEnter);
+        target.removeEventListener('pointerleave', onLeave);
+      });
       resetTarget(activeTarget);
       cursor.remove();
-      trailCanvas.remove();
       document.documentElement.classList.remove('has-premium-cursor');
     }, { once: true });
   };
@@ -727,6 +824,7 @@ const initI18n = () => {
         import('gsap/ScrollTrigger'),
       ]);
       gsap.registerPlugin(ScrollTrigger);
+      await document.fonts?.ready.catch(() => undefined);
 
       const isMobile = window.innerWidth <= 768;
       const heroSection = document.querySelector<HTMLElement>('#top');
@@ -735,6 +833,7 @@ const initI18n = () => {
       const heroCta = document.querySelector<HTMLElement>('.hero-cta');
       const heroImage = document.querySelector<HTMLElement>('.hero-visual');
       const processIntro = document.querySelector<HTMLElement>('.process-intro');
+      const processHeading = document.querySelector<HTMLElement>('.process-heading');
       const processHeadingWords = Array.from(document.querySelectorAll<HTMLElement>('.process-heading-word'));
       const processIntroCopy = document.querySelector<HTMLElement>('.process-intro-copy');
       const genericReveal = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal')).filter(
@@ -779,7 +878,7 @@ const initI18n = () => {
 
       if (heroImage && heroSection) {
         gsap.to(heroImage, {
-          y: isMobile ? -45 : -90,
+          y: isMobile ? -60 : -120,
           ease: 'none',
           scrollTrigger: {
             trigger: heroSection,
@@ -793,18 +892,23 @@ const initI18n = () => {
       if (processIntro) {
         gsap.set(processIntro, { autoAlpha: 1 });
         if (processHeadingWords.length) {
-          gsap.set(processHeadingWords, { y: '115%' });
-          gsap.to(processHeadingWords, {
-            y: '0%',
-            duration: 1.15,
-            ease: 'expo.out',
-            stagger: 0.075,
-            scrollTrigger: {
-              trigger: processIntro,
-              start: 'top 82%',
-              once: true,
+          gsap.fromTo(
+            processHeadingWords,
+            { yPercent: 110, autoAlpha: 0 },
+            {
+              yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.95,
+              ease: 'power3.out',
+              stagger: 0.08,
+              clearProps: 'transform,opacity,visibility',
+              scrollTrigger: {
+                trigger: processHeading ?? processIntro,
+                start: 'top 82%',
+                once: true,
+              },
             },
-          });
+          );
         }
         if (processIntroCopy) {
           gsap.from(processIntroCopy, {
@@ -821,6 +925,61 @@ const initI18n = () => {
           });
         }
       }
+
+      const serviceItems = Array.from(document.querySelectorAll<HTMLElement>('.solution-item'));
+      serviceItems.forEach((item, index) => {
+        const summary = item.querySelector<HTMLElement>('.solution-summary');
+        const title = item.querySelector<HTMLElement>('.solution-title');
+        const toggle = item.querySelector<HTMLElement>('.solution-toggle');
+
+        if (!summary || !title || !toggle) return;
+
+        gsap.set(item, { '--solution-line-scale': 0 });
+        gsap.set(summary, {
+          '--solution-number-opacity': 0,
+          '--solution-number-y': '20px',
+        });
+        gsap.set(title, { autoAlpha: 0, y: 30 });
+        gsap.set(toggle, {
+          autoAlpha: 0,
+          rotation: -90,
+          transformOrigin: '50% 50%',
+        });
+
+        gsap.timeline({
+          delay: Math.min(index * 0.08, 0.32),
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+          .to(item, {
+            '--solution-line-scale': 1,
+            duration: 0.8,
+            ease: 'power3.out',
+          })
+          .to(summary, {
+            '--solution-number-opacity': 1,
+            '--solution-number-y': '0px',
+            duration: 0.6,
+            ease: 'power3.out',
+          }, '-=0.28')
+          .to(title, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'expo.out',
+            clearProps: 'transform,opacity,visibility',
+          }, '-=0.34')
+          .to(toggle, {
+            autoAlpha: 1,
+            rotation: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity,visibility',
+          }, '-=0.46');
+      });
 
       const workRows = Array.from(document.querySelectorAll<HTMLElement>('.work-row'));
       const workSection = document.querySelector<HTMLElement>('#work');
@@ -863,19 +1022,64 @@ const initI18n = () => {
         });
       });
 
-      ScrollTrigger.batch('.process-card', {
-        start: 'top 80%',
-        once: true,
-        onEnter: (batch) => {
-          gsap.set(batch, { autoAlpha: 1 });
-          gsap.from(batch, {
-            opacity: 0,
-            y: isMobile ? 22 : 45,
-            duration: 0.8,
+      const processCards = Array.from(document.querySelectorAll<HTMLElement>('.process-card'));
+      gsap.set(processCards, { autoAlpha: 1 });
+      processCards.forEach((card) => {
+        const title = card.querySelector<HTMLElement>('.process-step-title');
+        const text = card.querySelector<HTMLElement>('.process-step-text');
+        const shapes = Array.from(
+          card.querySelectorAll<SVGGeometryElement>('path, line, circle, rect, polygon, polyline'),
+        ).filter((shape) => typeof shape.getTotalLength === 'function');
+
+        if (title) {
+          gsap.set(title, { autoAlpha: 0, y: 24 });
+        }
+        if (text) {
+          gsap.set(text, { autoAlpha: 0, y: 20 });
+        }
+
+        shapes.forEach((shape) => {
+          const length = shape.getTotalLength();
+          shape.style.strokeDasharray = `${length}`;
+          shape.style.strokeDashoffset = `${length}`;
+        });
+
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+
+        if (shapes.length) {
+          timeline.to(shapes, {
+            strokeDashoffset: 0,
+            duration: 1.2,
             ease: 'power2.out',
-            stagger: 0.1,
+            stagger: 0.035,
           });
-        },
+        }
+
+        if (title) {
+          timeline.to(title, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.62,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity,visibility',
+          }, '+=0.04');
+        }
+
+        if (text) {
+          timeline.to(text, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.56,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity,visibility',
+          }, '+=0.02');
+        }
       });
 
       if (genericReveal.length) {
@@ -933,8 +1137,19 @@ const initI18n = () => {
     } catch (error) {
       console.error('GSAP animations failed to initialize', error);
       // Fallback: hacer visibles todos los elementos animados si GSAP falla
-      document.querySelectorAll<HTMLElement>('.process-intro, .process-card, .work-row').forEach((el) => {
+      document.querySelectorAll<HTMLElement>('.solution-title, .solution-toggle, .process-intro, .process-heading-word, .process-card, .process-step-title, .process-step-text, .work-row').forEach((el) => {
         el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'none';
+      });
+      document.querySelectorAll<HTMLElement>('.solution-item').forEach((item) => {
+        item.style.setProperty('--solution-line-scale', '1');
+        item.querySelector<HTMLElement>('.solution-summary')?.style.setProperty('--solution-number-opacity', '1');
+        item.querySelector<HTMLElement>('.solution-summary')?.style.setProperty('--solution-number-y', '0px');
+      });
+      document.querySelectorAll<SVGGeometryElement>('.process-icon path, .process-icon line, .process-icon circle, .process-icon rect, .process-icon polygon, .process-icon polyline').forEach((shape) => {
+        shape.style.strokeDasharray = '';
+        shape.style.strokeDashoffset = '';
       });
     }
   };
