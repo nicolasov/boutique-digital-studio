@@ -171,78 +171,130 @@ const initI18n = () => {
     button.addEventListener('click', () => setMenuOpen(false));
   });
 
-  const enableAnimatedServicesAccordion = false;
-  // Temporarily disabled for performance QA
-  if (enableAnimatedServicesAccordion) {
-    const getSolutionBody = (detail: HTMLDetailsElement) =>
-      detail.querySelector<HTMLElement>('[data-solution-body]');
+  const initServicesHoverAccordion = () => {
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const items = Array.from(
+      document.querySelectorAll<HTMLDetailsElement>('#soluciones-digitales .solution-item'),
+    );
+    if (!items.length) return;
 
-    const expandSolution = (detail: HTMLDetailsElement) => {
-      const body = getSolutionBody(detail);
-      if (!body) return;
+    const EASING_DURATION = 540; // ms — matches CSS height transition
+
+    // Animate open: height 0 → scrollHeight → 'auto'
+    const expandItem = (detail: HTMLDetailsElement) => {
+      const body = detail.querySelector<HTMLElement>('[data-solution-body]');
+      if (!body) {
+        detail.open = true;
+        return;
+      }
+
       detail.classList.remove('is-closing');
-      body.style.height = '0px';
+      // Set open so grid children render and scrollHeight is measurable
       detail.open = true;
+      // Measure natural height while still at 0
+      const targetHeight = body.scrollHeight;
+      // Start from 0 explicitly
+      body.style.height = '0px';
 
-      window.requestAnimationFrame(() => {
-        body.style.height = `${body.scrollHeight}px`;
-      });
+      // Force reflow so the transition sees the change from 0 → targetHeight
+      void body.offsetHeight;
+      body.style.height = `${targetHeight}px`;
 
-      const onTransitionEnd = (event: TransitionEvent) => {
+      const onEnd = (event: TransitionEvent) => {
         if (event.target !== body || event.propertyName !== 'height') return;
+        // After animation: release to 'auto' so it reflows on resize
         body.style.height = 'auto';
-        body.removeEventListener('transitionend', onTransitionEnd);
+        body.removeEventListener('transitionend', onEnd);
       };
-
-      body.addEventListener('transitionend', onTransitionEnd);
+      body.addEventListener('transitionend', onEnd);
     };
 
-    const collapseSolution = (detail: HTMLDetailsElement) => {
-      const body = getSolutionBody(detail);
+    // Animate close: height scrollHeight → 0 → detail.open = false
+    const collapseItem = (detail: HTMLDetailsElement) => {
+      const body = detail.querySelector<HTMLElement>('[data-solution-body]');
       if (!body || !detail.open) return;
-      body.style.height = `${body.scrollHeight}px`;
+
+      // Measure and lock current height before removing 'open'
+      const currentHeight = body.scrollHeight;
+      body.style.height = `${currentHeight}px`;
+      // Mark closing for CSS fade-out of children
       detail.classList.add('is-closing');
 
-      window.requestAnimationFrame(() => {
-        body.style.height = '0px';
-      });
+      // Force reflow then animate to 0
+      void body.offsetHeight;
+      body.style.height = '0px';
 
-      const onTransitionEnd = (event: TransitionEvent) => {
+      const onEnd = (event: TransitionEvent) => {
         if (event.target !== body || event.propertyName !== 'height') return;
         detail.open = false;
         detail.classList.remove('is-closing');
         body.style.height = '';
-        body.removeEventListener('transitionend', onTransitionEnd);
+        body.removeEventListener('transitionend', onEnd);
       };
-
-      body.addEventListener('transitionend', onTransitionEnd);
+      body.addEventListener('transitionend', onEnd);
     };
 
-    const openSolution = (detail: HTMLDetailsElement) => {
-      expandSolution(detail);
-      document.querySelectorAll<HTMLDetailsElement>('.solution-item[open]').forEach((other) => {
-        if (other !== detail) collapseSolution(other);
-      });
-    };
-
-    document.querySelectorAll<HTMLDetailsElement>('.solution-item').forEach((detail) => {
-      const summary = detail.querySelector('summary');
-
-      summary?.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (detail.open && !detail.classList.contains('is-closing')) {
-          collapseSolution(detail);
+    // Open target, close all others — with animation
+    const openItem = (target: HTMLDetailsElement) => {
+      items.forEach((item) => {
+        if (item === target) {
+          if (!item.open) expandItem(item);
         } else {
-          openSolution(detail);
+          if (item.open) collapseItem(item);
         }
       });
+    };
 
-      detail.addEventListener('mouseenter', () => {
-        if (!window.matchMedia('(hover: hover)').matches) return;
-        openSolution(detail);
+    // Ensure the first (initially open) item has its body height = 'auto'
+    // so there's no flash on first open-to-close transition
+    const firstOpen = items.find((item) => item.open);
+    if (firstOpen) {
+      const body = firstOpen.querySelector<HTMLElement>('[data-solution-body]');
+      if (body) body.style.height = 'auto';
+    }
+
+    if (isDesktop) {
+      items.forEach((detail) => {
+        const summary = detail.querySelector<HTMLElement>('summary');
+
+        // Prevent click from collapsing the currently-open item
+        summary?.addEventListener('click', (event) => {
+          if (detail.open) {
+            event.preventDefault();
+          } else {
+            // User clicked a closed item: animate open, close the rest
+            event.preventDefault();
+            openItem(detail);
+          }
+        });
+
+        // Hover opens the item
+        detail.addEventListener('mouseenter', () => {
+          if (!detail.open) openItem(detail);
+        });
       });
-    });
-  }
+    } else {
+      // Mobile: intercept clicks to ensure animated expand/collapse
+      // but still allow collapsing (native tap behaviour).
+      // We prevent the default toggle and do it ourselves so the height animates.
+      items.forEach((detail) => {
+        const summary = detail.querySelector<HTMLElement>('summary');
+        summary?.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (detail.open) {
+            // On mobile, allow closing — but keep at least one open:
+            // only close if another would remain open, else do nothing.
+            const otherOpen = items.some((item) => item !== detail && item.open);
+            if (otherOpen) collapseItem(detail);
+          } else {
+            openItem(detail);
+          }
+        });
+      });
+    }
+  };
+
+  initServicesHoverAccordion();
 
   const loopNode = document.querySelector<HTMLElement>('[data-hero-loop]');
   const loopKeys = loopNode?.dataset.loopKeys?.split(',') ?? [];
